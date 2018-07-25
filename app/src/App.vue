@@ -1,18 +1,17 @@
 <template>
   <div id="app">
-    <toolbar></toolbar>
-    <router-view></router-view>
-    <footer></footer>
+    <Toolbar/>
+    <router-view/>
+    <Footer/>
   </div>
 </template>
 
 <script>
 import Toolbar from "./components/Toolbar.vue";
 import Footer from "./components/Footer.vue";
-import axios from "axios";
 
 export default {
-  name: "app",
+  name: "college",
   components: {
     Toolbar,
     Footer
@@ -25,19 +24,9 @@ export default {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+}
+h1 {
   text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>

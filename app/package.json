@@ -1,62 +1,63 @@
 {
-  "name": "app",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome": "^1.1.8",
-    "@fortawesome/fontawesome-free-solid": "^5.0.13",
-    "@fortawesome/vue-fontawesome": "0.0.23",
-    "axios": "^0.15.3",
-    "core-js": "^2.4.1",
-    "font-awesome": "^4.6.3",
-    "material-design-icons-iconfont": "^3.0.3",
-    "vue": "^2.5.16",
-    "vue-carousel-3d": "^0.1.23",
-    "vue-router": "^3.0.1",
-    "vue-server-renderer": "^2.1.8",
-    "vue-template-compiler": "^2.1.8",
-    "vuetify": "^1.1.1",
-    "vuex": "^3.0.1",
-    "vuex-router-sync": "^4.0.1"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0-rc.5",
-    "@vue/cli-plugin-eslint": "^3.0.0-rc.5",
-    "@vue/cli-plugin-unit-mocha": "^3.0.0-rc.5",
-    "@vue/cli-service": "^3.0.0-rc.5",
-    "@vue/eslint-config-prettier": "^3.0.0-rc.5",
-    "@vue/test-utils": "^1.0.0-beta.20",
-    "chai": "^4.1.2",
-    "vue-template-compiler": "^2.5.16"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
+    "name": "app",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint",
+        "test:unit": "vue-cli-service test:unit"
     },
-    "extends": [
-      "plugin:vue/essential",
-      "@vue/prettier"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+    "dependencies": {
+        "@fortawesome/fontawesome": "^1.1.8",
+        "@fortawesome/fontawesome-free-solid": "^5.0.13",
+        "@fortawesome/vue-fontawesome": "0.0.23",
+        "axios": "^0.15.3",
+        "core-js": "^2.4.1",
+        "font-awesome": "^4.6.3",
+        "material-design-icons-iconfont": "^3.0.3",
+        "vue": "^2.5.16",
+        "vue-carousel-3d": "^0.1.23",
+        "vue-router": "^3.0.1",
+        "vue-server-renderer": "^2.1.8",
+        "vue-template-compiler": "^2.1.8",
+        "vuetify": "^1.1.8",
+        "vuex": "^3.0.1",
+        "vuex-router-sync": "^4.0.1"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "^3.0.0-rc.5",
+        "@vue/cli-plugin-eslint": "^3.0.0-rc.5",
+        "@vue/cli-plugin-unit-mocha": "^3.0.0-rc.5",
+        "@vue/cli-service": "^3.0.0-rc.5",
+        "@vue/eslint-config-prettier": "^3.0.0-rc.5",
+        "@vue/test-utils": "^1.0.0-beta.20",
+        "chai": "^4.1.2",
+        "vue-template-compiler": "^2.5.16",
+        "bootstrap": "^3.3.6"
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": [
+            "plugin:vue/essential",
+            "@vue/prettier"
+        ],
+        "rules": {},
+        "parserOptions": {
+            "parser": "babel-eslint"
+        }
+    },
+    "postcss": {
+        "plugins": {
+            "autoprefixer": {}
+        }
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not ie <= 8"
+    ]
 }
