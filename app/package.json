@@ -32,9 +32,11 @@
         "@vue/cli-service": "^3.0.0-rc.5",
         "@vue/eslint-config-prettier": "^3.0.0-rc.5",
         "@vue/test-utils": "^1.0.0-beta.20",
+        "bootstrap": "^3.3.6",
         "chai": "^4.1.2",
+        "css-loader": "^1.0.0",
         "vue-template-compiler": "^2.5.16",
-        "bootstrap": "^3.3.6"
+        "webpack": "^4.16.2"
     },
     "eslintConfig": {
         "root": true,
