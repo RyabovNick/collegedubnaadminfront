@@ -40,12 +40,21 @@
 }
 
 .btn__content i {
-  display: initial;
   vertical-align: bottom;
 }
 
 .container {
   padding: 0;
+}
+
+@media only screen and (min-width: 1170px) {
+  .hidden-sm-and-down {
+    display: inline-block;
+  }
+
+  .toolbar__items {
+    margin-right: 2em;
+  }
 }
 
 @media only screen and (min-width: 670px) {
@@ -57,6 +66,10 @@
 @media only screen and (max-width: 1170px) {
   .hidden-sm-and-down {
     display: none !important;
+  }
+
+  .toolbar__items {
+    margin-right: 2em;
   }
 }
 
@@ -163,7 +176,7 @@
         </router-link>
       </div>
       <v-btn icon large>
-        <v-icon>remove_red_eye</v-icon>
+        <v-icon title="Версия для слабовидящих">remove_red_eye</v-icon>
       </v-btn>
       </v-toolbar>
     <v-content>
