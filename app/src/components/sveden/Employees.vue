@@ -9,6 +9,11 @@ table.v-table {
   max-width: max-content;
   margin: auto;
 }
+
+.v-card .v-card__title .v-input {
+  max-width: 500px;
+  margin: auto;
+}
 </style>
 
 
@@ -63,8 +68,9 @@ table.v-table {
             <v-data-table
             :headers="headersTeachingStaff"
             :items="teachingStaff"
-            class="elevation-1"
+            class="elevation-2"
             :search="search"
+            rows-per-page-text="Записей на странице"
             >
                 <template slot="items" slot-scope="props">
                     <tr @click="props.expanded = !props.expanded">
@@ -148,7 +154,7 @@ export default {
   },
   mounted() {
     axios
-      .get("/api/getHeads")
+      .get("http://localhost:3000/api/heads")
       .then(response => (this.heads = response.data))
       .catch(error => {
         console.log(error);
@@ -156,7 +162,7 @@ export default {
       })
       .finally(() => (this.loading = false));
     axios
-      .get("/api/getTeachingStaff")
+      .get("http://localhost:3000/api/teachingstaff")
       .then(response => (this.teachingStaff = response.data))
       .catch(error => {
         console.log(error);

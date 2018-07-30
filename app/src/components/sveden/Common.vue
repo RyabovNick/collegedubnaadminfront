@@ -1,3 +1,21 @@
+<style>
+.elevation-1 {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.v-datatable tbody tr td {
+  font-size: 14px;
+}
+
+.v-datatable thead tr th {
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+}
+</style>
+
+
 <template>
     <v-app>
         <h1>Основные сведения</h1>
@@ -35,7 +53,7 @@ export default {
   },
   mounted() {
     axios
-      .get("/api/getCommon")
+      .get("http://localhost:3000/api/common")
       .then(response => (this.sveden = response.data))
       .catch(error => {
         console.log(error);

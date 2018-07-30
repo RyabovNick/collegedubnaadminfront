@@ -1,11 +1,3 @@
-<style scoped>
-table.v-table {
-    width: auto;
-    margin: auto;
-}
-</style>
-
-
 <template>
     <v-app>
         <h1>Структура и органы управления образовательной организации</h1>
@@ -38,30 +30,30 @@ table.v-table {
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   data() {
     return {
-        headers: [
-          {
-            text: 'ФИО',
-            align: 'left',
-            sortable: false,
-            value: 'fio'
-          },
-          { text: 'Должность', sortable: false, value: 'post' },
-          { text: 'Телефон', sortable: false, value: 'telephone' },
-          { text: 'Почта', sortable: false, value: 'email' },
-        ],
-        heads: [],
-        loading: true,
-        errored: false
+      headers: [
+        {
+          text: "ФИО",
+          align: "left",
+          sortable: false,
+          value: "fio"
+        },
+        { text: "Должность", sortable: false, value: "post" },
+        { text: "Телефон", sortable: false, value: "telephone" },
+        { text: "Почта", sortable: false, value: "email" }
+      ],
+      heads: [],
+      loading: true,
+      errored: false
     };
   },
   mounted() {
     axios
-      .get("/api/getHeads")
+      .get("http://localhost:3000/api/heads")
       .then(response => (this.heads = response.data))
       .catch(error => {
         console.log(error);

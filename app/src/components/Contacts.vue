@@ -1,8 +1,8 @@
 <style scoped>
-@import url('../css/pages.css');
+/*@import url('../css/pages.css');*/
 
 .contacts >>> p {
-    text-align: center;
+  text-align: center;
 }
 </style>
 

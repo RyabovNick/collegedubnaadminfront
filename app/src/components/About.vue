@@ -1,5 +1,5 @@
 <style scoped>
-@import url('../css/pages.css');
+/*@import url('../css/pages.css');*/
 </style>
 
 <template>
