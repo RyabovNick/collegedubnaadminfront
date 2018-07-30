@@ -6,8 +6,8 @@ import Contacts from "./components/Contacts.vue";
 import Common from "./components/sveden/Common.vue";
 import Struct from "./components/sveden/Struct.vue";
 import Document from "./components/sveden/Document.vue";
-/*import Education from "./components/sveden/Education.vue"
-import EduStandarts from "./components/sveden/EduStandarts.vue"*/
+import Education from "./components/sveden/Education.vue";
+/*import EduStandarts from "./components/sveden/EduStandarts.vue"*/
 import Employees from "./components/sveden/Employees.vue";
 /*import Objects from "./components/sveden/Objects.vue"
 import Grants from "./components/sveden/Grants.vue"*/
@@ -27,10 +27,13 @@ export const routes = [
         path: "/sveden/document",
         name: "Document",
         component: Document
-    } /*
-    { path: '/sveden/education', name: 'Education', component: Education },
-    { path: '/sveden/eduStandarts', name: 'EduStandarts', component: EduStandarts },*/,
-    { path: "/sveden/employees", name: "Employees", component: Employees },
+    },
+    { path: "/sveden/education", name: "Education", component: Education },
+    /*{ path: '/sveden/eduStandarts', name: 'EduStandarts', component: EduStandarts },*/ {
+        path: "/sveden/employees",
+        name: "Employees",
+        component: Employees
+    },
     /*{ path: '/sveden/objects', name: 'Objects', component: Objects },
     { path: '/sveden/grants', name: 'Grants', component: Grants },
     */

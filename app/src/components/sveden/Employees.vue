@@ -108,10 +108,16 @@ export default {
     return {
       search: "",
       headersHeads: [
-        { text: "ФИО", align: "left", sortable: false, value: "fio" },
-        { text: "Должность", sortable: false, value: "post" },
-        { text: "Телефон", sortable: false, value: "telephone" },
-        { text: "Почта", sortable: false, value: "email" }
+        {
+          text: "ФИО",
+          align: "left",
+          sortable: false,
+          value: "fio",
+          width: "50%"
+        },
+        { text: "Должность", sortable: false, value: "post", width: "20%" },
+        { text: "Телефон", sortable: false, value: "telephone", width: "10%" },
+        { text: "Почта", sortable: false, value: "email", width: "20%" }
       ],
       headersTeachingStaff: [
         { text: "ФИО", align: "left", sortable: false, value: "fio" },

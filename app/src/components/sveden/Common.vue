@@ -8,7 +8,7 @@
   font-size: 14px;
 }
 
-.v-datatable thead tr th {
+.elevation-1 .v-datatable thead tr th {
   color: black;
   font-size: 16px;
   font-weight: bold;
