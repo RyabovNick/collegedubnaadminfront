@@ -26,6 +26,10 @@ h2 {
   height: 30px;
   margin-left: 10px;
 }
+
+table.v-table thead th {
+  white-space: initial;
+}
 </style>
 
 
@@ -39,7 +43,7 @@ h2 {
         </section>
         <section v-else>
             <div v-if="loading_eduop">Загрузка...</div>
-
+            
             <v-data-table
             :headers="headersEduop"
             :items="eduop"
