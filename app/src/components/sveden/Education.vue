@@ -43,12 +43,22 @@ table.v-table thead th {
         </section>
         <section v-else>
             <div v-if="loading_eduop">Загрузка...</div>
-            
+            <v-card>
+            <v-card-title>
+                <v-text-field
+                    v-model="searchEduop"
+                    append-icon="search"
+                    label="Поиск"
+                    single-line
+                    hide-details
+                ></v-text-field>
+            </v-card-title>
             <v-data-table
             :headers="headersEduop"
             :items="eduop"
             expand
             hide-actions
+            :search="searchEduop"
             class="elevation-2"
         >
             <template slot="items" slot-scope="props">
@@ -99,13 +109,161 @@ table.v-table thead th {
                   </td>
                 <td itemprop="eduPr" class="text-xs-right">{{ props.item.eduPr }}</td>
             </template>
-
-            
-        </v-data-table>
+            </v-data-table>
+            </v-card>
         </section>
-        <h1>Педагогический состав</h1>
-        <section v-if="errored_eduop">
+        <br/>
+        <h2>Информация о сроке действия государственной аккредитации образовательной программы, о языках, на которых осуществляется образование (обучение)</h2>
+        <section v-if="errored_eduaccred">
             <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
+        </section>
+        <section v-else>
+            <div v-if="loading_eduaccred">Загрузка...</div>
+            <v-card>
+            <v-card-title>
+                <v-text-field
+                    v-model="searchEduaccred"
+                    append-icon="search"
+                    label="Поиск"
+                    single-line
+                    hide-details
+                ></v-text-field>
+            </v-card-title>
+            <v-data-table
+            :headers="headersEduaccred"
+            :items="eduaccred"
+            expand
+            hide-actions
+            :search="searchEduaccred"
+            class="elevation-2"
+        >
+            <template slot="items" slot-scope="props">
+                <td itemprop="eduCode" class="text-xs-left">{{ props.item.eduCode }}</td>
+                <td itemprop="eduName" class="text-xs-right">{{ props.item.eduName }}</td>
+                <td itemprop="eduLevel" class="text-xs-right">{{ props.item.eduLevel }}</td>
+                <td itemprop="learningTerm" class="text-xs-right">{{ props.item.learningTerm }}</td>
+                <td itemprop="eduAccred" class="text-xs-right">{{ props.item.dateEnd }}</td>
+                <td itemprop="eduLang" class="text-xs-right">{{ props.item.language }}</td>
+            </template>
+            </v-data-table>
+            </v-card>
+        </section>
+        <br/>
+        <h2>Информация о численности обучающихся по реализуемым образовательным программам</h2>
+        <section v-if="errored_chislen">
+            <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
+        </section>
+        <section v-else>
+            <div v-if="loading_chislen">Загрузка...</div>
+            <v-card>
+            <v-card-title>
+                <v-text-field
+                    v-model="searchChislen"
+                    append-icon="search"
+                    label="Поиск"
+                    single-line
+                    hide-details
+                ></v-text-field>
+            </v-card-title>
+            <v-data-table
+            :headers="headersChislen"
+            :items="chislen"
+            expand
+            hide-actions
+            :search="searchChislen"
+            class="elevation-2"
+        >
+            <template slot="items" slot-scope="props">
+                <td itemprop="eduCode" class="text-xs-left">{{ props.item.eduCode }}</td>
+                <td itemprop="eduName" class="text-xs-right">{{ props.item.eduName }}</td>
+                <td itemprop="eduLevel" class="text-xs-right">{{ props.item.eduLevel }}</td>
+                <td itemprop="eduForm" class="text-xs-right">{{ props.item.eduForm }}</td>
+                <td itemprop="numberBFpriem" class="text-xs-right">{{ props.item.numberBFpriem }}</td>
+                <td itemprop="numberBRpriem" class="text-xs-right">{{ props.item.numberBRpriem }}</td>
+                <td itemprop="numberBMpriem" class="text-xs-right">{{ props.item.numberBMpriem }}</td>
+                <td itemprop="numberPpriem" class="text-xs-right">{{ props.item.numberPpriem }}</td>
+                
+            </template>
+            </v-data-table>
+            </v-card>
+        </section>
+        <br/>
+        <h2>Информация о результатах приема</h2>
+        <section v-if="errored_priem">
+            <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
+        </section>
+        <section v-else>
+            <div v-if="loading_priem">Загрузка...</div>
+            <v-card>
+            <v-card-title>
+                <v-text-field
+                    v-model="searchPriem"
+                    append-icon="search"
+                    label="Поиск"
+                    single-line
+                    hide-details
+                ></v-text-field>
+            </v-card-title>
+            <v-data-table
+            :headers="headersPriem"
+            :items="priem"
+            expand
+            hide-actions
+            :search="searchPriem"
+            class="elevation-2"
+        >
+            <template slot="items" slot-scope="props">
+                <td itemprop="eduCode" class="text-xs-left">{{ props.item.eduCode }}</td>
+                <td itemprop="eduName" class="text-xs-right">{{ props.item.eduName }}</td>
+                <td itemprop="eduLevel" class="text-xs-right">{{ props.item.eduLevel }}</td>
+                <td itemprop="eduForm" class="text-xs-right">{{ props.item.eduForm }}</td>
+                <td itemprop="numberBFpriem" class="text-xs-right">{{ props.item.numberBFpriem }}</td>
+                <td itemprop="numberBRpriem" class="text-xs-right">{{ props.item.numberBRpriem }}</td>
+                <td itemprop="numberBMpriem" class="text-xs-right">{{ props.item.numberBMpriem }}</td>
+                <td itemprop="numberPpriem" class="text-xs-right">{{ props.item.numberPpriem }}</td>
+                
+            </template>
+            </v-data-table>
+            </v-card>
+        </section>
+        <br/>
+        <h2>Информация о результатах перевода, восстановления и отчисления</h2>
+        <section v-if="errored_perevod">
+            <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
+        </section>
+        <section v-else>
+            <div v-if="loading_perevod">Загрузка...</div>
+            <v-card>
+            <v-card-title>
+                <v-text-field
+                    v-model="searchPerevod"
+                    append-icon="search"
+                    label="Поиск"
+                    single-line
+                    hide-details
+                ></v-text-field>
+            </v-card-title>
+            <v-data-table
+            :headers="headersPerevod"
+            :items="perevod"
+            expand
+            hide-actions
+            :search="searchPerevod"
+            class="elevation-2"
+        >
+            <template slot="items" slot-scope="props">
+                <td itemprop="eduCode" class="text-xs-left">{{ props.item.eduCode }}</td>
+                <td itemprop="eduName" class="text-xs-right">{{ props.item.eduName }}</td>
+                <td itemprop="eduLevel" class="text-xs-right">{{ props.item.eduLevel }}</td>
+                <td itemprop="eduForm" class="text-xs-right">{{ props.item.eduForm }}</td>
+                <td itemprop="numberOutPerevod" class="text-xs-right">{{ props.item.numberOutPerevod }}</td>
+                <td itemprop="numberToPerevod" class="text-xs-right">{{ props.item.numberToPerevod }}</td>
+                <td itemprop="numberResPerevod" class="text-xs-right">{{ props.item.numberResPerevod }}</td>
+                <td itemprop="numberExpPerevod" class="text-xs-right">{{ props.item.numberExpPerevod }}</td>
+                
+            </template>
+            </v-data-table>
+            </v-card>
         </section>
     </v-app>
 </template>
@@ -116,7 +274,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      search: "",
+      searchEduop: "",
       headersEduop: [
         { text: "Код", align: "left", sortable: false, value: "eduCode" },
         {
@@ -159,110 +317,174 @@ export default {
           value: "eduPr"
         }
       ],
+      searchEduaccred: "",
       headersEduaccred: [
-        { text: "Код программы", align: "left", sortable: false },
-        { text: "Название программы", sortable: false },
+        {
+          text: "Код программы",
+          align: "left",
+          sortable: false,
+          value: "eduCode"
+        },
+        { text: "Название программы", sortable: false, value: "eduName" },
         {
           text: "Уровень образования",
-          sortable: false
+          sortable: false,
+          value: "eduLevel"
         },
         {
           text: "Информация о нормативных сроках обучения",
-          sortable: false
+          sortable: false,
+          value: "learningTerm"
         },
-        { text: "Срок действия государственной аккредитации", sortable: false },
-        { text: "Языки, на которых осуществляется обучение", sortable: false }
+        {
+          text: "Срок действия государственной аккредитации",
+          sortable: false,
+          value: "dateEnd"
+        },
+        {
+          text: "Языки, на которых осуществляется обучение",
+          sortable: false,
+          value: "language"
+        }
       ],
+      searchChislen: "",
       headersChislen: [
-        { text: "Код программы", align: "left", sortable: false },
-        { text: "Наименование специальности", sortable: false },
+        {
+          text: "Код программы",
+          align: "left",
+          sortable: false,
+          value: "eduCode"
+        },
+        {
+          text: "Наименование специальности",
+          sortable: false,
+          value: "eduName"
+        },
         {
           text: "Уровень образования",
-          sortable: false
+          sortable: false,
+          value: "eduLevel"
         },
         {
           text: "Форма обучения",
-          sortable: false
+          sortable: false,
+          value: "eduForm"
         },
         {
           text:
             "Численность обучающихся за счёт бюджетных ассигнований федерального бюджета",
-          sortable: false
+          sortable: false,
+          value: "numberBFpriem"
         },
         {
           text:
             "Численность обучающихся за счёт бюджетов субъектов Российской Федерации",
-          sortable: false
+          sortable: false,
+          value: "numberBRpriem"
         },
         {
           text: "Численность обучающихся за счёт местных бюджетов",
-          sortable: false
+          sortable: false,
+          value: "numberBMpriem"
         },
         {
           text:
             "Численность обучающихся за счёт средств физических и (или) юридических лиц",
-          sortable: false
+          sortable: false,
+          value: "numberPpriem"
         }
       ],
+      searchPriem: "",
       headersPriem: [
-        { text: "Код программы", align: "left", sortable: false },
-        { text: "Наименование специальности", sortable: false },
+        {
+          text: "Код программы",
+          align: "left",
+          sortable: false,
+          value: "eduCode"
+        },
+        {
+          text: "Наименование специальности",
+          sortable: false,
+          value: "eduName"
+        },
         {
           text: "Уровень образования",
-          sortable: false
+          sortable: false,
+          value: "eduLevel"
         },
         {
           text: "Форма обучения",
-          sortable: false
+          sortable: false,
+          value: "eduForm"
         },
         {
           text:
             "Результаты приема за счёт бюджетных ассигнований федерального бюджета",
-          sortable: false
+          sortable: false,
+          value: "numberBFpriem"
         },
         {
           text:
             "Результаты приема за счёт бюджетов субъектов Российской Федерации",
-          sortable: false
+          sortable: false,
+          value: "numberBRpriem"
         },
         {
           text: "Результаты приема за счёт местных бюджетов",
-          sortable: false
+          sortable: false,
+          value: "numberBMpriem"
         },
         {
           text:
             "Результаты приема за счёт средств физических и (или) юридических лиц",
-          sortable: false
+          sortable: false,
+          value: "numberPpriem"
         }
       ],
+      searchPerevod: "",
       headersPerevod: [
-        { text: "Код программы", align: "left", sortable: false },
-        { text: "Наименование специальности", sortable: false },
+        {
+          text: "Код программы",
+          align: "left",
+          sortable: false,
+          value: "eduCode"
+        },
+        {
+          text: "Наименование специальности",
+          sortable: false,
+          value: "eduName"
+        },
         {
           text: "Уровень образования",
-          sortable: false
+          sortable: false,
+          value: "eduLevel"
         },
         {
           text: "Форма обучения",
-          sortable: false
+          sortable: false,
+          value: "eduForm"
         },
         {
           text:
             "Численность обучающихся, переведенных в другие образовательные организации",
-          sortable: false
+          sortable: false,
+          value: "numberOutPerevod"
         },
         {
           text:
             "Численность обучающихся, переведенных из других образовательных организаций",
-          sortable: false
+          sortable: false,
+          value: "numberToPerevod"
         },
         {
           text: "Численность восстановленных обучающихся",
-          sortable: false
+          sortable: false,
+          value: "numberResPerevod"
         },
         {
           text: "Численность отчисленных обучающихся",
-          sortable: false
+          sortable: false,
+          value: "numberExpPerevod"
         }
       ],
       priem: [],
