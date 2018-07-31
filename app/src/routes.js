@@ -14,6 +14,8 @@ import Grants from "./components/sveden/Grants.vue";
 import PaidEdu from "./components/sveden/PaidEdu.vue";
 import Budget from "./components/sveden/Budget.vue";
 import Vacant from "./components/sveden/Vacant.vue";
+import Login from "./components/admin/Login.vue";
+import HiddenPage from "./components/admin/HiddenPage.vue";
 
 export const routes = [
     { path: "/", name: "Home", component: Home },
@@ -39,5 +41,17 @@ export const routes = [
     { path: "/sveden/grants", name: "Grants", component: Grants },
     { path: "/sveden/paid_edu", name: "PaidEdu", component: PaidEdu },
     { path: "/sveden/budget", name: "Budget", component: Budget },
-    { path: "/sveden/vacant", name: "Vacant", component: Vacant }
+    { path: "/sveden/vacant", name: "Vacant", component: Vacant },
+    {
+        path: "/uni-adminpanel",
+        name: "Login",
+        component: Login,
+        children: [
+            {
+                path: "hiddenpage",
+                name: "hiddenpage",
+                component: HiddenPage
+            }
+        ]
+    }
 ];
