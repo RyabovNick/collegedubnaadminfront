@@ -1,28 +1,14 @@
 <template>
   <nav class="navbar navbar-light">
     <div class="container">
-      <router-link class="navbar-brand"
-        :to="{ name: 'Home' }">
-        conduit
-      </router-link>
       <ul v-if="!isAuthenticated" class="nav navbar-nav pull-xs-right">
         <li class="nav-item">
           <router-link class="nav-link"
             active-class="active"
             exact
-            :to="{ name: 'Home' }">
-            {{ isAuthenticated }}
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link"
-            active-class="active"
-            exact
             :to="{ name: 'Login' }">
-            <i class="ion-compose"></i>Sign in
+            <i class="ion-compose"></i>Войти
           </router-link>
-        </li>
-        <li class="nav-item">Sign up
         </li>
       </ul>
       <ul v-else class="nav navbar-nav pull-xs-right">
@@ -32,26 +18,13 @@
             active-class="active"
             exact
             :to="{ name: 'Home' }">
-            Home
+            На главную
           </router-link>
-        </li>
-        <li class="nav-item">New Article
         </li>
         <li class="nav-item">
-            <router-link class="nav-link"
-            active-class="active"
-            exact
-            :to="{ name: 'settings' }">
-            Settings
-          </router-link>
-        </li>
-        <li class="nav-item" v-if="currentUser.username">
-          <router-link class="nav-link"
-            active-class="active"
-            exact
-            :to="{ name: 'profile', params: { username: currentUser.username } }">
-            {{ currentUser.username }}
-          </router-link>
+          <button @click="logout" class="btn btn-outline-danger">
+            Выход
+          </button>
         </li>
       </ul>
     </div>
@@ -59,11 +32,19 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import { LOGOUT } from "@/store/actions.type";
 
 export default {
   name: "RwvHeader",
   computed: {
     ...mapGetters(["currentUser", "isAuthenticated"])
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch(LOGOUT).then(() => {
+        this.$router.push({ name: "Login" });
+      });
+    }
   }
 };
 </script>

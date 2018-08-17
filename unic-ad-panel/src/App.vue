@@ -1,10 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-        <rwv-header></rwv-header>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/login">Login</router-link>
+      <rwv-header></rwv-header>
     </div>
     <router-view/>
   </div>

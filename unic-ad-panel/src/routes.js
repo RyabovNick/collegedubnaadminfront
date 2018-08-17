@@ -7,7 +7,8 @@ export const routes = [
     {
         name: "Login",
         path: "/login",
-        component: () => import("@/views/Login")
+        component: () => import("@/views/Login"),
+        meta: { authNotRequired: true }
     },
     {
         name: "settings",

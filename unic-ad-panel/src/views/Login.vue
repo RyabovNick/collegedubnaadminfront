@@ -3,11 +3,9 @@
     <div class="container page">
       <div class="row">
         <div class="col-md-6 offset-md-3 col-xs-12">
-          <h1 class="text-xs-center">Sign in</h1>
+          <h1 class="text-xs-center">Введите логин и пароль</h1>
           <p class="text-xs-center">
-            <router-link :to="{ name: 'register' }">
-              Need an account?
-            </router-link>
+              Нужен доступ? Обратитесь к администратору
           </p>
           <ul v-if="errors" class="error-messages">
             <li
@@ -16,25 +14,29 @@
               {{k}} {{ v | error }}
             </li>
           </ul>
-          <form v-on:submit.prevent="onSubmit(email, password)">
-            <fieldset class="form-group">
-              <input
-                class="form-control form-control-lg"
-                type="text"
-                v-model="email"
-                placeholder="Email">
-            </fieldset>
-            <fieldset class="form-group">
-              <input
-                class="form-control form-control-lg"
-                type="password"
-                v-model="password"
-                placeholder="Password">
-            </fieldset>
-            <button class="btn btn-lg btn-primary pull-xs-right">
-              Sign in
-            </button>
-          </form>
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-text-field
+              v-model="email"
+              label="Login"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="password"
+              :append-icon="show ? 'visibility_off' : 'visibility'"
+              :type="show ? 'text' : 'password'"
+              name="input-10-1"
+              label="Password"
+              hint="Enter your password"
+              counter
+              @click:append="show = !show"
+            ></v-text-field>
+
+            <v-btn
+              @click="onSubmit(email, password)"
+            >
+              Авторизоваться
+            </v-btn>
+          </v-form>
         </div>
       </div>
     </div>
@@ -49,7 +51,9 @@ export default {
   data() {
     return {
       email: null,
-      password: null
+      password: null,
+      show: false,
+      valid: true
     };
   },
   methods: {

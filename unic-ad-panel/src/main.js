@@ -6,7 +6,6 @@ import "material-design-icons-iconfont/dist/material-design-icons.css";
 import App from "./App.vue";
 import router from "./router";
 import store from "@/store";
-import { CHECK_AUTH } from "@/store/actions.type";
 
 import ApiService from "@/common/api.service";
 import DateFilter from "@/common/date.filter";
@@ -20,7 +19,14 @@ Vue.use(Vuetify);
 ApiService.init();
 // Check auth before each page load
 router.beforeEach((to, from, next) => {
-    return Promise.all([store.dispatch(CHECK_AUTH)]).then(next);
+    const authRequired = to.matched.some(router => router.meta.authNotRequired);
+    const authed = store.getters.isAuthenticated;
+    if (!authRequired && !authed) {
+        next("/login");
+    } else {
+        next();
+    }
+    //return Promise.all([store.dispatch(CHECK_AUTH)]).then(next);
 });
 
 new Vue({
