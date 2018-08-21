@@ -32,14 +32,12 @@ const ApiService = {
     },
 
     get(resource) {
-        console.log(resource);
         return Vue.axios.get(`${resource}`).catch(error => {
             throw new Error(`[RWV] ApiService ${error}`);
         });
     },
 
     post(resource, params) {
-        console.log(resource, params);
         return Vue.axios.post(`${resource}`, params);
     },
 
@@ -51,10 +49,8 @@ const ApiService = {
         return Vue.axios.put(`${resource}`, params);
     },
 
-    delete(resource) {
-        return Vue.axios.delete(resource).catch(error => {
-            throw new Error(`[RWV] ApiService ${error}`);
-        });
+    delete(resource, params) {
+        return Vue.axios.delete(`${resource}`, { data: params });
     }
 };
 
