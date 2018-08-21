@@ -33,9 +33,12 @@ export default {
       errored: false
     };
   },
+  mounted() {
+    this.fetchCommon();
+  },
   methods: {
     fetchCommon() {
-      this.$store.dispatch(FETCH_COMMON, "common");
+      this.$store.dispatch(FETCH_COMMON);
     }
   },
   computed: {
