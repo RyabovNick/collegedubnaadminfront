@@ -277,7 +277,8 @@ export default {
         icon: "remove_red_eye",
         text: "Версия для слабовидящих",
         link: "/special"
-      }
+      },
+      { icon: "contacts", text: "Новости", link: "/news" }
     ],
     toolbar: [{ icon: "home", text: "Главная", link: "/" }]
   }),

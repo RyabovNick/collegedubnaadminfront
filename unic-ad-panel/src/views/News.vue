@@ -7,7 +7,7 @@
         <section v-else>
             <div v-if="loading">Загрузка...</div>
             <v-toolbar flat color="white">
-              <v-toolbar-title>CRUD common</v-toolbar-title>
+              <v-toolbar-title>CRUD news</v-toolbar-title>
               <v-divider
                 class="mx-2"
                 inset
@@ -23,17 +23,34 @@
 
                   <v-card-text>
                     <v-container grid-list-md>
+                        <v-form action="http://localhost:3000/api/admin/upload_news"
+                            enctype="multipart/form-data"
+                            v-model="valid" method="post">
+                            <v-text-field name="title" v-model="editedItem.title" label="Заголовок"></v-text-field>
+                            <v-text-field name="content" v-model="editedItem.content" label="Новость"></v-text-field>
+                            <v-text-field name="date_now" v-model="editedItem.date_now" label="Дата новости"></v-text-field>
+                            <input type="file" name="upload">
+                            <v-btn
+                            type="submit">
+                            submit
+                            </v-btn>
+                        </v-form>
+                      <!--  
                       <v-layout wrap>
                         <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
+                          <v-text-field v-model="editedItem.title" label="Заголовок"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.tag" label="Тег"></v-text-field>
+                          <v-text-field v-model="editedItem.content" label="Новость"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.value" label="Значение"></v-text-field>
+                          <v-text-field v-model="editedItem.date_now" label="Дата новости"></v-text-field>
+                        </v-flex>
+                        <v-flex xs12 sm6 md4>
+                            <input type="file" name="upload" multiple="multiple">
                         </v-flex>
                       </v-layout>
+                      -->
                     </v-container>
                   </v-card-text>
 
@@ -48,15 +65,16 @@
             </v-toolbar>
             <v-data-table
                 :headers="headers"
-                :items="common"
+                :items="news"
                 class="elevation-1"
                 hide-actions
             >
                 <template slot="items" slot-scope="props">
                 <td class="text-xs-left">{{ props.item.id }}</td>
-                <td class="text-xs-left">{{ props.item.name }}</td>
-                <td class="text-xs-left">{{ props.item.tag }}</td>
-                <td class="text-xs-left">{{ props.item.value }}</td>
+                <td class="text-xs-left">{{ props.item.title }}</td>
+                <td class="text-xs-left">{{ props.item.content }}</td>
+                <td class="text-xs-left">{{ props.item.date_now }}</td>
+                <td class="text-xs-left">{{ props.item.logo }}</td>
                 <td class="justify-center layout px-0">
                   <v-icon
                     small
@@ -81,61 +99,66 @@
 <script>
 import { mapGetters } from "vuex";
 import {
-  FETCH_COMMON,
-  NEW_COMMON,
-  DELETE_COMMON,
-  UPDATE_COMMON
+  FETCH_NEWS,
+  NEW_NEWS,
+  DELETE_NEWS,
+  UPDATE_NEWS
 } from "@/store/actions.type";
 
 export default {
   data() {
     return {
+      valid: true,
       loading: false,
       errored: false,
       //added
       dialog: false,
       headers: [
         { text: "Id", value: "id" },
-        { text: "Название", value: "name" },
-        { text: "Тег", value: "tag" },
-        { text: "Значение", value: "value" },
-        { text: "Действия", value: "actions" }
+        { text: "Заголовок", value: "title" },
+        { text: "Новость", value: "content" },
+        { text: "Дата", value: "date_now" },
+        { text: "Лого", value: "logo" }
       ],
       editedIndex: -1,
       editedItem: {
         id: 0,
-        name: "",
-        tag: "",
-        value: ""
+        title: "",
+        description: "",
+        content: "",
+        date_now: "",
+        logo: ""
       },
       defaultItem: {
         id: 0,
-        name: "",
-        tag: "",
-        value: ""
+        title: "",
+        description: "",
+        content: "",
+        date_now: "",
+        logo: ""
       }
     };
   },
   mounted() {
-    this.fetchCommon();
+    this.fetchNews();
   },
   methods: {
-    fetchCommon() {
-      this.$store.dispatch(FETCH_COMMON);
+    fetchNews() {
+      this.$store.dispatch(FETCH_NEWS);
     },
 
     editItem(item) {
-      this.editedIndex = this.common.indexOf(item);
+      this.editedIndex = this.news.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      const index = this.common.indexOf(item);
+      const index = this.news.indexOf(item);
       const id = item.id;
       confirm("Действительно хотите удалить элемент с ID: " + id) &&
-        this.$store.dispatch(DELETE_COMMON, { id }).then(() => {
-          this.common.splice(index, 1);
+        this.$store.dispatch(DELETE_NEWS, { id }).then(() => {
+          this.news.splice(index, 1);
         });
     },
 
@@ -153,22 +176,20 @@ export default {
       const tag = item.tag;
       const value = item.value;
       if (this.editedIndex > -1) {
-        this.$store.dispatch(UPDATE_COMMON, { id, name, tag, value });
-        Object.assign(this.common[this.editedIndex], item);
+        this.$store.dispatch(UPDATE_NEWS, { id, name, tag, value });
+        Object.assign(this.news[this.editedIndex], item);
         this.editedIndex = -1;
       } else {
-        this.$store
-          .dispatch(NEW_COMMON, { name, tag, value })
-          .then(responce => {
-            this.editedItem.id = responce.data.insertId;
-          });
-        this.common.push(this.editedItem);
+        this.$store.dispatch(NEW_NEWS, { name, tag, value }).then(responce => {
+          this.editedItem.id = responce.data.insertId;
+        });
+        this.news.push(this.editedItem);
       }
       this.close();
     }
   },
   computed: {
-    ...mapGetters(["common"]),
+    ...mapGetters(["news"]),
 
     formTitle() {
       return this.editedIndex === -1 ? "Новый элемент" : "Изменить элемент";

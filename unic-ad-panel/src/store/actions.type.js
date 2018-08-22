@@ -6,3 +6,18 @@ export const FETCH_COMMON = "fetchCommon";
 export const NEW_COMMON = "newCommon";
 export const DELETE_COMMON = "deleteCommon";
 export const UPDATE_COMMON = "updateCommon";
+//news.module
+export const FETCH_NEWS = "fetchNews";
+export const NEW_NEWS = "newNews";
+export const DELETE_NEWS = "deleteNews";
+export const UPDATE_NEWS = "updateNews";
+
+export const FETCH_NEWS_DOCS = "fetchNewsDocs";
+export const NEW_NEWS_DOCS = "newNewsDocs";
+export const DELETE_NEWS_DOCS = "deleteNewsDocs";
+export const UPDATE_NEWS_DOCS = "updateNewsDocs";
+
+export const FETCH_NEWS_PHOTO = "fetchNewsPhoto";
+export const NEW_NEWS_PHOTO = "newNewsPhoto";
+export const DELETE_NEWS_PHOTO = "deleteNewsPhoto";
+export const UPDATE_NEWS_PHOTO = "updateNewsPhoto";
