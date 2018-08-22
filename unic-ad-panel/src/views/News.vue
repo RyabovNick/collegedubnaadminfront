@@ -23,15 +23,14 @@
 
                   <v-card-text>
                     <v-container grid-list-md>
-                        <v-form action="http://localhost:3000/api/admin/upload_news"
-                            enctype="multipart/form-data"
+                        <v-form enctype="multipart/form-data"
                             v-model="valid" method="post">
                             <v-text-field name="title" v-model="editedItem.title" label="Заголовок"></v-text-field>
                             <v-text-field name="content" v-model="editedItem.content" label="Новость"></v-text-field>
                             <v-text-field name="date_now" v-model="editedItem.date_now" label="Дата новости"></v-text-field>
                             <input type="file" name="upload">
                             <v-btn
-                            type="submit">
+                            @click="filesUpload($event.target.name, $event.taget.files)">
                             submit
                             </v-btn>
                         </v-form>
