@@ -1,5 +1,5 @@
 import ApiService from "@/common/api.service";
-import { FETCH_COMMON, NEW_COMMON, DELETE_COMMON } from "./actions.type";
+import { FETCH_COMMON, NEW_COMMON, DELETE_COMMON, UPDATE_COMMON } from "./actions.type";
 import { SET_COMMON } from "./mutations.type";
 
 export const state = {
@@ -21,12 +21,17 @@ export const actions = {
     },
     [NEW_COMMON](context, params) {
         ApiService.setHeader();
-        return ApiService.post("admin/common", params);
+        return ApiService.post("admin/common", params).then(function(responce) {
+            return responce;
+        });
     },
     [DELETE_COMMON](context, params) {
-        console.log(params);
         ApiService.setHeader();
         return ApiService.delete("admin/common", params);
+    },
+    [UPDATE_COMMON](context, params) {
+        ApiService.setHeader();
+        return ApiService.put("admin/common", params);
     }
 };
 

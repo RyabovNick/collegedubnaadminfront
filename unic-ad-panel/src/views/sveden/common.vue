@@ -40,7 +40,7 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" flat @click.native="close">Отмена</v-btn>
-                    <v-btn color="blue darken-1" flat @click.native="save(editedItem.name, editedItem.tag, editedItem.value)">
+                    <v-btn color="blue darken-1" flat @click.native="save(editedItem)">
                       Сохранить</v-btn>
                   </v-card-actions>
                 </v-card>
@@ -53,6 +53,7 @@
                 hide-actions
             >
                 <template slot="items" slot-scope="props">
+                <td class="text-xs-left">{{ props.item.id }}</td>
                 <td class="text-xs-left">{{ props.item.name }}</td>
                 <td class="text-xs-left">{{ props.item.tag }}</td>
                 <td class="text-xs-left">{{ props.item.value }}</td>
@@ -66,7 +67,7 @@
                   </v-icon>
                   <v-icon
                     small
-                    @click="deleteItem(props.item.id)"
+                    @click="deleteItem(props.item)"
                   >
                     delete
                   </v-icon>
@@ -79,7 +80,12 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { FETCH_COMMON, NEW_COMMON, DELETE_COMMON } from "@/store/actions.type";
+import {
+  FETCH_COMMON,
+  NEW_COMMON,
+  DELETE_COMMON,
+  UPDATE_COMMON
+} from "@/store/actions.type";
 
 export default {
   data() {
@@ -89,6 +95,7 @@ export default {
       //added
       dialog: false,
       headers: [
+        { text: "Id", value: "id" },
         { text: "Название", value: "name" },
         { text: "Тег", value: "tag" },
         { text: "Значение", value: "value" },
@@ -96,6 +103,7 @@ export default {
       ],
       editedIndex: -1,
       editedItem: {
+        id: 0,
         name: "",
         tag: "",
         value: ""
@@ -118,15 +126,18 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+      this.editedIndex = this.common.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
-    deleteItem(id) {
-      console.log(id);
-      confirm("Are you sure you want to delete this item?") &&
-        this.$store.dispatch(DELETE_COMMON, { id });
+    deleteItem(item) {
+      const index = this.common.indexOf(item);
+      const id = item.id;
+      confirm("Действительно хотите удалить элемент с ID: " + id) &&
+        this.$store.dispatch(DELETE_COMMON, { id }).then(() => {
+          this.common.splice(index, 1);
+        });
     },
 
     close() {
@@ -137,11 +148,23 @@ export default {
       }, 300);
     },
 
-    save(name, tag, value) {
+    save(item) {
+      const id = item.id;
+      const name = item.name;
+      const tag = item.tag;
+      const value = item.value;
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        this.$store.dispatch(UPDATE_COMMON, { id, name, tag, value });
+        Object.assign(this.common[this.editedIndex], item);
+        this.editedIndex = -1;
       } else {
-        this.$store.dispatch(NEW_COMMON, { name, tag, value });
+        this.$store
+          .dispatch(NEW_COMMON, { name, tag, value })
+          .then(responce => {
+            console.log(responce);
+            this.editedItem.id = responce.data.insertId;
+          });
+        this.common.push(this.editedItem);
       }
       this.close();
     }

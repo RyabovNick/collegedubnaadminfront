@@ -5,3 +5,4 @@ export const LOGOUT = "logout";
 export const FETCH_COMMON = "fetchCommon";
 export const NEW_COMMON = "newCommon";
 export const DELETE_COMMON = "deleteCommon";
+export const UPDATE_COMMON = "updateCommon";
