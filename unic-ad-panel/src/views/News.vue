@@ -27,8 +27,57 @@
                             action="http://localhost:3000/api/admin/upload_news"
                             v-model="valid" method="post" @submit.prevent="testEvent($event)">
                             <v-text-field name="title" v-model="editedItem.title" label="Заголовок"></v-text-field>
-                            <v-text-field name="content" v-model="editedItem.content" label="Новость"></v-text-field>
-                            <v-text-field name="date_now" v-model="editedItem.date_now" label="Дата новости"></v-text-field>
+                            <v-textarea name="content" v-model="editedItem.content" label="Новость"></v-textarea>
+                            <v-menu
+                              ref="menu1"
+                              :close-on-content-click="false"
+                              v-model="menu1"
+                              :nudge-right="40"
+                              lazy
+                              transition="scale-transition"
+                              offset-y
+                              full-width
+                              max-width="290px"
+                              min-width="290px"
+                            >
+                              <v-text-field
+                                slot="activator"
+                                v-model="dateFormatted"
+                                label="Дата"
+                                hint="DD.MM.YYYY формат"
+                                persistent-hint
+                                prepend-icon="event"
+                                @blur="date = parseDate(dateFormatted)"
+                              ></v-text-field>
+                              <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
+                            </v-menu>
+                            <v-menu
+                              ref="menu"
+                              :close-on-content-click="false"
+                              v-model="menu2"
+                              :nudge-right="40"
+                              :return-value.sync="time"
+                              lazy
+                              transition="scale-transition"
+                              offset-y
+                              full-width
+                              max-width="290px"
+                              min-width="290px"
+                            >
+                              <v-text-field
+                                slot="activator"
+                                v-model="time"
+                                label="Picker in menu"
+                                prepend-icon="access_time"
+                                readonly
+                              ></v-text-field>
+                              <v-time-picker
+                                v-if="menu2"
+                                v-model="time"
+                                format="24hr"
+                                @change="$refs.menu.save(time)"
+                              ></v-time-picker>
+                            </v-menu>
                             <input type="file" multiple="multiple" name="upload" @change="saveFileInfo($event.target.name, $event.target.files[0])">
                             <v-btn
                             type="submit">
@@ -60,14 +109,15 @@
                     <v-btn color="blue darken-1" flat @click.native="save(editedItem)">
                       Сохранить</v-btn>
                   </v-card-actions>
+                  <div v-html="editedItem.content"></div>
                 </v-card>
               </v-dialog>
             </v-toolbar>
             <v-data-table
                 :headers="headers"
                 :items="news"
+                :pagination.sync="pagination"
                 class="elevation-1"
-                hide-actions
             >
                 <template slot="items" slot-scope="props">
                 <td class="text-xs-left">{{ props.item.id }}</td>
@@ -111,11 +161,23 @@ import axios from "axios";
 export default {
   data() {
     return {
-      uploadedFiles: [],
-      uploadError: null,
-      currentStatus: null,
-      uploadFieldName: "photos",
-
+      //datetimePicker
+      date: null,
+      dateFormatted:
+        new Date().getDate() +
+        "." +
+        (new Date().getMonth() + 1) +
+        "." +
+        new Date().getFullYear(),
+      menu1: false,
+      time:
+        new Date().getHours() +
+        ":" +
+        new Date().getMinutes() +
+        ":" +
+        new Date().getSeconds(),
+      menu2: false,
+      //fileUpload
       eventName: [],
       eventFiles: "",
 
@@ -123,6 +185,10 @@ export default {
       loading: false,
       errored: false,
       //added
+      pagination: {
+        sortBy: "date_now",
+        descending: true
+      },
       dialog: false,
       headers: [
         { text: "Id", value: "id" },
@@ -228,7 +294,7 @@ export default {
       console.log(formData);
       formData.append("title", this.editedItem.title);
       formData.append("content", this.editedItem.content);
-      formData.append("date_now", this.editedItem.date_now);
+      formData.append("date_now", this.prepareDate());
       formData.append("upload", this.eventFiles, this.eventFiles.name);
       console.log(formData);
 
@@ -248,6 +314,33 @@ export default {
       console.log(this.editedItem);
       console.log(this.eventFiles);
       */
+    },
+
+    /**
+     * dateTimePicker
+     */
+    formatDate(date) {
+      if (!date) return null;
+
+      const [year, month, day] = date.split("-");
+      return `${day}.${month}.${year}`;
+    },
+
+    parseDate(date) {
+      if (!date) return null;
+
+      const [day, month, year] = date.split(".");
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    },
+
+    /**
+     * date format for database
+     */
+    prepareDate() {
+      const [day, month, year] = this.dateFormatted.split(".");
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")} ${
+        this.time
+      }`;
     }
   },
   computed: {
@@ -261,6 +354,10 @@ export default {
   watch: {
     dialog(val) {
       val || this.close();
+    },
+    //datetimePicker
+    date(val) {
+      this.dateFormatted = this.formatDate(this.date);
     }
   }
 };
