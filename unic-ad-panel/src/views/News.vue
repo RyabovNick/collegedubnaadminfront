@@ -24,13 +24,14 @@
                   <v-card-text>
                     <v-container grid-list-md>
                         <v-form enctype="multipart/form-data"
-                            v-model="valid" method="post">
+                            action="http://localhost:3000/api/admin/upload_news"
+                            v-model="valid" method="post" @submit.prevent="testEvent($event)">
                             <v-text-field name="title" v-model="editedItem.title" label="Заголовок"></v-text-field>
                             <v-text-field name="content" v-model="editedItem.content" label="Новость"></v-text-field>
                             <v-text-field name="date_now" v-model="editedItem.date_now" label="Дата новости"></v-text-field>
-                            <input type="file" name="upload">
+                            <input type="file" multiple="multiple" name="upload" @change="saveFileInfo($event.target.name, $event.target.files[0])">
                             <v-btn
-                            @click="filesUpload($event.target.name, $event.taget.files)">
+                            type="submit">
                             submit
                             </v-btn>
                         </v-form>
@@ -104,9 +105,20 @@ import {
   UPDATE_NEWS
 } from "@/store/actions.type";
 
+import { upload } from "@/common/file-upload.service.js";
+import axios from "axios";
+
 export default {
   data() {
     return {
+      uploadedFiles: [],
+      uploadError: null,
+      currentStatus: null,
+      uploadFieldName: "photos",
+
+      eventName: [],
+      eventFiles: "",
+
       valid: true,
       loading: false,
       errored: false,
@@ -185,6 +197,57 @@ export default {
         this.news.push(this.editedItem);
       }
       this.close();
+    },
+
+    filesUpload(item, fieldName, fileList) {
+      // handle file changes
+      console.log(item, fieldName, fileList);
+
+      const formData = new FormData();
+
+      if (!fileList.length) return;
+
+      // append the files to FormData
+      Array.from(Array(fileList.length).keys()).map(x => {
+        formData.append(fieldName, fileList[x], fileList[x].name);
+      });
+
+      console.log(formData);
+    },
+
+    saveFileInfo(name, files) {
+      this.eventName = name;
+      this.eventFiles = files;
+      console.log("________________");
+      console.log(this.eventFiles.name, this.eventFiles);
+      console.log("________________");
+    },
+
+    testEvent(event) {
+      var formData = new FormData();
+      console.log(formData);
+      formData.append("title", this.editedItem.title);
+      formData.append("content", this.editedItem.content);
+      formData.append("date_now", this.editedItem.date_now);
+      formData.append("upload", this.eventFiles, this.eventFiles.name);
+      console.log(formData);
+
+      let config = {
+        header: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
+      //axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
+      //axios.headers.post["Content-Type"] = "multipart/form-data";
+      axios
+        .post("http://localhost:3000/api/admin/upload_news", formData, config)
+        .then(responce => {
+          console.log(responce);
+        });
+      /*
+      console.log(this.editedItem);
+      console.log(this.eventFiles);
+      */
     }
   },
   computed: {
