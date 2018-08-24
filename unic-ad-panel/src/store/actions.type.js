@@ -21,3 +21,9 @@ export const FETCH_NEWS_PHOTO = "fetchNewsPhoto";
 export const NEW_NEWS_PHOTO = "newNewsPhoto";
 export const DELETE_NEWS_PHOTO = "deleteNewsPhoto";
 export const UPDATE_NEWS_PHOTO = "updateNewsPhoto";
+
+//struct.module
+export const FETCH_STRUCT = "fetchStruct";
+export const NEW_STRUCT = "newStruct";
+export const DELETE_STRUCT = "deleteStruct";
+export const UPDATE_STRUCT = "updateStruct";

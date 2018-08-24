@@ -7,3 +7,6 @@ export const SET_COMMON = "setCommon";
 export const SET_NEWS = "setNews";
 export const SET_NEWS_DOCS = "setNewsDocs";
 export const SET_NEWS_PHOTO = "setNewsPhoto";
+
+//struct
+export const SET_STRUCT = "setStruct";

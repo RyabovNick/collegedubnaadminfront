@@ -2,6 +2,7 @@ import Home from "./views/Home.vue";
 import About from "./views/About.vue";
 import Common from "./views/sveden/common.vue";
 import News from "./views/News.vue";
+import Struct from "./views/sveden/struct.vue";
 
 export const routes = [
     { path: "/", name: "Home", component: Home },
@@ -12,6 +13,7 @@ export const routes = [
         component: () => import("@/views/Login"),
         meta: { authNotRequired: true }
     },
+    { path: "/news", name: "News", component: News },
     { path: "/sveden/common", name: "Common", component: Common },
-    { path: "/news", name: "News", component: News }
+    { path: "/sveden/struct", name: "Struct", component: Struct }
 ];
