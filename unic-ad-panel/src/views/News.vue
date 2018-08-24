@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <h1>Основные сведения</h1>
+        <h1>Новости</h1>
         <section v-if="errored">
             <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
         </section>
@@ -15,7 +15,8 @@
               ></v-divider>
               <v-spacer></v-spacer>
               <v-dialog v-model="dialog" max-width="800px">
-                <v-btn slot="activator" color="primary" dark class="mb-2" @click="isEdited = false">Добавить</v-btn>
+                <v-btn slot="activator" color="primary"
+                  dark class="mb-2" @click="isEdited = false">Добавить</v-btn>
                 <v-card>
                   <v-card-title>
                     <span class="headline">{{ formTitle }}</span>
@@ -25,7 +26,7 @@
                     <v-container grid-list-md>
                         <v-form enctype="multipart/form-data"
                             action="http://localhost:3000/api/admin/upload_news"
-                            v-model="valid" method="post" @submit.prevent="uploadData($event)">
+                            v-model="valid" method="post" @submit.prevent="uploadData()">
                             <v-text-field name="title" v-model="editedItem.title" label="Заголовок"></v-text-field>
                             <v-textarea name="content" v-model="editedItem.content" label="Новость"></v-textarea>
                             <v-menu
@@ -108,26 +109,50 @@
                 class="elevation-1"
             >
                 <template slot="items" slot-scope="props">
-                <td class="text-xs-left">{{ props.item.id }}</td>
-                <td class="text-xs-left">{{ props.item.title }}</td>
-                <td class="text-xs-left">{{ props.item.content }}</td>
-                <td class="text-xs-left">{{ props.item.date_now | date}}</td>
-                <td class="text-xs-left">{{ props.item.logo }}</td>
-                <td class="justify-center layout px-0">
-                  <v-icon
-                    small
-                    class="mr-2"
-                    @click="editItem(props.item)"
-                  >
-                    edit
-                  </v-icon>
-                  <v-icon
-                    small
-                    @click="deleteItem(props.item)"
-                  >
-                    delete
-                  </v-icon>
-                </td>
+                  <tr @click="props.expanded = !props.expanded">
+                    <td class="text-xs-left">{{ props.item.id }}</td>
+                    <td class="text-xs-left">{{ props.item.title }}</td>
+                    <td class="text-xs-left">{{ props.item.content }}</td>
+                    <td class="text-xs-left">{{ props.item.date_now | date}}</td>
+                    <td class="text-xs-left">{{ props.item.logo }}</td>
+                    <td class="justify-center layout px-0">
+                      <v-icon
+                        small
+                        class="mr-2"
+                        @click="editItem(props.item)"
+                      >
+                        edit
+                      </v-icon>
+                      <v-icon
+                        small
+                        @click="deleteItem(props.item)"
+                      >
+                        delete
+                      </v-icon>
+                    </td>
+                  </tr>
+                </template>
+                <template slot="expand" slot-scope="props">
+                  <v-form enctype="multipart/form-data"
+                    v-model="valid" method="post" @submit.prevent="uploadDocs(props.item.id)">
+                    Загрузить документы: 
+                    <input type="file" name="upload" multiple="multiple" @change="saveDocsInfo($event.target.files)">
+                    <v-btn type="submit">submit</v-btn>
+                    <v-progress-circular
+                      :value="progressDocs"
+                      color="blue-grey"
+                    ></v-progress-circular>
+                  </v-form>
+                  <v-form enctype="multipart/form-data"
+                    v-model="valid" method="post" @submit.prevent="uploadPhotos(props.item.id)">
+                    Загрузить фотографии: 
+                    <input type="file" name="upload" multiple="multiple" @change="savePhotosInfo($event.target.files)">
+                    <v-btn type="submit">submit</v-btn>
+                    <v-progress-circular
+                      :value="progressDocs"
+                      color="blue-grey"
+                    ></v-progress-circular>
+                  </v-form>
                 </template>
             </v-data-table>
         </section>
@@ -205,7 +230,12 @@ export default {
         logo: ""
       },
       //progress
-      progress: 0
+      progress: 0,
+      //docs, photos
+      eventDocs: [],
+      progressDocs: 0,
+      eventPhotos: [],
+      progressPhotos: 0
     };
   },
   mounted() {
@@ -257,7 +287,7 @@ export default {
       this.eventFiles = files;
     },
 
-    uploadData(event) {
+    uploadData() {
       this.progress = 30;
       var formData = new FormData();
       this.prepareDate();
@@ -319,6 +349,72 @@ export default {
 
     prepareDateEdit(item) {
       return format(item, "YYYY-MM-DD HH:mm");
+    },
+
+    /**
+     * uploadDocs
+     */
+    uploadDocs(id) {
+      var formData = new FormData();
+      console.log(this.eventDocs);
+
+      formData.append("idnews", id);
+
+      for (var k in this.eventDocs) {
+        formData.append("upload", this.eventDocs[k], this.eventDocs[k].name);
+      }
+
+      let config = {
+        header: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
+      axios
+        .post(
+          "http://localhost:3000/api/admin/upload_news/newsdocs",
+          formData,
+          config
+        )
+        .finally(() => (this.progressDocs = 100));
+    },
+
+    saveDocsInfo(docs) {
+      this.eventDocs = docs;
+    },
+
+    /**
+     * uploadPhotos
+     */
+    uploadPhotos(id) {
+      var formData = new FormData();
+      console.log(this.eventPhotos);
+
+      formData.append("idnews", id);
+
+      for (var k in this.eventPhotos) {
+        formData.append(
+          "upload",
+          this.eventPhotos[k],
+          this.eventPhotos[k].name
+        );
+      }
+
+      let config = {
+        header: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
+      axios
+        .post(
+          "http://localhost:3000/api/admin/upload_news/photo",
+          formData,
+          config
+        )
+        .finally(() => (this.progressDocs = 100));
+    },
+
+    savePhotosInfo(photos) {
+      this.eventPhotos = photos;
     }
   },
   computed: {
