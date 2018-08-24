@@ -15,7 +15,7 @@
               ></v-divider>
               <v-spacer></v-spacer>
               <v-dialog v-model="dialog" max-width="800px">
-                <v-btn slot="activator" color="primary" dark class="mb-2">Добавить</v-btn>
+                <v-btn slot="activator" color="primary" dark class="mb-2" @click="isEdited = false">Добавить</v-btn>
                 <v-card>
                   <v-card-title>
                     <span class="headline">{{ formTitle }}</span>
@@ -25,7 +25,7 @@
                     <v-container grid-list-md>
                         <v-form enctype="multipart/form-data"
                             action="http://localhost:3000/api/admin/upload_news"
-                            v-model="valid" method="post" @submit.prevent="testEvent($event)">
+                            v-model="valid" method="post" @submit.prevent="uploadData($event)">
                             <v-text-field name="title" v-model="editedItem.title" label="Заголовок"></v-text-field>
                             <v-textarea name="content" v-model="editedItem.content" label="Новость"></v-textarea>
                             <v-menu
@@ -78,36 +78,24 @@
                                 @change="$refs.menu.save(time)"
                               ></v-time-picker>
                             </v-menu>
-                            <input type="file" multiple="multiple" name="upload" @change="saveFileInfo($event.target.name, $event.target.files[0])">
-                            <v-btn
+                            <input v-if="!isEdited" type="file" name="upload" @change="saveFileInfo($event.target.files[0])">
+                            <v-btn v-if="!isEdited"
                             type="submit">
                             submit
                             </v-btn>
+                            <v-progress-circular
+                              :value="progress"
+                              color="blue-grey"
+                            ></v-progress-circular>
                         </v-form>
-                      <!--  
-                      <v-layout wrap>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.title" label="Заголовок"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.content" label="Новость"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.date_now" label="Дата новости"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                            <input type="file" name="upload" multiple="multiple">
-                        </v-flex>
-                      </v-layout>
-                      -->
                     </v-container>
                   </v-card-text>
 
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" flat @click.native="close">Отмена</v-btn>
-                    <v-btn color="blue darken-1" flat @click.native="save(editedItem)">
+                    <v-btn v-if="isEdited" color="blue darken-1" flat @click.native="save(editedItem)">
                       Сохранить</v-btn>
+                    <v-btn color="blue darken-1" flat @click.native="close">Отмена</v-btn>
                   </v-card-actions>
                   <div v-html="editedItem.content"></div>
                 </v-card>
@@ -123,7 +111,7 @@
                 <td class="text-xs-left">{{ props.item.id }}</td>
                 <td class="text-xs-left">{{ props.item.title }}</td>
                 <td class="text-xs-left">{{ props.item.content }}</td>
-                <td class="text-xs-left">{{ props.item.date_now }}</td>
+                <td class="text-xs-left">{{ props.item.date_now | date}}</td>
                 <td class="text-xs-left">{{ props.item.logo }}</td>
                 <td class="justify-center layout px-0">
                   <v-icon
@@ -157,6 +145,7 @@ import {
 
 import { upload } from "@/common/file-upload.service.js";
 import axios from "axios";
+import { default as format } from "date-fns/format";
 
 export default {
   data() {
@@ -178,7 +167,6 @@ export default {
         new Date().getSeconds(),
       menu2: false,
       //fileUpload
-      eventName: [],
       eventFiles: "",
 
       valid: true,
@@ -190,12 +178,14 @@ export default {
         descending: true
       },
       dialog: false,
+      isEdited: false,
       headers: [
         { text: "Id", value: "id" },
         { text: "Заголовок", value: "title" },
         { text: "Новость", value: "content" },
         { text: "Дата", value: "date_now" },
-        { text: "Лого", value: "logo" }
+        { text: "Лого", value: "logo" },
+        { text: "Действия", value: "actions" }
       ],
       editedIndex: -1,
       editedItem: {
@@ -213,7 +203,9 @@ export default {
         content: "",
         date_now: "",
         logo: ""
-      }
+      },
+      //progress
+      progress: 0
     };
   },
   mounted() {
@@ -225,6 +217,7 @@ export default {
     },
 
     editItem(item) {
+      this.isEdited = true;
       this.editedIndex = this.news.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
@@ -239,6 +232,19 @@ export default {
         });
     },
 
+    save(item) {
+      const id = item.id;
+      const title = item.title;
+      const content = item.content;
+      const date_now = this.prepareDateEdit(item.date_now);
+
+      this.$store.dispatch(UPDATE_NEWS, { id, title, content, date_now });
+      Object.assign(this.news[this.editedIndex], item);
+      this.editedIndex = -1;
+
+      this.close();
+    },
+
     close() {
       this.dialog = false;
       setTimeout(() => {
@@ -247,73 +253,39 @@ export default {
       }, 300);
     },
 
-    save(item) {
-      const id = item.id;
-      const name = item.name;
-      const tag = item.tag;
-      const value = item.value;
-      if (this.editedIndex > -1) {
-        this.$store.dispatch(UPDATE_NEWS, { id, name, tag, value });
-        Object.assign(this.news[this.editedIndex], item);
-        this.editedIndex = -1;
-      } else {
-        this.$store.dispatch(NEW_NEWS, { name, tag, value }).then(responce => {
-          this.editedItem.id = responce.data.insertId;
-        });
-        this.news.push(this.editedItem);
-      }
-      this.close();
-    },
-
-    filesUpload(item, fieldName, fileList) {
-      // handle file changes
-      console.log(item, fieldName, fileList);
-
-      const formData = new FormData();
-
-      if (!fileList.length) return;
-
-      // append the files to FormData
-      Array.from(Array(fileList.length).keys()).map(x => {
-        formData.append(fieldName, fileList[x], fileList[x].name);
-      });
-
-      console.log(formData);
-    },
-
-    saveFileInfo(name, files) {
-      this.eventName = name;
+    saveFileInfo(files) {
       this.eventFiles = files;
-      console.log("________________");
-      console.log(this.eventFiles.name, this.eventFiles);
-      console.log("________________");
     },
 
-    testEvent(event) {
+    uploadData(event) {
+      this.progress = 30;
       var formData = new FormData();
-      console.log(formData);
+      this.prepareDate();
       formData.append("title", this.editedItem.title);
       formData.append("content", this.editedItem.content);
-      formData.append("date_now", this.prepareDate());
+      formData.append("date_now", this.editedItem.date_now);
       formData.append("upload", this.eventFiles, this.eventFiles.name);
-      console.log(formData);
 
       let config = {
         header: {
           "Content-Type": "multipart/form-data"
         }
       };
-      //axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
-      //axios.headers.post["Content-Type"] = "multipart/form-data";
       axios
         .post("http://localhost:3000/api/admin/upload_news", formData, config)
         .then(responce => {
+          this.progress = 50;
+          this.editedItem.id = responce.data.insertId;
           console.log(responce);
-        });
-      /*
-      console.log(this.editedItem);
-      console.log(this.eventFiles);
-      */
+          console.log(this.editedItem);
+        })
+        .finally(
+          () => (
+            (this.progress = 100),
+            this.news.unshift(this.editedItem),
+            this.close()
+          )
+        );
     },
 
     /**
@@ -338,9 +310,15 @@ export default {
      */
     prepareDate() {
       const [day, month, year] = this.dateFormatted.split(".");
-      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")} ${
-        this.time
-      }`;
+      this.editedItem.date_now = `${year}-${month.padStart(
+        2,
+        "0"
+      )}-${day.padStart(2, "0")} ${this.time}`;
+      console.log(this.editedItem);
+    },
+
+    prepareDateEdit(item) {
+      return format(item, "YYYY-MM-DD HH:mm");
     }
   },
   computed: {
