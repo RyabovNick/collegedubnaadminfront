@@ -13,3 +13,6 @@ export const SET_STRUCT = "setStruct";
 
 //vacant
 export const SET_VACANT = "setVacant";
+
+//teachingStaff
+export const SET_TEACHINGSTAFF = "setTeachingStaff";

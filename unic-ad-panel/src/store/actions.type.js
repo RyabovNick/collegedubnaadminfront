@@ -33,3 +33,9 @@ export const FETCH_VACANT = "fetchVacant";
 export const NEW_VACANT = "newVacant";
 export const DELETE_VACANT = "deleteVacant";
 export const UPDATE_VACANT = "updateVacant";
+
+//teachingStaff.module
+export const FETCH_TEACHINGSTAFF = "fetchTeachingStaff";
+export const NEW_TEACHINGSTAFF = "newTeachingStaff";
+export const DELETE_TEACHINGSTAFF = "deleteTeachingStaff";
+export const UPDATE_TEACHINGSTAFF = "updateTeachingStaff";

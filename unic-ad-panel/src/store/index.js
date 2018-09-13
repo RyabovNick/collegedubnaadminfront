@@ -6,6 +6,7 @@ import common from "./common.module";
 import news from "./news.module";
 import struct from "./struct.module";
 import vacant from "./vacant.module";
+import teachingstaff from "./teachingstaff.module";
 
 Vue.use(Vuex);
 
@@ -15,7 +16,8 @@ export default new Vuex.Store({
         common,
         news,
         struct,
-        vacant
+        vacant,
+        teachingstaff
     }
     /*state: {},
     mutations: {},
