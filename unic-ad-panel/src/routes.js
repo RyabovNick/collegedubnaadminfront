@@ -3,6 +3,7 @@ import About from "./views/About.vue";
 import Common from "./views/sveden/common.vue";
 import News from "./views/News.vue";
 import Struct from "./views/sveden/struct.vue";
+import Vacant from "./views/sveden/vacant.vue";
 
 export const routes = [
     { path: "/", name: "Home", component: Home },
@@ -15,5 +16,6 @@ export const routes = [
     },
     { path: "/news", name: "News", component: News },
     { path: "/sveden/common", name: "Common", component: Common },
-    { path: "/sveden/struct", name: "Struct", component: Struct }
+    { path: "/sveden/struct", name: "Struct", component: Struct },
+    { path: "/sveden/vacant", name: "Vacant", component: Vacant }
 ];

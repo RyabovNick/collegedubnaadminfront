@@ -5,6 +5,7 @@ import auth from "./auth.module";
 import common from "./common.module";
 import news from "./news.module";
 import struct from "./struct.module";
+import vacant from "./vacant.module";
 
 Vue.use(Vuex);
 
@@ -13,7 +14,8 @@ export default new Vuex.Store({
         auth,
         common,
         news,
-        struct
+        struct,
+        vacant
     }
     /*state: {},
     mutations: {},

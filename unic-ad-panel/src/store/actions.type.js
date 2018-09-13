@@ -27,3 +27,9 @@ export const FETCH_STRUCT = "fetchStruct";
 export const NEW_STRUCT = "newStruct";
 export const DELETE_STRUCT = "deleteStruct";
 export const UPDATE_STRUCT = "updateStruct";
+
+//vacant.module
+export const FETCH_VACANT = "fetchVacant";
+export const NEW_VACANT = "newVacant";
+export const DELETE_VACANT = "deleteVacant";
+export const UPDATE_VACANT = "updateVacant";

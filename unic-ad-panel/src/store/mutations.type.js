@@ -10,3 +10,6 @@ export const SET_NEWS_PHOTO = "setNewsPhoto";
 
 //struct
 export const SET_STRUCT = "setStruct";
+
+//vacant
+export const SET_VACANT = "setVacant";
