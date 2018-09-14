@@ -39,3 +39,9 @@ export const FETCH_TEACHINGSTAFF = "fetchTeachingStaff";
 export const NEW_TEACHINGSTAFF = "newTeachingStaff";
 export const DELETE_TEACHINGSTAFF = "deleteTeachingStaff";
 export const UPDATE_TEACHINGSTAFF = "updateTeachingStaff";
+
+//grantsGJ.module (graduateJob)
+export const FETCH_GRANTSGJ = "fetchGrantsGJ";
+export const NEW_GRANTSGJ = "newGrantsGJ";
+export const DELETE_GRANTSGJ = "deleteGrantsGJ";
+export const UPDATE_GRANTSGJ = "updateGrantsGJ";

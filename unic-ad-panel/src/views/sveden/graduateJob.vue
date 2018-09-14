@@ -1,13 +1,13 @@
 <template>
     <v-app>
-        <h1>Вакантные места</h1>
+        <h1>Трудойстройство выпускников</h1>
         <section v-if="errored">
             <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
         </section>
         <section v-else>
             <div v-if="loading">Загрузка...</div>
             <v-toolbar flat color="white">
-              <v-toolbar-title>CRUD vacant</v-toolbar-title>
+              <v-toolbar-title>CRUD graduateJob</v-toolbar-title>
               <v-divider
                 class="mx-2"
                 inset
@@ -28,28 +28,16 @@
                           <v-text-field v-model="editedItem.code" label="Код"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
+                          <v-text-field v-model="editedItem.year" label="Год"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.level" label="Уровень образования"></v-text-field>
+                          <v-text-field v-model="editedItem.name" label="Специальность"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.course" label="Курс"></v-text-field>
+                          <v-text-field v-model="editedItem.count_graduate" label="Выпускников"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.form" label="Форма обучения"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.numberBFVacant" label="Федеральный бюджет"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.numberBRVacant" label="Бюджет субъектов Российской Федерации"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.numberBMVacant" label="Местные бюджеты"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.numberPVacant" label="По договорам"></v-text-field>
+                          <v-text-field v-model="editedItem.count_work_graduate" label="Трудоустроенных"></v-text-field>
                         </v-flex>
                       </v-layout>
                     </v-container>
@@ -66,21 +54,17 @@
             </v-toolbar>
             <v-data-table
                 :headers="headers"
-                :items="vacant"
+                :items="graduateJob"
                 class="elevation-1"
                 hide-actions
             >
                 <template slot="items" slot-scope="props">
                 <td class="text-xs-left">{{ props.item.id }}</td>
                 <td class="text-xs-left">{{ props.item.code }}</td>
+                <td class="text-xs-left">{{ props.item.year }}</td>
                 <td class="text-xs-left">{{ props.item.name }}</td>
-                <td class="text-xs-left">{{ props.item.level }}</td>
-                <td class="text-xs-left">{{ props.item.course }}</td>
-                <td class="text-xs-left">{{ props.item.form }}</td>
-                <td class="text-xs-left">{{ props.item.numberBFVacant }}</td>
-                <td class="text-xs-left">{{ props.item.numberBRVacant }}</td>
-                <td class="text-xs-left">{{ props.item.numberBMVacant }}</td>
-                <td class="text-xs-left">{{ props.item.numberPVacant }}</td>
+                <td class="text-xs-left">{{ props.item.count_graduate }}</td>
+                <td class="text-xs-left">{{ props.item.count_work_graduate }}</td>
                 <td class="justify-center layout px-0">
                   <v-icon
                     small
@@ -105,10 +89,10 @@
 <script>
 import { mapGetters } from "vuex";
 import {
-  FETCH_VACANT,
-  NEW_VACANT,
-  DELETE_VACANT,
-  UPDATE_VACANT
+  FETCH_GRANTSGJ,
+  NEW_GRANTSGJ,
+  DELETE_GRANTSGJ,
+  UPDATE_GRANTSGJ
 } from "@/store/actions.type";
 
 export default {
@@ -120,73 +104,52 @@ export default {
       dialog: false,
       headers: [
         { text: "Id", value: "id" },
-        { text: "Код программы", value: "code" },
-        { text: "Наименование", value: "name" },
-        { text: "Уровень образования", value: "level" },
-        { text: "Курс", value: "course" },
-        { text: "Форма обучения", value: "form" },
-        {
-          text: "Федеральный бюджет",
-          value: "numberBFVacant"
-        },
-        {
-          text: "Бюджет субъектов Российской Федерации",
-          value: "numberBRVacant"
-        },
-        { text: "Местные бюджеты", value: "numberBMVacant" },
-        {
-          text: "По договорам",
-          value: "numberPVacant"
-        },
+        { text: "Код", value: "code" },
+        { text: "Год", value: "year" },
+        { text: "Специальность", value: "name" },
+        { text: "Выпускников", value: "count_graduate" },
+        { text: "Трудоустроенных", value: "count_work_graduate" },
         { text: "Действия", value: "actions" }
       ],
       editedIndex: -1,
       editedItem: {
         id: 0,
         code: "",
+        year: "",
         name: "",
-        level: "",
-        course: "",
-        form: "",
-        numberBFVacant: "",
-        numberBRVacant: "",
-        numberBMVacant: "",
-        numberPVacant: ""
+        count_graduate: "",
+        count_work_graduate: ""
       },
       defaultItem: {
         id: 0,
         code: "",
+        year: "",
         name: "",
-        level: "",
-        course: "",
-        form: "",
-        numberBFVacant: "",
-        numberBRVacant: "",
-        numberBMVacant: "",
-        numberPVacant: ""
+        count_graduate: "",
+        count_work_graduate: ""
       }
     };
   },
   mounted() {
-    this.fetchVacant();
+    this.fetchGraduateJob();
   },
   methods: {
-    fetchVacant() {
-      this.$store.dispatch(FETCH_VACANT);
+    fetchGraduateJob() {
+      this.$store.dispatch(FETCH_GRANTSGJ);
     },
 
     editItem(item) {
-      this.editedIndex = this.vacant.indexOf(item);
+      this.editedIndex = this.graduateJob.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      const index = this.vacant.indexOf(item);
+      const index = this.graduateJob.indexOf(item);
       const id = item.id;
       confirm("Действительно хотите удалить элемент с ID: " + id) &&
-        this.$store.dispatch(DELETE_VACANT, { id }).then(() => {
-          this.vacant.splice(index, 1);
+        this.$store.dispatch(DELETE_GRANTSGJ, { id }).then(() => {
+          this.graduateJob.splice(index, 1);
         });
     },
 
@@ -201,52 +164,42 @@ export default {
     save(item) {
       const id = item.id;
       const code = item.code;
+      const year = item.year;
       const name = item.name;
-      const level = item.level;
-      const course = item.course;
-      const form = item.form;
-      const numberBFVacant = item.numberBFVacant;
-      const numberBRVacant = item.numberBRVacant;
-      const numberBMVacant = item.numberBMVacant;
-      const numberPVacant = item.numberPVacant;
+      const count_graduate = item.count_graduate;
+      const count_work_graduate = item.count_work_graduate;
+
       if (this.editedIndex > -1) {
-        this.$store.dispatch(UPDATE_VACANT, {
+        this.$store.dispatch(UPDATE_GRANTSGJ, {
           id,
           code,
+          year,
           name,
-          level,
-          course,
-          form,
-          numberBFVacant,
-          numberBRVacant,
-          numberBMVacant,
-          numberPVacant
+          count_graduate,
+          count_work_graduate
         });
-        Object.assign(this.vacant[this.editedIndex], item);
+        Object.assign(this.graduateJob[this.editedIndex], item);
         this.editedIndex = -1;
       } else {
+        console.log("save");
         this.$store
-          .dispatch(NEW_VACANT, {
+          .dispatch(NEW_GRANTSGJ, {
             code,
+            year,
             name,
-            level,
-            course,
-            form,
-            numberBFVacant,
-            numberBRVacant,
-            numberBMVacant,
-            numberPVacant
+            count_graduate,
+            count_work_graduate
           })
           .then(responce => {
             this.editedItem.id = responce.data.insertId;
           });
-        this.vacant.push(this.editedItem);
+        this.graduateJob.push(this.editedItem);
       }
       this.close();
     }
   },
   computed: {
-    ...mapGetters(["vacant"]),
+    ...mapGetters(["graduateJob"]),
 
     formTitle() {
       return this.editedIndex === -1 ? "Новый элемент" : "Изменить элемент";

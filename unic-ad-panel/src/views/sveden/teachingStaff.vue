@@ -137,7 +137,8 @@ export default {
         { text: "Направление подготовки", value: "employeeQualification" },
         { text: "Повышение квалификации", value: "profDevelopment" },
         { text: "Общий стаж работы", value: "genExperience" },
-        { text: "Стаж работы по специальности", value: "specExperience" }
+        { text: "Стаж работы по специальности", value: "specExperience" },
+        { text: "Действия", value: "actions" }
       ],
       editedIndex: -1,
       editedItem: {

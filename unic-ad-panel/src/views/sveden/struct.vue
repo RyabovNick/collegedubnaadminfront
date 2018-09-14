@@ -108,7 +108,8 @@ export default {
         { text: "Должность", value: "position" },
         { text: "Адрес", value: "addressStr" },
         { text: "Сайт", value: "site" },
-        { text: "Почта", value: "email" }
+        { text: "Почта", value: "email" },
+        { text: "Действия", value: "actions" }
       ],
       editedIndex: -1,
       editedItem: {

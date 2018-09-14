@@ -16,3 +16,6 @@ export const SET_VACANT = "setVacant";
 
 //teachingStaff
 export const SET_TEACHINGSTAFF = "setTeachingStaff";
+
+//grants
+export const SET_GRANTSGJ = "setGrantsGJ";
