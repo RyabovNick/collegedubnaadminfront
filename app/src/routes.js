@@ -16,6 +16,15 @@ import Budget from "./components/sveden/Budget.vue";
 import Vacant from "./components/sveden/Vacant.vue";
 import Login from "./components/admin/Login.vue";
 import HiddenPage from "./components/admin/HiddenPage.vue";
+//environment
+import virtualTour from "./components/environment/virtualTour.vue";
+import availability from "./components/environment/availability.vue";
+import roadMap from "./components/environment/roadMap.vue";
+import normative from "./components/environment/normative.vue";
+import equipment from "./components/environment/equipment.vue";
+import careerGuidance from "./components/environment/careerGuidance.vue";
+import socialSupport from "./components/environment/socialSupport.vue";
+import employment from "./components/environment/employment.vue";
 
 export const routes = [
     { path: "/", name: "Home", component: Home },
@@ -42,16 +51,12 @@ export const routes = [
     { path: "/sveden/paid_edu", name: "PaidEdu", component: PaidEdu },
     { path: "/sveden/budget", name: "Budget", component: Budget },
     { path: "/sveden/vacant", name: "Vacant", component: Vacant },
-    {
-        path: "/uni-adminpanel",
-        name: "Login",
-        component: Login,
-        children: [
-            {
-                path: "hiddenpage",
-                name: "hiddenpage",
-                component: HiddenPage
-            }
-        ]
-    }
+    { path: "/environment/virtual_tour", name: "virtualTour", component: virtualTour },
+    { path: "/environment/availability", name: "availability", component: availability },
+    { path: "/environment/road_map", name: "roadMap", component: roadMap },
+    { path: "/environment/normative", name: "normative", component: normative },
+    { path: "/environment/equipment", name: "equipment", component: equipment },
+    { path: "/environment/career_guidance", name: "careerGuidance", component: careerGuidance },
+    { path: "/environment/social_support", name: "socialSupport", component: socialSupport },
+    { path: "/environment/employment", name: "employment", component: employment }
 ];
