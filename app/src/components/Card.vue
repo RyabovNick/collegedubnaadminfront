@@ -1,4 +1,4 @@
-<style>
+<style scoped>
 .layout {
   max-width: 44.438em;
   margin: auto;
@@ -7,20 +7,15 @@
 
 
 <template>
-  <v-layout justify-center column>
-    <v-flex xs6 sm4
-      v-for="tnews in news"
-      :key="tnews.id">
+  <v-layout align-center justify-center row fill-height>
+    <v-flex xs4 v-for="tnews in news" :key="tnews.id">
       <v-card>
-        <v-card-media
-          :src="`http://college.uni-dubna.ru/files/${tnews.logo}`"
-          height="25em"
-        ></v-card-media>
+        <v-card-media :src="`http://college.uni-dubna.ru/files/${tnews.logo}`" height="25em"></v-card-media>
 
         <v-card-title primary-title>
           <div>
             <h3 class="headline mb-0">{{ tnews.title }}</h3>
-            <div>{{ tnews.date_now }}</div>
+            <div>{{ tnews.date_now | formatDate}}</div>
           </div>
         </v-card-title>
       </v-card>
