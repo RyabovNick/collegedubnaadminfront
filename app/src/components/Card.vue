@@ -1,16 +1,20 @@
 <style scoped>
 .layout {
-  max-width: 44.438em;
+  max-width: 68.572em;
   margin: auto;
+}
+
+.v-card {
+  margin: 10px;
 }
 </style>
 
 
 <template>
-  <v-layout align-center justify-center row fill-height>
-    <v-flex xs4 v-for="tnews in news" :key="tnews.id">
-      <v-card>
-        <v-card-media :src="`http://college.uni-dubna.ru/files/${tnews.logo}`" height="25em"></v-card-media>
+  <v-layout row wrap>
+    <v-flex xs6 v-for="tnews in news" :key="tnews.id">
+      <v-card hover height="97.1%">
+        <v-card-media :src="`http://college.uni-dubna.ru/files/${tnews.logo}`" height="18.429em"></v-card-media>
 
         <v-card-title primary-title>
           <div>

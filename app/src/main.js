@@ -15,8 +15,9 @@ Vue.prototype.$http = axios;
 Vue.use(Vuetify);
 
 Vue.filter("formatDate", value => {
+    moment.locale("ru");
     if (value) {
-        return moment(String(value)).format("hh:mm DD/MM/YYYY");
+        return moment(String(value)).format("DD MMMM YYYY");
     }
 });
 
