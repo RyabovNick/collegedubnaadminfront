@@ -1,11 +1,16 @@
 <style scoped>
 /*@import url('../css/pages.css');*/
+.speciality-helper {
+  margin-bottom: 2em;
+  margin-top: 2em;
+  padding-left: 2em;
+  padding-right: 2em;
+}
 </style>
 
 
 <template>
-    <v-container v-html="page.content">
-    </v-container>
+  <v-container class="speciality-helper" v-html="page.content"></v-container>
 </template>
 
 <script>
@@ -21,8 +26,8 @@ export default {
   },
   mounted() {
     axios
-      .get("/api/getPage/2")
-      .then(response => (this.page = response.data))
+      .get("/api/pages/2")
+      .then(response => (this.page = response.data[0]))
       .catch(error => {
         console.log(error);
         this.errored = true;

@@ -1,15 +1,17 @@
 <style scoped>
 /*@import url('../css/pages.css');*/
-
-.contacts >>> p {
+.contacts-helper {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+.contacts-helper >>> p {
   text-align: center;
 }
 </style>
 
 
 <template>
-    <v-container v-html="page.content" class="contacts">
-    </v-container>
+  <v-container v-html="page.content" class="contacts-helper"></v-container>
 </template>
 
 <script>
@@ -25,8 +27,8 @@ export default {
   },
   mounted() {
     axios
-      .get("/api/getPage/4")
-      .then(response => (this.page = response.data))
+      .get("/api/pages/4")
+      .then(response => (this.page = response.data[0]))
       .catch(error => {
         console.log(error);
         this.errored = true;

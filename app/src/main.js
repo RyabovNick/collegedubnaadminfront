@@ -9,6 +9,7 @@ import { sync } from "vuex-router-sync";
 import App from "./App.vue";
 
 Vue.config.productionTip = false;
+axios.defaults.baseURL = "http://localhost:3000";
 Vue.prototype.$http = axios;
 Vue.use(Vuetify);
 

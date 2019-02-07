@@ -28,5 +28,27 @@ export default {
 }
 h1 {
   text-align: center;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+h4 {
+  font-size: 1.6em;
+  padding-top: 0.5em;
+}
+
+h5 {
+  font-size: 1.4em;
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
+}
+
+p {
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+mark {
+  background-color: #fcf8e3;
 }
 </style>

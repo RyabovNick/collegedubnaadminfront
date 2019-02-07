@@ -7,7 +7,8 @@ table {
     margin-bottom: 1em;
 }
 
-th, td {
+th,
+td {
     border: 1px solid grey;
     border-collapse: collapse;
     padding: 5px;
@@ -17,7 +18,16 @@ td {
     vertical-align: top;
 }
 
-h2, h3, h4, h5, h6  {
+h1 {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
     padding-top: 1.5em;
     font-weight: bold;
     text-align: center;
