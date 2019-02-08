@@ -18,86 +18,93 @@ table.v-table {
 
 
 <template>
-    <v-app>
-        <h1>Руководство</h1>
-        <section v-if="errored">
-            <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
-        </section>
+  <v-app>
+    <h1>Руководство</h1>
+    <section v-if="errored">
+      <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
+    </section>
 
-        <section v-else>
-            <div v-if="loading">Загрузка...</div>
+    <section v-else>
+      <div v-if="loading">Загрузка...</div>
 
-            <v-data-table
-            :headers="headersHeads"
-            :items="heads"
-            hide-actions
-            class="elevation-1"
+      <v-data-table :headers="headersHeads" :items="heads" hide-actions class="elevation-1">
+        <template slot="items" slot-scope="props">
+          <td itemprop="fio" class="text-xs-left">{{ props.item.fio }}</td>
+          <td itemprop="post" class="text-xs-right">{{ props.item.post }}</td>
+          <td itemprop="telephone" class="text-xs-right">{{ props.item.telephone }}</td>
+          <td itemprop="email" class="text-xs-right">
+            <a :href="`mailto:${props.item.email}`">{{ props.item.email }}</a>
+          </td>
+        </template>
+      </v-data-table>
+    </section>
+    <h1>Педагогический состав</h1>
+    <section v-if="errored">
+      <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
+    </section>
+
+    <section v-else>
+      <div v-if="loading">Загрузка...</div>
+      <v-card>
+        <v-card-title>
+          <v-text-field
+            v-model="search"
+            append-icon="search"
+            label="Поиск"
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-card-title>
+
+        <v-data-table
+          :headers="headersTeachingStaff"
+          :items="teachingStaff"
+          class="elevation-2"
+          :search="search"
+          rows-per-page-text="Записей на странице"
         >
-            <template slot="items" slot-scope="props">
-                <td itemprop="fio" class="text-xs-left">{{ props.item.fio }}</td>
-                <td itemprop="post" class="text-xs-right">{{ props.item.position }}</td>
-                <td itemprop="telephone" class="text-xs-right">{{ props.item.telephone }}</td>
-                <td itemprop="email" class="text-xs-right">
-                    <a :href="`mailto:${props.item.email}`">
-                        {{ props.item.email }}
-                    </a>
-                </td>
-            </template>
-
-            
-        </v-data-table>
-        </section>
-        <h1>Педагогический состав</h1>
-        <section v-if="errored">
-            <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
-        </section>
-
-        <section v-else>
-            <div v-if="loading">Загрузка...</div>
-            <v-card>
-            <v-card-title>
-                <v-text-field
-                    v-model="search"
-                    append-icon="search"
-                    label="Поиск"
-                    single-line
-                    hide-details
-                ></v-text-field>
-            </v-card-title>
-
-            <v-data-table
-            :headers="headersTeachingStaff"
-            :items="teachingStaff"
-            class="elevation-2"
-            :search="search"
-            rows-per-page-text="Записей на странице"
-            >
-                <template slot="items" slot-scope="props">
-                    <tr @click="props.expanded = !props.expanded">
-                        <td itemprop="fio" class="text-xs-left">{{ props.item.fio }}</td>
-                        <td itemprop="post" class="text-xs-right">{{ props.item.position }}</td>
-                        <td itemprop="teachingDescipline" class="text-xs-right">{{ props.item.teachingDescipline }}</td>
-                        <td itemprop="teachingLevel" class="text-xs-right">{{ props.item.teachingLevel }}</td>
-                        <td itemprop="teachingQual" class="text-xs-right">{{ props.item.teachingQual }}</td>
-                        <td itemprop="degree" class="text-xs-right">{{ props.item.degree }}</td>
-                        <td itemprop="academStat" class="text-xs-right">{{ props.item.academStat }}</td>
-                        <td itemprop="employeeQualification" class="text-xs-right">{{ props.item.employeeQualification }}</td>
-                    </tr>
-                </template>
-                <template slot="expand" slot-scope="props">
-                    <v-card flat>
-                        <v-card-text itemprop="profDevelopment"><b>Повышение квалификации:</b> {{ props.item.profDevelopment }}</v-card-text>
-                        <v-card-text itemprop="genExperience"><b>Общий стаж работы:</b> {{ props.item.genExperience }}</v-card-text>
-                        <v-card-text itemprop="specExperience"><b>Стаж работы по специальности:</b> {{ props.item.specExperience }}</v-card-text>
-                    </v-card>
-                </template>
-                <template slot="pageText" slot-scope="props">
-                    Записей {{ props.pageStart }} - {{ props.pageStop }} из {{ props.itemsLength }}
-                </template>
-            </v-data-table>
+          <template slot="items" slot-scope="props">
+            <tr @click="props.expanded = !props.expanded">
+              <td itemprop="fio" class="text-xs-left">{{ props.item.fio }}</td>
+              <td itemprop="post" class="text-xs-right">{{ props.item.post }}</td>
+              <td
+                itemprop="teachingDescipline"
+                class="text-xs-right"
+              >{{ props.item.teachingDescipline }}</td>
+              <td itemprop="teachingLevel" class="text-xs-right">{{ props.item.teachingLevel }}</td>
+              <td itemprop="teachingQual" class="text-xs-right">{{ props.item.teachingQual }}</td>
+              <td itemprop="degree" class="text-xs-right">{{ props.item.degree }}</td>
+              <td itemprop="academStat" class="text-xs-right">{{ props.item.academStat }}</td>
+              <td
+                itemprop="employeeQualification"
+                class="text-xs-right"
+              >{{ props.item.employeeQualification }}</td>
+            </tr>
+          </template>
+          <template slot="expand" slot-scope="props">
+            <v-card flat>
+              <v-card-text itemprop="profDevelopment">
+                <b>Повышение квалификации:</b>
+                {{ props.item.profDevelopment }}
+              </v-card-text>
+              <v-card-text itemprop="genExperience">
+                <b>Общий стаж работы:</b>
+                {{ props.item.genExperience }}
+              </v-card-text>
+              <v-card-text itemprop="specExperience">
+                <b>Стаж работы по специальности:</b>
+                {{ props.item.specExperience }}
+              </v-card-text>
             </v-card>
-        </section>
-    </v-app>
+          </template>
+          <template
+            slot="pageText"
+            slot-scope="props"
+          >Записей {{ props.pageStart }} - {{ props.pageStop }} из {{ props.itemsLength }}</template>
+        </v-data-table>
+      </v-card>
+    </section>
+  </v-app>
 </template>
 
 <script>
