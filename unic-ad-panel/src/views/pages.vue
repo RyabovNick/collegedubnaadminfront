@@ -110,12 +110,12 @@ ul {
             item-text="page_name"
             item-value="id"
             v-model="selectedValue"
-            label="Standard"
+            label="Выбор страницы"
             @change="fetchPage()"
           ></v-select>
         </v-flex>
         <v-flex xs12 sm4>
-          <v-switch v-model="isPlace" :label="`Расположение элементов: ${isPlace.toString()}`"></v-switch>
+          <v-switch v-model="isPlace" :label="`Расположение элементов`"></v-switch>
         </v-flex>
         <v-flex xs12 sm2>
           <v-btn color="info" @click="savePage()">Принять изменения</v-btn>
@@ -184,14 +184,12 @@ export default {
         this.snackbar = true;
       } else {
         try {
-          console.log("newsText: ", this.newsText);
           const id = this.selectedValue;
           const content = this.newsText;
           await this.$store.dispatch(UPDATE_PAGE, { id, content });
           this.text = "Данные успешно изменены";
           this.snackbar = true;
         } catch (err) {
-          console.log("err: ", err);
           this.color = "error";
           this.text = "Произошла ошибка при изменении данных";
           this.snackbar = true;

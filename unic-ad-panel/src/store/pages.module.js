@@ -32,7 +32,6 @@ export const actions = {
     },
     [UPDATE_PAGE](context, params) {
         ApiService.setHeader();
-        console.log("content: ", params);
         return ApiService.put("admin/pages", params);
     }
 };
