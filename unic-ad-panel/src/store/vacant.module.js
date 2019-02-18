@@ -21,8 +21,8 @@ export const actions = {
     },
     [NEW_VACANT](context, params) {
         ApiService.setHeader();
-        return ApiService.post("admin/vacant", params).then(function(responce) {
-            return responce;
+        return ApiService.post("admin/vacant", params).then(function(response) {
+            return response;
         });
     },
     [DELETE_VACANT](context, params) {

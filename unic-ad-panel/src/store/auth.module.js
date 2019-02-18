@@ -27,7 +27,8 @@ const actions = {
                     resolve(data);
                 })
                 .catch(({ response }) => {
-                    context.commit(SET_ERROR, response.data.errors);
+                    console.log("response: ", response);
+                    context.commit(SET_ERROR, response.data.message);
                 });
         });
     },

@@ -1,0 +1,92 @@
+.md-helper >>> h1 {
+    font-size: 2em;
+    text-align: center;
+}
+
+.md-helper >>> h2 {
+    font-size: 1.7em;
+    text-align: center;
+    padding-bottom: 1em;
+    padding-top: 1em;
+}
+
+.md-helper >>> h3 {
+    font-size: 1.4em;
+    text-align: center;
+    padding-bottom: 0.8em;
+    padding-top: 0.8em;
+}
+
+.md-helper >>> h4 {
+    font-size: 1em;
+    text-align: center;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+}
+
+.md-helper >>> h5 {
+    font-size: 1.25em;
+    text-align: left;
+}
+
+.md-helper >>> p {
+    font-size: 16px;
+    text-align: left;
+    line-height: 1.5;
+    margin-bottom: 0;
+    text-indent: 35px;
+}
+
+.md-helper >>> table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+    border-collapse: collapse;
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+}
+
+.md-helper >>> th {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.md-helper >>> td {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.md-helper >>> hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.md-helper >>> img {
+    width: 80%;
+    display: block;
+    margin: auto;
+}
+
+.md-helper >>> ol,
+ul {
+    padding-left: 70px;
+}
+
+.md-helper >>> li {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.md-helper >>> iframe {
+    width: 100%;
+    max-width: 560px;
+}
+
+.md-helper >>> .yandexmap {
+    max-width: inherit;
+}

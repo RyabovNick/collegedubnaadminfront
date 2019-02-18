@@ -8,6 +8,7 @@ import struct from "./struct.module";
 import vacant from "./vacant.module";
 import teachingstaff from "./teachingstaff.module";
 import graduatejob from "./grantsgj.module";
+import pages from "./pages.module";
 
 Vue.use(Vuex);
 
@@ -19,7 +20,8 @@ export default new Vuex.Store({
         struct,
         vacant,
         teachingstaff,
-        graduatejob
+        graduatejob,
+        pages
     }
     /*state: {},
     mutations: {},

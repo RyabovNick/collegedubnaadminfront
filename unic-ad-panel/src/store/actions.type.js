@@ -45,3 +45,8 @@ export const FETCH_GRANTSGJ = "fetchGrantsGJ";
 export const NEW_GRANTSGJ = "newGrantsGJ";
 export const DELETE_GRANTSGJ = "deleteGrantsGJ";
 export const UPDATE_GRANTSGJ = "updateGrantsGJ";
+
+//pages
+export const FETCH_PAGES = "fetchPages";
+export const FETCH_PAGE = "newPage";
+export const UPDATE_PAGE = "updatePage";

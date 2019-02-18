@@ -6,6 +6,7 @@ import Struct from "./views/sveden/struct.vue";
 import Vacant from "./views/sveden/vacant.vue";
 import TeachingStaff from "./views/sveden/teachingStaff.vue";
 import GraduateJob from "./views/sveden/graduateJob.vue";
+import Pages from "./views/pages.vue";
 
 export const routes = [
     { path: "/", name: "Home", component: Home },
@@ -21,5 +22,6 @@ export const routes = [
     { path: "/sveden/struct", name: "Struct", component: Struct },
     { path: "/sveden/vacant", name: "Vacant", component: Vacant },
     { path: "/sveden/employees", name: "TeachingStaff", component: TeachingStaff },
-    { path: "/sveden/grants", name: "GraduateJob", component: GraduateJob }
+    { path: "/sveden/grants", name: "GraduateJob", component: GraduateJob },
+    { path: "/pages", name: "Pages", component: Pages }
 ];

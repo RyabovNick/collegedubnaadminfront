@@ -94,16 +94,9 @@
     >
       <v-list dense>
         <template v-for="item in items">
-          <v-layout
-            v-if="item.heading"
-            :key="item.heading"
-            row
-            align-center
-          >
+          <v-layout v-if="item.heading" :key="item.heading" row align-center>
             <v-flex xs6>
-              <v-subheader v-if="item.heading">
-                {{ item.heading }}
-              </v-subheader>
+              <v-subheader v-if="item.heading">{{ item.heading }}</v-subheader>
             </v-flex>
             <v-flex xs6 class="text-xs-center">
               <a href="#!" class="body-2 black--text">EDIT</a>
@@ -114,27 +107,20 @@
             v-model="item.model"
             :key="item.text"
             :prepend-icon="item.model ? item.icon : item['icon-alt']"
-            append-icon=""
+            append-icon
           >
             <v-list-tile slot="activator">
               <v-list-tile-content>
-                <v-list-tile-title>
-                  {{ item.text }}
-                </v-list-tile-title>
+                <v-list-tile-title>{{ item.text }}</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile
-              v-for="(child, i) in item.children"
-              :key="i"
-            >
+            <v-list-tile v-for="(child, i) in item.children" :key="i">
               <router-link class="v-list__tile" :to="child.link">
                 <v-list-tile-action v-if="child.icon">
                   <v-icon>{{ child.icon }}</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                  <v-list-tile-title>
-                    {{ child.text }}
-                  </v-list-tile-title>
+                  <v-list-tile-title>{{ child.text }}</v-list-tile-title>
                 </v-list-tile-content>
               </router-link>
             </v-list-tile>
@@ -145,22 +131,14 @@
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-tile-action>
               <v-list-tile-content>
-                <v-list-tile-title>
-                  {{ item.text }}
-                </v-list-tile-title>
+                <v-list-tile-title>{{ item.text }}</v-list-tile-title>
               </v-list-tile-content>
             </router-link>
           </v-list-tile>
         </template>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar
-      :clipped-left="$vuetify.breakpoint.lgAndUp"
-      color="blue darken-3"
-      dark
-      app
-      fixed
-    >
+    <v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" color="blue darken-3" dark app fixed>
       <v-toolbar-title class="ml-0 pl-3">
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <span class="hidden-sm-and-down test">Колледж университета "Дубна"</span>
@@ -170,18 +148,16 @@
         <router-link class="btn btn--flat btn--router" :to="item.link">
           <div class="btn__content">
             <span class="hidden-sm-and-down">{{ item.text }}</span>
-            <i aria-hidden="true" class="icon icon--right material-icons">
-              {{ item.icon }}</i>
+            <i aria-hidden="true" class="icon icon--right material-icons">{{ item.icon }}</i>
           </div>
         </router-link>
       </div>
       <v-btn @click="logout" icon large>
         <v-icon title="Выход">exit_to_app</v-icon>
       </v-btn>
-      </v-toolbar>
+    </v-toolbar>
     <v-content>
-      <v-container fluid>
-      </v-container>
+      <v-container fluid></v-container>
     </v-content>
   </v-app>
 </template>
@@ -196,13 +172,7 @@ export default {
     drawer: null,
     items: [
       { icon: "home", text: "Главная", link: "/" },
-      { icon: "account_balance", text: "О нас", link: "/about" },
-      { icon: "people", text: "Абитуриентам", link: "/abitur" },
-      {
-        icon: "school",
-        text: "О профессиях и специальностях",
-        link: "/speciality"
-      },
+      { icon: "account_balance", text: "Страницы", link: "/pages" },
       {
         icon: "keyboard_arrow_up",
         "icon-alt": "keyboard_arrow_down",
