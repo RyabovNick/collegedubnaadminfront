@@ -187,6 +187,7 @@ export default {
           const id = this.selectedValue;
           const content = this.newsText;
           await this.$store.dispatch(UPDATE_PAGE, { id, content });
+          this.color = "success";
           this.text = "Данные успешно изменены";
           this.snackbar = true;
         } catch (err) {
