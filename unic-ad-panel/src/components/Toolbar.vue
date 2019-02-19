@@ -185,10 +185,6 @@ export default {
             link: "/sveden/struct"
           },
           {
-            text: "Документы",
-            link: "/sveden/document"
-          },
-          {
             text: "Образование",
             link: "/sveden/education"
           },
@@ -202,7 +198,7 @@ export default {
           },
           {
             text:
-              "Материально-техническое обеспечение \n и оснащенность образовательного процесса",
+              "Материально-техническое обеспечение и оснащенность образовательного процесса",
             link: "/sveden/objects"
           },
           {
@@ -210,45 +206,13 @@ export default {
             link: "/sveden/grants"
           },
           {
-            text: "Платные образовательные услуги",
-            link: "/sveden/paid_edu"
-          },
-          {
-            text: "Финансово-хозяйственная деятельность",
-            link: "/sveden/budget"
-          },
-          {
             text: "Вакантные места для приема (перевода)",
             link: "/sveden/vacant"
           }
         ]
       },
-      {
-        icon: "accessible",
-        "icon-alt": "accessible",
-        text: "Доступная среда",
-        model: false,
-        children: [
-          { text: "Виртуальная экскурсия", link: "/environment/virtual_tour" },
-          { text: "Паспорта доступности", link: "/environment/availability" },
-          { text: "Дорожная карта", link: "/environment/road_map" },
-          { text: "Нормативное обеспечение", link: "/environment/normative" },
-          { text: "Оборудование", link: "/environment/equipment" },
-          { text: "Профориентация", link: "/environment/career_guidance" },
-          {
-            text: "Перечень мер социальной поддержки",
-            link: "/environment/social_support"
-          },
-          { text: "Трудоустройство", link: "/environment/employment" }
-        ]
-      },
-      { icon: "contacts", text: "Контакты", link: "/contacts" },
-      {
-        icon: "remove_red_eye",
-        text: "Версия для слабовидящих",
-        link: "/special"
-      },
-      { icon: "contacts", text: "Новости", link: "/news" }
+      { icon: "contacts", text: "Новости", link: "/news" },
+      { icon: "contacts", text: "Добавить новость", link: "/addnews" }
     ],
     toolbar: [{ icon: "home", text: "Главная", link: "/" }]
   }),

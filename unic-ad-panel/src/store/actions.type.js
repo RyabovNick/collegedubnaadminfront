@@ -7,6 +7,8 @@ export const NEW_COMMON = "newCommon";
 export const DELETE_COMMON = "deleteCommon";
 export const UPDATE_COMMON = "updateCommon";
 //news.module
+export const FETCH_LIST_NEWS = "fetchListNews";
+
 export const FETCH_NEWS = "fetchNews";
 export const NEW_NEWS = "newNews";
 export const DELETE_NEWS = "deleteNews";

@@ -1,162 +1,171 @@
 <template>
-    <v-app>
-        <h1>Новости</h1>
-        <section v-if="errored">
-            <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
-        </section>
-        <section v-else>
-            <div v-if="loading">Загрузка...</div>
-            <v-toolbar flat color="white">
-              <v-toolbar-title>CRUD news</v-toolbar-title>
-              <v-divider
-                class="mx-2"
-                inset
-                vertical
-              ></v-divider>
+  <v-app>
+    <h1>Новости</h1>
+    <section v-if="errored">
+      <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
+    </section>
+    <section v-else>
+      <div v-if="loading">Загрузка...</div>
+      <v-toolbar flat color="white">
+        <v-toolbar-title>CRUD news</v-toolbar-title>
+        <v-divider class="mx-2" inset vertical></v-divider>
+        <v-spacer></v-spacer>
+        <v-dialog v-model="dialog" max-width="800px">
+          <v-btn
+            slot="activator"
+            color="primary"
+            dark
+            class="mb-2"
+            @click="isEdited = false"
+          >Добавить</v-btn>
+          <v-card>
+            <v-card-title>
+              <span class="headline">{{ formTitle }}</span>
+            </v-card-title>
+
+            <v-card-text>
+              <v-container grid-list-md>
+                <v-form
+                  enctype="multipart/form-data"
+                  action="http://localhost:3000/api/admin/upload_news"
+                  v-model="valid"
+                  method="post"
+                  @submit.prevent="uploadData()"
+                >
+                  <v-text-field name="title" v-model="editedItem.title" label="Заголовок"></v-text-field>
+                  <v-textarea name="content" v-model="editedItem.content" label="Новость"></v-textarea>
+                  <v-menu
+                    ref="menu1"
+                    :close-on-content-click="false"
+                    v-model="menu1"
+                    :nudge-right="40"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    max-width="290px"
+                    min-width="290px"
+                  >
+                    <v-text-field
+                      slot="activator"
+                      v-model="dateFormatted"
+                      label="Дата"
+                      hint="DD.MM.YYYY формат"
+                      persistent-hint
+                      prepend-icon="event"
+                      @blur="date = parseDate(dateFormatted)"
+                    ></v-text-field>
+                    <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
+                  </v-menu>
+                  <v-menu
+                    ref="menu"
+                    :close-on-content-click="false"
+                    v-model="menu2"
+                    :nudge-right="40"
+                    :return-value.sync="time"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    max-width="290px"
+                    min-width="290px"
+                  >
+                    <v-text-field
+                      slot="activator"
+                      v-model="time"
+                      label="Picker in menu"
+                      prepend-icon="access_time"
+                      readonly
+                    ></v-text-field>
+                    <v-time-picker
+                      v-if="menu2"
+                      v-model="time"
+                      format="24hr"
+                      @change="$refs.menu.save(time)"
+                    ></v-time-picker>
+                  </v-menu>
+                  <input
+                    v-if="!isEdited"
+                    type="file"
+                    name="upload"
+                    @change="saveFileInfo($event.target.files[0])"
+                  >
+                  <v-btn v-if="!isEdited" type="submit">submit</v-btn>
+                  <v-progress-circular :value="progress" color="blue-grey"></v-progress-circular>
+                </v-form>
+              </v-container>
+            </v-card-text>
+
+            <v-card-actions>
               <v-spacer></v-spacer>
-              <v-dialog v-model="dialog" max-width="800px">
-                <v-btn slot="activator" color="primary"
-                  dark class="mb-2" @click="isEdited = false">Добавить</v-btn>
-                <v-card>
-                  <v-card-title>
-                    <span class="headline">{{ formTitle }}</span>
-                  </v-card-title>
-
-                  <v-card-text>
-                    <v-container grid-list-md>
-                        <v-form enctype="multipart/form-data"
-                            action="http://localhost:3000/api/admin/upload_news"
-                            v-model="valid" method="post" @submit.prevent="uploadData()">
-                            <v-text-field name="title" v-model="editedItem.title" label="Заголовок"></v-text-field>
-                            <v-textarea name="content" v-model="editedItem.content" label="Новость"></v-textarea>
-                            <v-menu
-                              ref="menu1"
-                              :close-on-content-click="false"
-                              v-model="menu1"
-                              :nudge-right="40"
-                              lazy
-                              transition="scale-transition"
-                              offset-y
-                              full-width
-                              max-width="290px"
-                              min-width="290px"
-                            >
-                              <v-text-field
-                                slot="activator"
-                                v-model="dateFormatted"
-                                label="Дата"
-                                hint="DD.MM.YYYY формат"
-                                persistent-hint
-                                prepend-icon="event"
-                                @blur="date = parseDate(dateFormatted)"
-                              ></v-text-field>
-                              <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
-                            </v-menu>
-                            <v-menu
-                              ref="menu"
-                              :close-on-content-click="false"
-                              v-model="menu2"
-                              :nudge-right="40"
-                              :return-value.sync="time"
-                              lazy
-                              transition="scale-transition"
-                              offset-y
-                              full-width
-                              max-width="290px"
-                              min-width="290px"
-                            >
-                              <v-text-field
-                                slot="activator"
-                                v-model="time"
-                                label="Picker in menu"
-                                prepend-icon="access_time"
-                                readonly
-                              ></v-text-field>
-                              <v-time-picker
-                                v-if="menu2"
-                                v-model="time"
-                                format="24hr"
-                                @change="$refs.menu.save(time)"
-                              ></v-time-picker>
-                            </v-menu>
-                            <input v-if="!isEdited" type="file" name="upload" @change="saveFileInfo($event.target.files[0])">
-                            <v-btn v-if="!isEdited"
-                            type="submit">
-                            submit
-                            </v-btn>
-                            <v-progress-circular
-                              :value="progress"
-                              color="blue-grey"
-                            ></v-progress-circular>
-                        </v-form>
-                    </v-container>
-                  </v-card-text>
-
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn v-if="isEdited" color="blue darken-1" flat @click.native="save(editedItem)">
-                      Сохранить</v-btn>
-                    <v-btn color="blue darken-1" flat @click.native="close">Отмена</v-btn>
-                  </v-card-actions>
-                  <div v-html="editedItem.content"></div>
-                </v-card>
-              </v-dialog>
-            </v-toolbar>
-            <v-data-table
-                :headers="headers"
-                :items="news"
-                :pagination.sync="pagination"
-                class="elevation-1"
+              <v-btn
+                v-if="isEdited"
+                color="blue darken-1"
+                flat
+                @click.native="save(editedItem)"
+              >Сохранить</v-btn>
+              <v-btn color="blue darken-1" flat @click.native="close">Отмена</v-btn>
+            </v-card-actions>
+            <div v-html="editedItem.content"></div>
+          </v-card>
+        </v-dialog>
+      </v-toolbar>
+      <v-data-table
+        :headers="headers"
+        :items="news"
+        :pagination.sync="pagination"
+        class="elevation-1"
+      >
+        <template slot="items" slot-scope="props">
+          <tr @click="props.expanded = !props.expanded">
+            <td class="text-xs-left">{{ props.item.id }}</td>
+            <td class="text-xs-left">{{ props.item.title }}</td>
+            <td class="text-xs-left">{{ props.item.content }}</td>
+            <td class="text-xs-left">{{ props.item.date_now | date}}</td>
+            <td class="text-xs-left">{{ props.item.logo }}</td>
+            <td class="justify-center layout px-0">
+              <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
+              <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            </td>
+          </tr>
+        </template>
+        <template slot="expand" slot-scope="props">
+          <v-form
+            enctype="multipart/form-data"
+            v-model="valid"
+            method="post"
+            @submit.prevent="uploadDocs(props.item.id)"
+          >
+            Загрузить документы:
+            <input
+              type="file"
+              name="upload"
+              multiple="multiple"
+              @change="saveDocsInfo($event.target.files)"
             >
-                <template slot="items" slot-scope="props">
-                  <tr @click="props.expanded = !props.expanded">
-                    <td class="text-xs-left">{{ props.item.id }}</td>
-                    <td class="text-xs-left">{{ props.item.title }}</td>
-                    <td class="text-xs-left">{{ props.item.content }}</td>
-                    <td class="text-xs-left">{{ props.item.date_now | date}}</td>
-                    <td class="text-xs-left">{{ props.item.logo }}</td>
-                    <td class="justify-center layout px-0">
-                      <v-icon
-                        small
-                        class="mr-2"
-                        @click="editItem(props.item)"
-                      >
-                        edit
-                      </v-icon>
-                      <v-icon
-                        small
-                        @click="deleteItem(props.item)"
-                      >
-                        delete
-                      </v-icon>
-                    </td>
-                  </tr>
-                </template>
-                <template slot="expand" slot-scope="props">
-                  <v-form enctype="multipart/form-data"
-                    v-model="valid" method="post" @submit.prevent="uploadDocs(props.item.id)">
-                    Загрузить документы: 
-                    <input type="file" name="upload" multiple="multiple" @change="saveDocsInfo($event.target.files)">
-                    <v-btn type="submit">submit</v-btn>
-                    <v-progress-circular
-                      :value="progressDocs"
-                      color="blue-grey"
-                    ></v-progress-circular>
-                  </v-form>
-                  <v-form enctype="multipart/form-data"
-                    v-model="valid" method="post" @submit.prevent="uploadPhotos(props.item.id)">
-                    Загрузить фотографии: 
-                    <input type="file" name="upload" multiple="multiple" @change="savePhotosInfo($event.target.files)">
-                    <v-btn type="submit">submit</v-btn>
-                    <v-progress-circular
-                      :value="progressDocs"
-                      color="blue-grey"
-                    ></v-progress-circular>
-                  </v-form>
-                </template>
-            </v-data-table>
-        </section>
-    </v-app>
+            <v-btn type="submit">submit</v-btn>
+            <v-progress-circular :value="progressDocs" color="blue-grey"></v-progress-circular>
+          </v-form>
+          <v-form
+            enctype="multipart/form-data"
+            v-model="valid"
+            method="post"
+            @submit.prevent="uploadPhotos(props.item.id)"
+          >
+            Загрузить фотографии:
+            <input
+              type="file"
+              name="upload"
+              multiple="multiple"
+              @change="savePhotosInfo($event.target.files)"
+            >
+            <v-btn type="submit">submit</v-btn>
+            <v-progress-circular :value="progressDocs" color="blue-grey"></v-progress-circular>
+          </v-form>
+        </template>
+      </v-data-table>
+    </section>
+  </v-app>
 </template>
 
 <script>
