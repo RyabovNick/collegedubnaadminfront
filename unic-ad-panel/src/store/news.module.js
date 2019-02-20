@@ -1,6 +1,6 @@
 import ApiService from "@/common/api.service";
 import { FETCH_LIST_NEWS, FETCH_NEWS, NEW_NEWS, DELETE_NEWS, UPDATE_NEWS } from "./actions.type";
-import { SET_LIST_NEWS, SET_NEWS } from "./mutations.type";
+import { SET_LIST_NEWS, SET_NEWS, CHANGE_LIST_NEWS } from "./mutations.type";
 
 export const state = {
     listNews: [],
@@ -25,8 +25,8 @@ export const actions = {
         });
     },
 
-    [FETCH_NEWS](context) {
-        return ApiService.get("news").then(({ data }) => {
+    [FETCH_NEWS](context, id) {
+        return ApiService.get(`news/${id}`).then(({ data }) => {
             context.commit(SET_NEWS, data);
             return data;
         });
@@ -39,7 +39,9 @@ export const actions = {
     },
     [DELETE_NEWS](context, params) {
         ApiService.setHeader();
-        return ApiService.delete("admin/news", params);
+        return ApiService.delete("admin/news", params).then(() => {
+            context.commit(CHANGE_LIST_NEWS, params);
+        });
     },
     [UPDATE_NEWS](context, params) {
         ApiService.setHeader();
@@ -51,9 +53,16 @@ export const mutations = {
     [SET_LIST_NEWS](state, news) {
         state.listNews = news;
     },
-
     [SET_NEWS](state, news) {
         state.news = news;
+    },
+    [CHANGE_LIST_NEWS](state, news) {
+        let removeIndex = state.listNews
+            .map(item => {
+                return item.id;
+            })
+            .indexOf(news.id);
+        removeIndex >= 0 && state.listNews.splice(removeIndex, 1);
     }
 };
 

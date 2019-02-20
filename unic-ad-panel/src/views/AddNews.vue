@@ -104,29 +104,36 @@ ul {
   <v-app>
     <v-container fluid grid-list-xl>
       <v-layout wrap align-center>
-        <v-flex xs12 sm6 d-flex>
+        <v-flex xs12 sm6 md6 d-flex>
           <v-select
             :items="listNews"
             item-value="id"
             v-model="selectedValue"
             label="Выбор страницы"
-            @change="fetchPage()"
+            @change="fetchNews()"
           >
+            <template
+              slot="selection"
+              slot-scope="data"
+            >{{ data.item.title}} - {{data.item.date_now }}</template>
             <template slot="item" slot-scope="data">{{ data.item.title}} - {{data.item.date_now }}</template>
           </v-select>
         </v-flex>
-        <v-flex xs12 sm4>
+        <v-flex xs12 sm6 md3>
           <v-switch v-model="isPlace" :label="`Расположение элементов`"></v-switch>
         </v-flex>
-        <v-flex xs12 sm2>
-          <v-btn color="info" @click="savePage()">Принять изменения</v-btn>
+        <v-flex v-if="selectedValue" xs12 sm6 md3>
+          <v-btn color="error" @click="deleteNews()">Удалить новость</v-btn>
+        </v-flex>
+        <v-flex xs12 sm6 md3>
+          <v-btn color="info" @click="saveNews()">{{ action }}</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
     <v-container fluid grid-list-md>
       <v-layout v-if="isPlace" row wrap>
         <v-flex xs12 sm6>
-          <v-textarea name="input-7-1" box label="Label" v-model="newsText" rows="30"></v-textarea>
+          <v-textarea name="input-7-1" box label="Содержание новости" v-model="newsText" rows="30"></v-textarea>
         </v-flex>
         <v-flex xs12 sm6>
           <vue-markdown class="md-helper" show :source="newsText"></vue-markdown>
@@ -134,7 +141,7 @@ ul {
       </v-layout>
       <v-layout v-else row wrap>
         <v-flex xs12 sm12 md12 lg12>
-          <v-textarea name="input-7-1" box label="Label" v-model="newsText" rows="30"></v-textarea>
+          <v-textarea name="input-7-1" box label="Содержание новости" v-model="newsText" rows="30"></v-textarea>
         </v-flex>
         <v-flex xs12 sm12 md12 lg12>
           <vue-markdown class="md-helper" show :source="newsText"></vue-markdown>
@@ -151,7 +158,12 @@ ul {
 <script>
 import VueMarkdown from "vue-markdown";
 import { mapGetters } from "vuex";
-import { FETCH_LIST_NEWS, FETCH_PAGE, UPDATE_PAGE } from "@/store/actions.type";
+import {
+  FETCH_LIST_NEWS,
+  FETCH_NEWS,
+  UPDATE_NEWS,
+  DELETE_NEWS
+} from "@/store/actions.type";
 
 export default {
   components: {
@@ -164,7 +176,8 @@ export default {
       snackbar: false,
       color: "success",
       text: "",
-      newsText: ""
+      newsText: "",
+      action: "Добавить новость"
     };
   },
   mounted() {
@@ -174,11 +187,12 @@ export default {
     fetchListNews() {
       this.$store.dispatch(FETCH_LIST_NEWS);
     },
-    async fetchPage() {
-      await this.$store.dispatch(FETCH_PAGE, this.selectedValue);
-      this.newsText = await this.$store.getters.page;
+    async fetchNews() {
+      this.action = "Изменить новость";
+      await this.$store.dispatch(FETCH_NEWS, this.selectedValue);
+      this.newsText = await this.$store.getters.news[0].content;
     },
-    async savePage() {
+    async saveNews() {
       if (this.selectedValue === null) {
         this.color = "error";
         this.text = "Необходимо выбрать новость";
@@ -196,6 +210,26 @@ export default {
           this.text = "Произошла ошибка при изменении данных";
           this.snackbar = true;
         }
+      }
+    },
+    async deleteNews() {
+      const id = this.selectedValue;
+      try {
+        (await confirm(
+          `Вы действительно хотите удалить новость ${
+            this.$store.getters.news[0].title
+          } ?`
+        )) &&
+          this.$store.dispatch(DELETE_NEWS, { id }).then(() => {
+            this.color = "success";
+            this.text = "Данные успешно изменены";
+            this.snackbar = true;
+            this.newsText = "";
+          });
+      } catch {
+        this.color = "error";
+        this.text = "Произошла ошибка при изменении данных";
+        this.snackbar = true;
       }
     }
   },
