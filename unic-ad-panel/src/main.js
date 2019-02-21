@@ -3,6 +3,8 @@ import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 
+import { Upload } from "element-ui";
+
 import App from "./App.vue";
 import router from "./router";
 import store from "@/store";
@@ -15,6 +17,7 @@ Vue.config.productionTip = false;
 Vue.filter("date", DateFilter);
 Vue.filter("error", ErrorFilter);
 Vue.use(Vuetify);
+Vue.use(Upload);
 
 ApiService.init();
 // Check auth before each page load
