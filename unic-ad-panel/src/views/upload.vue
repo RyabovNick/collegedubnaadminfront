@@ -26,6 +26,9 @@
 
 <template>
   <v-app>FILE UPLOADER
+    <v-text-field v-model="title" label="title"></v-text-field>
+    <v-text-field v-model="content" label="content"></v-text-field>
+    <v-text-field v-model="date_now" label="date_now YYYY-MM-DD HH:mm"></v-text-field>
     <el-upload
       class="upload-demo"
       drag
@@ -59,6 +62,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -80,15 +85,40 @@ export default {
       // keep it in store
       // send request on mounted
       // show preview image
-      imageUrl: ""
+      imageUrl: "",
+
+      // variables for test
+      title: "",
+      content: "",
+      date_now: ""
     };
   },
   methods: {
     //mytest methods
     //use file to handle axios post request
     saveFile(file, fileList) {
-      console.log("file: ", file);
+      console.log("file: ", file.raw);
       console.log("fileList: ", fileList);
+
+      let formData = new FormData();
+      formData.append("title", this.title);
+      formData.append("content", this.content);
+      formData.append("date_now", this.date_now);
+      formData.append("upload", file.raw, file.rawname);
+
+      let config = {
+        header: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
+
+      axios
+        .post("http://localhost:3000/api/admin/upload_news", formData, config)
+        .then(responce => {
+          console.log("responce.data.insertId: ", responce.data.insertId);
+          console.log(responce);
+        })
+        .finally(() => console.log("completed"));
     },
     // list of file
     // file deletion handler

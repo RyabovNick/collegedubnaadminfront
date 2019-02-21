@@ -300,6 +300,7 @@ export default {
       this.progress = 30;
       var formData = new FormData();
       this.prepareDate();
+      console.log("this.eventFiles: ", this.eventFiles);
       formData.append("title", this.editedItem.title);
       formData.append("content", this.editedItem.content);
       formData.append("date_now", this.editedItem.date_now);
