@@ -98,6 +98,30 @@ ul {
   width: 90%;
   text-align: left;
 }
+
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 </style>
 
 <template>
@@ -115,7 +139,7 @@ ul {
             <template
               slot="selection"
               slot-scope="data"
-            >{{ data.item.title}} - {{data.item.date_now }}</template>
+            >{{ data.item.title}} - {{ data.item.date_now }}</template>
             <template slot="item" slot-scope="data">{{ data.item.title}} - {{data.item.date_now }}</template>
           </v-select>
         </v-flex>
@@ -130,21 +154,87 @@ ul {
         </v-flex>
       </v-layout>
     </v-container>
+    <v-container>
+      <v-layout row wrap>
+        <v-flex xs12>
+          <v-textarea
+            v-model="title"
+            name="input-7-1"
+            label="Заголовок новости"
+            hint="Введите текст"
+            rows="2"
+          ></v-textarea>
+        </v-flex>
+      </v-layout>
+    </v-container>
     <v-container fluid grid-list-md>
-      <v-layout v-if="isPlace" row wrap>
-        <v-flex xs12 sm6>
+      <v-layout row wrap>
+        <v-flex :class="[isPlace ? 'xs12 sm6' : 'xs12 sm12 md12 lg12']">
           <v-textarea name="input-7-1" box label="Содержание новости" v-model="newsText" rows="30"></v-textarea>
         </v-flex>
-        <v-flex xs12 sm6>
+        <v-flex :class="[isPlace ? 'xs12 sm6' : 'xs12 sm12 md12 lg12']">
           <vue-markdown class="md-helper" show :source="newsText"></vue-markdown>
         </v-flex>
       </v-layout>
-      <v-layout v-else row wrap>
-        <v-flex xs12 sm12 md12 lg12>
-          <v-textarea name="input-7-1" box label="Содержание новости" v-model="newsText" rows="30"></v-textarea>
+    </v-container>
+    <v-container fluid grid-list-md>
+      <v-layout row wrap>
+        <v-flex xs12 sm3 md3 lg3>
+          <v-menu
+            v-model="datePicker"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            min-width="290px"
+          >
+            <v-text-field slot="activator" v-model="date" label="Выбор даты" prepend-icon="event"></v-text-field>
+            <v-date-picker v-model="date" @input="datePicker = false"></v-date-picker>
+          </v-menu>
         </v-flex>
-        <v-flex xs12 sm12 md12 lg12>
-          <vue-markdown class="md-helper" show :source="newsText"></vue-markdown>
+        <v-flex xs12 sm3 md3 lg3>
+          <v-menu
+            ref="menu"
+            v-model="timePicker"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            :return-value.sync="time"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            max-width="290px"
+            min-width="290px"
+          >
+            <v-text-field
+              slot="activator"
+              v-model="time"
+              label="Выбор времени"
+              prepend-icon="access_time"
+              readonly
+            ></v-text-field>
+            <v-time-picker
+              v-if="timePicker"
+              v-model="time"
+              full-width
+              @click:minute="$refs.menu.save(time)"
+              format="24hr"
+            ></v-time-picker>
+          </v-menu>
+        </v-flex>
+        <v-flex xs12 sm6 md6 lg6>
+          <el-upload
+            class="avatar-uploader"
+            action
+            :show-file-list="false"
+            :on-change="loadImage"
+            :auto-upload="false"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
         </v-flex>
       </v-layout>
     </v-container>
@@ -156,6 +246,7 @@ ul {
 </template>
 
 <script>
+import axios from "axios";
 import VueMarkdown from "vue-markdown";
 import { mapGetters } from "vuex";
 import {
@@ -175,40 +266,123 @@ export default {
       selectedValue: null,
       snackbar: false,
       color: "success",
+      title: "",
       text: "",
       newsText: "",
-      action: "Добавить новость"
+      action: "Добавить новость",
+      //datePicker
+      datePicker: false,
+      date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
+      timePicker: false,
+      time: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(11, 5),
+      //image
+      imageUrl: "",
+      file: ""
     };
   },
   mounted() {
     this.fetchListNews();
   },
   methods: {
+    /**
+     * its checked if file size and format allowed
+     * and save file.raw to local data
+     */
+    loadImage(file) {
+      const isJPG =
+        file.raw.type === "image/jpeg" || file.raw.type === "image/png";
+      const isLt2M = file.raw.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.color = "error";
+        this.text = "Картинка должна быть в формате jpg или png";
+        this.snackbar = true;
+      }
+      if (!isLt2M) {
+        this.color = "error";
+        this.text = "Размер картинки должен быть не более 2 мб";
+        this.snackbar = true;
+      }
+
+      if (isJPG && isLt2M) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+        this.file = file.raw;
+      }
+    },
     fetchListNews() {
       this.$store.dispatch(FETCH_LIST_NEWS);
     },
     async fetchNews() {
       this.action = "Изменить новость";
       await this.$store.dispatch(FETCH_NEWS, this.selectedValue);
-      this.newsText = await this.$store.getters.news[0].content;
+      this.title = await this.$store.getters.news[0].title;
+      this.newsText = this.$store.getters.news[0].content;
+      this.imageUrl = this.$store.getters.news[0].logo;
+      let prepareDate = new Date(this.$store.getters.news[0].date_now);
+      prepareDate.setHours(prepareDate.getHours() + 3);
+      prepareDate = new Date(prepareDate).toISOString();
+      this.date = prepareDate.substr(0, 10);
+      this.time = prepareDate.substr(11, 5);
     },
     async saveNews() {
-      if (this.selectedValue === null) {
-        this.color = "error";
-        this.text = "Необходимо выбрать новость";
-        this.snackbar = true;
-      } else {
+      let formData = new FormData();
+      formData.append("title", this.title);
+      formData.append("content", this.newsText);
+      formData.append("date_now", `${this.date} ${this.time}`);
+      formData.append("upload", this.file, this.file.name);
+
+      let config = {
+        header: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
+
+      //add news
+      if (this.news.length === 0) {
         try {
-          const id = this.selectedValue;
-          const content = this.newsText;
-          await this.$store.dispatch(UPDATE_PAGE, { id, content });
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
+          axios
+            .post(
+              "http://localhost:3000/api/admin/upload_news",
+              formData,
+              config
+            )
+            .then(responce => {
+              console.log("responce.data.insertId: ", responce.data.insertId);
+              console.log(responce);
+            })
+            .finally(() => console.log("completed"));
         } catch (err) {
+          console.log(err);
+        }
+      }
+      //update news (need to add backend)
+      else {
+        if (this.selectedValue === null) {
           this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
+          this.text = "Необходимо выбрать новость";
           this.snackbar = true;
+        } else {
+          try {
+            const id = this.selectedValue;
+            await this.$store.dispatch(UPDATE_NEWS, {
+              id,
+              title: this.title,
+              content: this.newsText,
+              date_now: `${this.date} ${this.time}`
+            });
+            this.color = "success";
+            this.text = "Данные успешно изменены";
+            this.snackbar = true;
+          } catch (err) {
+            console.log("err: ", err);
+            this.color = "error";
+            this.text = "Произошла ошибка при изменении данных";
+            this.snackbar = true;
+          }
         }
       }
     },

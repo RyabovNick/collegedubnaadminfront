@@ -32,14 +32,13 @@
     <el-upload
       class="upload-demo"
       drag
-      action="https://jsonplaceholder.typicode.com/posts/"
+      action
       ref="upload"
       :on-change="saveFile"
       :on-preview="handlePreview"
       :on-remove="handleRemove"
       :file-list="fileList"
       :auto-upload="false"
-      multiple
     >
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">
