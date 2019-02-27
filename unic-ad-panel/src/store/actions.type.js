@@ -60,3 +60,23 @@ export const FETCH_EDUACCRED = "fetchEduAccred";
 export const NEW_EDUACCRED = "newEduAccred";
 export const DELETE_EDUACCRED = "deleteEduAccred";
 export const UPDATE_EDUACCRED = "updateEduAccred";
+
+//education
+
+//eduChislen
+export const FETCH_EDUCHISLEN = "fetchEduChislen";
+export const NEW_EDUCHISLEN = "newEduChislen";
+export const DELETE_EDUCHISLEN = "deleteEduChislen";
+export const UPDATE_EDUCHISLEN = "updateEduChislen";
+
+//eduPerevod
+export const FETCH_EDUPEREVOD = "fetchEduPerevode";
+export const NEW_EDUPEREVOD = "newEduPerevode";
+export const DELETE_EDUPEREVOD = "deleteEduPerevode";
+export const UPDATE_EDUPEREVOD = "updateEduPerevode";
+
+//eduPriem
+export const FETCH_EDUPRIEM = "fetchEduPriem";
+export const NEW_EDUPRIEM = "newEduPriem";
+export const DELETE_EDUPRIEM = "deleteEduPriem";
+export const UPDATE_EDUPRIEM = "updateEduPriem";

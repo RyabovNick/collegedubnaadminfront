@@ -189,6 +189,22 @@ export default {
             link: "/sveden/eduAccred"
           },
           {
+            text: "Образование",
+            link: "/sveden/education"
+          },
+          {
+            text: "Численость обучающихся",
+            link: "/sveden/eduChislen"
+          },
+          {
+            text: "Информация о приёме",
+            link: "/sveden/eduPriem"
+          },
+          {
+            text: "Информация о переводе, восстановлении, отчислении",
+            link: "/sveden/eduPerevod"
+          },
+          {
             text: "Образовательные стандарты",
             link: "/sveden/eduStandarts"
           },

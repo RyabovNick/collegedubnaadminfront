@@ -180,10 +180,10 @@ export default {
         (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
           this.$store.dispatch(DELETE_VACANT, { id }).then(() => {
             this.vacant.splice(index, 1);
+            this.color = "success";
+            this.text = "Данные успешно изменены";
+            this.snackbar = true;
           });
-        this.color = "success";
-        this.text = "Данные успешно изменены";
-        this.snackbar = true;
       } catch {
         this.color = "error";
         this.text = "Произошла ошибка при изменении данных";

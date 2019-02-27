@@ -211,8 +211,26 @@ export default {
     async save(item) {
       if (this.editedIndex > -1) {
         try {
-          await this.$store.dispatch(UPDATE_EDUACCRED, item);
-          Object.assign(this.eduAccred[this.editedIndex], item);
+          await this.$store.dispatch(UPDATE_EDUACCRED, {
+            id: this.editedItem.id,
+            eduCode: this.editedItem.eduCode,
+            eduName: this.editedItem.eduName,
+            eduLevel: this.editedItem.eduLevel,
+            eduForm: this.editedItem.eduForm,
+            learningTerm: this.editedItem.learningTerm,
+            language: this.editedItem.language,
+            dateEnd: this.editedItem.dateEnd
+          });
+          Object.assign(this.eduAccred[this.editedIndex], {
+            id: this.editedItem.id,
+            eduCode: this.editedItem.eduCode,
+            eduName: this.editedItem.eduName,
+            eduLevel: this.editedItem.eduLevel,
+            eduForm: this.editedItem.eduForm,
+            learningTerm: this.editedItem.learningTerm,
+            language: this.editedItem.language,
+            dateEnd: this.editedItem.dateEnd
+          });
           this.editedIndex = -1;
           this.color = "success";
           this.text = "Данные успешно изменены";

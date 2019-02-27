@@ -30,3 +30,14 @@ export const SET_PAGES = "setPages";
 
 //eduAccred
 export const SET_EDUACCRED = "setEduAccred";
+
+//education
+
+//eduChislen
+export const SET_EDUCHISLEN = "setEduChislen";
+
+//eduPriem
+export const SET_EDUPRIEM = "setEduPriem";
+
+//eduPerevod
+export const SET_EDUPEREVOD = "setEduPerevod";
