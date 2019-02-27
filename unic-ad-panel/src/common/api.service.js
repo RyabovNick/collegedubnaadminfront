@@ -3,6 +3,7 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import JwtService from "@/common/jwt.service";
 import { API_URL } from "@/common/config";
+import { Upload } from "element-ui";
 
 const ApiService = {
     /**
@@ -51,6 +52,18 @@ const ApiService = {
 
     delete(resource, params) {
         return Vue.axios.delete(`${resource}`, { data: params });
+    },
+
+    upload(resource, params) {
+        const config = {
+            header: {
+                "Content-Type": "multipart/form-data"
+            }
+        };
+
+        return Vue.axios.post(`${resource}`, params, config).catch(error => {
+            throw new Error(`Upload ${error}`);
+        });
     }
 };
 

@@ -6,6 +6,7 @@ import common from "./common.module";
 import news from "./news.module";
 import struct from "./struct.module";
 import eduAccred from "./eduAccred.module";
+import education from "./education.module";
 import eduChislen from "./eduChislen.module";
 import eduPerevod from "./eduPerevod.module";
 import eduPriem from "./eduPriem.module";
@@ -23,6 +24,7 @@ export default new Vuex.Store({
         news,
         struct,
         eduAccred,
+        education,
         eduChislen,
         eduPerevod,
         eduPriem,

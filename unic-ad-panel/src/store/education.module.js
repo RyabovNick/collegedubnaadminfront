@@ -14,7 +14,8 @@ const getters = {
 
 export const actions = {
     [FETCH_EDUCATION](context) {
-        return ApiService.get("eduop").then(({ data }) => {
+        ApiService.setHeader();
+        return ApiService.get("admin/education/eduop").then(({ data }) => {
             context.commit(SET_EDUCATION, data);
             return data;
         });
@@ -33,7 +34,15 @@ export const actions = {
     //     ApiService.setHeader();
     //     return ApiService.put("admin/education/eduaccred", params);
     // }
-    [UPLOAD_EDUCATION](context) {}
+    [UPLOAD_EDUCATION](context, params) {
+        ApiService.setHeader();
+        return ApiService.upload(
+            `admin/education/upload/${params.id}/${params.tuple}`,
+            params.file
+        ).then(function(response) {
+            return response;
+        });
+    }
 };
 
 export const mutations = {
