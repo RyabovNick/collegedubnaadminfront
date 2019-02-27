@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <h1>Структура и органы управления образовательной организацией</h1>
+    <h1>Информация о результатах перевода, восстановления и отчисления</h1>
     <section v-if="errored">
       <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
     </section>
@@ -64,7 +64,7 @@
           <td class="text-xs-left">{{ props.item.numberExpPerevod }}</td>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon v-if="props.item.id !== null" small @click="deleteItem(props.item)">delete</v-icon>
           </td>
         </template>
       </v-data-table>

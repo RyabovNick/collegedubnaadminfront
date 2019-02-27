@@ -27,6 +27,7 @@ export const SET_PAGE = "setPage";
 export const SET_PAGES = "setPages";
 
 //education
+export const SET_EDUCATION = "setEducation";
 
 //eduAccred
 export const SET_EDUACCRED = "setEduAccred";

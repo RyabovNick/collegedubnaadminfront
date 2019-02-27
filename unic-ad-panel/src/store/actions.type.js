@@ -62,6 +62,8 @@ export const DELETE_EDUACCRED = "deleteEduAccred";
 export const UPDATE_EDUACCRED = "updateEduAccred";
 
 //education
+export const FETCH_EDUCATION = "fetchEducation";
+export const UPLOAD_EDUCATION = "uploadEducation";
 
 //eduChislen
 export const FETCH_EDUCHISLEN = "fetchEduChislen";

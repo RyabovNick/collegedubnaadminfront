@@ -1,43 +1,44 @@
 import ApiService from "@/common/api.service";
-import { FETCH_EDUACCRED, NEW_EDUACCRED, DELETE_EDUACCRED, UPDATE_EDUACCRED } from "./actions.type";
-import { SET_EDUACCRED } from "./mutations.type";
+import { FETCH_EDUCATION, UPLOAD_EDUCATION } from "./actions.type";
+import { SET_EDUCATION } from "./mutations.type";
 
 export const state = {
-    eduAccred: []
+    education: []
 };
 
 const getters = {
-    eduAccred(state) {
-        return state.eduAccred;
+    education(state) {
+        return state.education;
     }
 };
 
 export const actions = {
-    [FETCH_EDUACCRED](context) {
-        return ApiService.get("eduaccred").then(({ data }) => {
-            context.commit(SET_EDUACCRED, data);
+    [FETCH_EDUCATION](context) {
+        return ApiService.get("eduop").then(({ data }) => {
+            context.commit(SET_EDUCATION, data);
             return data;
         });
     },
-    [NEW_EDUACCRED](context, params) {
-        ApiService.setHeader();
-        return ApiService.post("admin/education/eduaccred", params).then(function(responce) {
-            return responce;
-        });
-    },
-    [DELETE_EDUACCRED](context, params) {
-        ApiService.setHeader();
-        return ApiService.delete("admin/education/eduaccred", params);
-    },
-    [UPDATE_EDUACCRED](context, params) {
-        ApiService.setHeader();
-        return ApiService.put("admin/education/eduaccred", params);
-    }
+    // [NEW_EDUCATION](context, params) {
+    //     ApiService.setHeader();
+    //     return ApiService.post("admin/education/eduaccred", params).then(function(responce) {
+    //         return responce;
+    //     });
+    // },
+    // [DELETE_EDUCATION](context, params) {
+    //     ApiService.setHeader();
+    //     return ApiService.delete("admin/education/eduaccred", params);
+    // },
+    // [UPDATE_EDUCATION](context, params) {
+    //     ApiService.setHeader();
+    //     return ApiService.put("admin/education/eduaccred", params);
+    // }
+    [UPLOAD_EDUCATION](context) {}
 };
 
 export const mutations = {
-    [SET_EDUACCRED](state, eduAccred) {
-        state.eduAccred = eduAccred;
+    [SET_EDUCATION](state, education) {
+        state.education = education;
     }
 };
 
