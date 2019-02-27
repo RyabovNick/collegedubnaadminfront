@@ -25,3 +25,8 @@ export const SET_GRANTSGJ = "setGrantsGJ";
 //pages
 export const SET_PAGE = "setPage";
 export const SET_PAGES = "setPages";
+
+//education
+
+//eduAccred
+export const SET_EDUACCRED = "setEduAccred";

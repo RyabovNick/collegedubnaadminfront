@@ -185,8 +185,8 @@ export default {
             link: "/sveden/struct"
           },
           {
-            text: "Образование",
-            link: "/sveden/education"
+            text: "Срок действия аккредитации",
+            link: "/sveden/eduAccred"
           },
           {
             text: "Образовательные стандарты",

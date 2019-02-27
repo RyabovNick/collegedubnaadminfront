@@ -5,6 +5,7 @@ import auth from "./auth.module";
 import common from "./common.module";
 import news from "./news.module";
 import struct from "./struct.module";
+import eduAccred from "./eduAccred.module";
 import vacant from "./vacant.module";
 import teachingstaff from "./teachingstaff.module";
 import graduatejob from "./grantsgj.module";
@@ -18,6 +19,7 @@ export default new Vuex.Store({
         common,
         news,
         struct,
+        eduAccred,
         vacant,
         teachingstaff,
         graduatejob,

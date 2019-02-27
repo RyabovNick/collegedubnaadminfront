@@ -52,3 +52,11 @@ export const UPDATE_GRANTSGJ = "updateGrantsGJ";
 export const FETCH_PAGES = "fetchPages";
 export const FETCH_PAGE = "newPage";
 export const UPDATE_PAGE = "updatePage";
+
+// education
+
+//eduAccred
+export const FETCH_EDUACCRED = "fetchEduAccred";
+export const NEW_EDUACCRED = "newEduAccred";
+export const DELETE_EDUACCRED = "deleteEduAccred";
+export const UPDATE_EDUACCRED = "updateEduAccred";
