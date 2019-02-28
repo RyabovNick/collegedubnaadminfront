@@ -34,12 +34,11 @@ export const actions = {
     //     ApiService.setHeader();
     //     return ApiService.put("admin/education/eduaccred", params);
     // }
-    [UPLOAD_EDUCATION](context, params) {
+    [UPLOAD_EDUCATION](context, { id, tuple, file }) {
         ApiService.setHeader();
-        return ApiService.upload(
-            `admin/education/upload/${params.id}/${params.tuple}`,
-            params.file
-        ).then(function(response) {
+        return ApiService.upload(`admin/education/upload/${id}/${tuple}`, file).then(function(
+            response
+        ) {
             return response;
         });
     }

@@ -24,7 +24,7 @@
           </v-select>
         </v-flex>
         <v-flex xs12 sm6 d-flex>
-          <v-select :items="tuples" label="Standard" v-model="selectedTuple"></v-select>
+          <v-select :items="tuples" label="Выберите тип документа" v-model="selectedTuple"></v-select>
         </v-flex>
         <v-flex v-if="selectedTuple !== '' && selectedValue !== null">
           <el-upload class="upload-demo" drag action :on-change="uploadFile" :auto-upload="false">
@@ -37,6 +37,10 @@
         </v-flex>
       </v-layout>
     </v-container>
+    <v-snackbar v-model="snackbar" :color="color" :timeout="50 * 100">
+      {{ text }}
+      <v-btn dark flat @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -49,13 +53,17 @@ export default {
     return {
       selectedValue: null,
       tuples: [
-        "opMain",
-        "educationPlan",
-        "educationAnnotation",
-        "educationShedule",
-        "methodology"
+        { value: "opMain", text: "Описание образовательной программы" },
+        { value: "educationPlan", text: "Учебный план" },
+        { value: "educationAnnotation", text: "Аннотации" },
+        { value: "educationShedule", text: "Календарный учебный график" },
+        { value: "methodology", text: "Методические документы" }
       ],
-      selectedTuple: ""
+      selectedTuple: "",
+      //snackbar
+      snackbar: false,
+      color: "success",
+      text: ""
     };
   },
   mounted() {
@@ -70,14 +78,18 @@ export default {
       let formData = new FormData();
       formData.append("upload", file.raw, file.raw.name);
       try {
-        console.log("this.selectedTuple: ", this.selectedTuple);
         await this.$store.dispatch(UPLOAD_EDUCATION, {
           id: this.selectedValue,
           tuple: this.selectedTuple,
           file: formData
         });
-      } catch (err) {
-        console.log("err: ", err);
+        this.color = "success";
+        this.text = "Данные успешно изменены";
+        this.snackbar = true;
+      } catch {
+        this.color = "error";
+        this.text = "Приносим извинения, произошла ошибка";
+        this.snackbar = true;
       }
     }
   },
