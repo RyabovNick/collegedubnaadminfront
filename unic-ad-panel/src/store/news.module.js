@@ -1,5 +1,12 @@
 import ApiService from "@/common/api.service";
-import { FETCH_LIST_NEWS, FETCH_NEWS, NEW_NEWS, DELETE_NEWS, UPDATE_NEWS } from "./actions.type";
+import {
+    FETCH_LIST_NEWS,
+    FETCH_NEWS,
+    NEW_NEWS,
+    DELETE_NEWS,
+    UPDATE_NEWS,
+    UPLOAD_NEWS
+} from "./actions.type";
 import { SET_LIST_NEWS, SET_NEWS, CHANGE_LIST_NEWS } from "./mutations.type";
 
 export const state = {
@@ -46,6 +53,12 @@ export const actions = {
     [UPDATE_NEWS](context, params) {
         ApiService.setHeader();
         return ApiService.put("admin/news", params);
+    },
+    [UPLOAD_NEWS](context, { file }) {
+        ApiService.setHeader();
+        return ApiService.upload(`admin/upload_news`, file).then(function(response) {
+            return response;
+        });
     }
 };
 

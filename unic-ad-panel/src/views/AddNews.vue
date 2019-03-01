@@ -253,7 +253,8 @@ import {
   FETCH_LIST_NEWS,
   FETCH_NEWS,
   UPDATE_NEWS,
-  DELETE_NEWS
+  DELETE_NEWS,
+  UPLOAD_NEWS
 } from "@/store/actions.type";
 
 export default {
@@ -344,19 +345,14 @@ export default {
       //add news
       if (this.news.length === 0) {
         try {
-          axios
-            .post(
-              "http://localhost:3000/api/admin/upload_news",
-              formData,
-              config
-            )
-            .then(responce => {
-              console.log("responce.data.insertId: ", responce.data.insertId);
-              console.log(responce);
-            })
-            .finally(() => console.log("completed"));
-        } catch (err) {
-          console.log(err);
+          await this.$store.dispatch(UPLOAD_NEWS, { file: formData });
+          this.color = "success";
+          this.text = "Данные успешно изменены";
+          this.snackbar = true;
+        } catch {
+          this.color = "error";
+          this.text = "Приносим извинения, произошла ошибка";
+          this.snackbar = true;
         }
       }
       //update news (need to add backend)

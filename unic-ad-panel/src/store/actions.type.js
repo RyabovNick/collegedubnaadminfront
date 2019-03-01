@@ -13,6 +13,7 @@ export const FETCH_NEWS = "fetchNews";
 export const NEW_NEWS = "newNews";
 export const DELETE_NEWS = "deleteNews";
 export const UPDATE_NEWS = "updateNews";
+export const UPLOAD_NEWS = "uploadNews";
 
 export const FETCH_NEWS_DOCS = "fetchNewsDocs";
 export const NEW_NEWS_DOCS = "newNewsDocs";
