@@ -38,11 +38,11 @@ AUTH
 -   struct: CRUD +
 -   documents: No need
 -   education:
-    -   eduOP
-    -   eduAccred
-    -   eduChislen
-    -   eduPriem
-    -   eduPerevod
+    -   eduOP + - need to check page
+    -   eduAccred +
+    -   eduChislen +
+    -   eduPriem +
+    -   eduPerevod +
 -   eduStandarts
 -   employees:
     -   teachingStaff CRUD +
@@ -57,5 +57,5 @@ AUTH
 -   paid_edu: no need
 -   budget: no need
 -   vacant CRUD +
--   news?
--   changePages
+-   news + - need to check page
+-   changePages + - need to check page
