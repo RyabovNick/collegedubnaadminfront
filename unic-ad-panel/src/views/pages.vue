@@ -34,7 +34,7 @@
   font-size: 16px;
   text-align: left;
   line-height: 1.5;
-  margin-bottom: 0;
+  margin-bottom: 1em;
   text-indent: 35px;
 }
 
