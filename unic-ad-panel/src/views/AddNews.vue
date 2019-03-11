@@ -322,7 +322,9 @@ export default {
       await this.$store.dispatch(FETCH_NEWS, this.selectedValue);
       this.title = await this.$store.getters.news[0].title;
       this.newsText = this.$store.getters.news[0].content;
-      this.imageUrl = this.$store.getters.news[0].logo;
+      this.imageUrl = `http://localhost:3001/files/${
+        this.$store.getters.news[0].logo
+      }`;
       let prepareDate = new Date(this.$store.getters.news[0].date_now);
       prepareDate.setHours(prepareDate.getHours() + 3);
       prepareDate = new Date(prepareDate).toISOString();
@@ -336,12 +338,6 @@ export default {
       formData.append("date_now", `${this.date} ${this.time}`);
       formData.append("upload", this.file, this.file.name);
 
-      let config = {
-        header: {
-          "Content-Type": "multipart/form-data"
-        }
-      };
-
       //add news
       if (this.news.length === 0) {
         try {
@@ -349,6 +345,11 @@ export default {
           this.color = "success";
           this.text = "Данные успешно изменены";
           this.snackbar = true;
+
+          // empty form
+          this.title = "";
+          this.newsText = "";
+          this.imageUrl = "";
         } catch {
           this.color = "error";
           this.text = "Приносим извинения, произошла ошибка";

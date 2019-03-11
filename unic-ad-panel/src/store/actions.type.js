@@ -83,3 +83,10 @@ export const FETCH_EDUPRIEM = "fetchEduPriem";
 export const NEW_EDUPRIEM = "newEduPriem";
 export const DELETE_EDUPRIEM = "deleteEduPriem";
 export const UPDATE_EDUPRIEM = "updateEduPriem";
+
+//eduStandarts
+export const FETCH_EDUSTANDARTS = "fetchEduStandarts";
+export const UPLOAD_EDUSTANDARTS = "uploadEduStandarts";
+export const NEW_EDUSTANDARTS = "newEduStandarts";
+export const CHANGE_EDUSTANDARTS = "changeEduStandarts";
+export const DELETE_EDUSTANDARTS = "deleteEduStandarts";

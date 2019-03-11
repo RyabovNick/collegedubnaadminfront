@@ -1,9 +1,7 @@
-<style>
-</style>
-
 <template>
   <v-app>
     <v-container fluid grid-list-xl>
+      <p>В разделе можно загрузить файлы для конкретной специальности и года</p>
       <v-layout wrap align-center>
         <v-flex xs12 sm12 d-flex>
           <v-select
@@ -74,7 +72,6 @@ export default {
       this.$store.dispatch(FETCH_EDUCATION);
     },
     async uploadFile(file) {
-      console.log("file: ", file.raw.name);
       let formData = new FormData();
       formData.append("upload", file.raw, file.raw.name);
       try {

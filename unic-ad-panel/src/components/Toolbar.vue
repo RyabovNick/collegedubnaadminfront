@@ -227,7 +227,6 @@ export default {
           }
         ]
       },
-      { icon: "contacts", text: "Новости", link: "/news" },
       { icon: "contacts", text: "Добавить новость", link: "/addnews" }
     ],
     toolbar: [{ icon: "home", text: "Главная", link: "/" }]

@@ -1,7 +1,6 @@
 import Home from "./views/Home.vue";
 import About from "./views/About.vue";
 import Common from "./views/sveden/common.vue";
-import News from "./views/News.vue";
 import AddNews from "./views/AddNews.vue";
 import Struct from "./views/sveden/struct.vue";
 import EduAccred from "./views/sveden/eduAccred.vue";
@@ -14,6 +13,7 @@ import TeachingStaff from "./views/sveden/teachingStaff.vue";
 import GraduateJob from "./views/sveden/graduateJob.vue";
 import Pages from "./views/pages.vue";
 import Upload from "./views/upload.vue";
+import EduStandarts from "./views/sveden/eduStandarts.vue";
 
 export const routes = [
     { path: "/", name: "Home", component: Home },
@@ -24,7 +24,6 @@ export const routes = [
         component: () => import("@/views/Login"),
         meta: { authNotRequired: true }
     },
-    { path: "/news", name: "News", component: News },
     { path: "/addnews", name: "AddNews", component: AddNews },
     { path: "/sveden/common", name: "Common", component: Common },
     { path: "/sveden/struct", name: "Struct", component: Struct },
@@ -33,6 +32,7 @@ export const routes = [
     { path: "/sveden/educhislen", name: "EduChislen", component: EduChislen },
     { path: "/sveden/eduperevod", name: "EduPerevod", component: EduPerevod },
     { path: "/sveden/edupriem", name: "EduPriem", component: EduPriem },
+    { path: "/sveden/eduStandarts", name: "EduStandarts", component: EduStandarts },
     { path: "/sveden/vacant", name: "Vacant", component: Vacant },
     { path: "/sveden/employees", name: "TeachingStaff", component: TeachingStaff },
     { path: "/sveden/grants", name: "GraduateJob", component: GraduateJob },

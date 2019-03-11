@@ -42,3 +42,6 @@ export const SET_EDUPRIEM = "setEduPriem";
 
 //eduPerevod
 export const SET_EDUPEREVOD = "setEduPerevod";
+
+//eduStandarts
+export const SET_EDUSTANDARTS = "setEduStandarts";
