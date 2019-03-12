@@ -14,6 +14,8 @@ import GraduateJob from "./views/sveden/graduateJob.vue";
 import Pages from "./views/pages.vue";
 import Upload from "./views/upload.vue";
 import EduStandarts from "./views/sveden/eduStandarts.vue";
+import Cabinets from "./views/sveden/cabinets.vue";
+import EduCabinets from "./views/sveden/eduCabinets.vue";
 
 export const routes = [
     { path: "/", name: "Home", component: Home },
@@ -33,6 +35,8 @@ export const routes = [
     { path: "/sveden/eduperevod", name: "EduPerevod", component: EduPerevod },
     { path: "/sveden/edupriem", name: "EduPriem", component: EduPriem },
     { path: "/sveden/eduStandarts", name: "EduStandarts", component: EduStandarts },
+    { path: "/sveden/cabinets", name: "Cabinets", component: Cabinets },
+    { path: "/sveden/educabinets", name: "EduCabinets", component: EduCabinets },
     { path: "/sveden/vacant", name: "Vacant", component: Vacant },
     { path: "/sveden/employees", name: "TeachingStaff", component: TeachingStaff },
     { path: "/sveden/grants", name: "GraduateJob", component: GraduateJob },

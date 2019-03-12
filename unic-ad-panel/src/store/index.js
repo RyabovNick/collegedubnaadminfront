@@ -10,6 +10,7 @@ import education from "./education.module";
 import eduChislen from "./eduChislen.module";
 import eduPerevod from "./eduPerevod.module";
 import eduPriem from "./eduPriem.module";
+import objects from "./objects.module";
 import vacant from "./vacant.module";
 import teachingstaff from "./teachingstaff.module";
 import graduatejob from "./grantsgj.module";
@@ -29,6 +30,7 @@ export default new Vuex.Store({
         eduChislen,
         eduPerevod,
         eduPriem,
+        objects,
         vacant,
         teachingstaff,
         graduatejob,

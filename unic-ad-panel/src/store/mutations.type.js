@@ -45,3 +45,9 @@ export const SET_EDUPEREVOD = "setEduPerevod";
 
 //eduStandarts
 export const SET_EDUSTANDARTS = "setEduStandarts";
+
+//objects
+
+//cabs
+export const SET_CABINETS = "setCabinets"; // новый кабинет
+export const SET_EDUCABINETS = "setEduCabinets"; // привязка кабинета к программе

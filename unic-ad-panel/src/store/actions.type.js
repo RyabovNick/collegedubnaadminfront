@@ -90,3 +90,17 @@ export const UPLOAD_EDUSTANDARTS = "uploadEduStandarts";
 export const NEW_EDUSTANDARTS = "newEduStandarts";
 export const CHANGE_EDUSTANDARTS = "changeEduStandarts";
 export const DELETE_EDUSTANDARTS = "deleteEduStandarts";
+
+//objects
+
+//cabinets
+export const FETCH_CABINETS = "fetchCabinets";
+export const NEW_CABINETS = "newCabinets";
+export const UPDATE_CABINETS = "changeCabinets";
+export const DELETE_CABINETS = "deleteCabinets";
+
+//eduCabs - привязать кабинет к обр. программе
+export const FETCH_EDUCABINETS = "fetchEduCabinets";
+export const NEW_EDUCABINETS = "newEduCabinets";
+export const UPDATE_EDUCABINETS = "changeEduCabinets";
+export const DELETE_EDUCABINETS = "deleteEduCabinets";
