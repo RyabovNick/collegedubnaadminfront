@@ -16,6 +16,8 @@ import Upload from "./views/upload.vue";
 import EduStandarts from "./views/sveden/eduStandarts.vue";
 import Cabinets from "./views/sveden/cabinets.vue";
 import EduCabinets from "./views/sveden/eduCabinets.vue";
+import PurposeLibr from "./views/sveden/purposeLibr.vue";
+import PurposeEios from "./views/sveden/purposeEios.vue";
 
 export const routes = [
     { path: "/", name: "Home", component: Home },
@@ -37,6 +39,8 @@ export const routes = [
     { path: "/sveden/eduStandarts", name: "EduStandarts", component: EduStandarts },
     { path: "/sveden/cabinets", name: "Cabinets", component: Cabinets },
     { path: "/sveden/educabinets", name: "EduCabinets", component: EduCabinets },
+    { path: "/sveden/purposelibr", name: "PurposeLibr", component: PurposeLibr },
+    { path: "/sveden/purposeeios", name: "PurposeEios", component: PurposeEios },
     { path: "/sveden/vacant", name: "Vacant", component: Vacant },
     { path: "/sveden/employees", name: "TeachingStaff", component: TeachingStaff },
     { path: "/sveden/grants", name: "GraduateJob", component: GraduateJob },

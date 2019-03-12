@@ -16,6 +16,7 @@ import teachingstaff from "./teachingstaff.module";
 import graduatejob from "./grantsgj.module";
 import pages from "./pages.module";
 import eduStandarts from "./eduStandarts.module";
+import purpose from "./purpose.module";
 
 Vue.use(Vuex);
 
@@ -35,7 +36,8 @@ export default new Vuex.Store({
         teachingstaff,
         graduatejob,
         pages,
-        eduStandarts
+        eduStandarts,
+        purpose
     }
     /*state: {},
     mutations: {},

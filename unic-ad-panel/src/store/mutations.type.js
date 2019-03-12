@@ -51,3 +51,9 @@ export const SET_EDUSTANDARTS = "setEduStandarts";
 //cabs
 export const SET_CABINETS = "setCabinets"; // новый кабинет
 export const SET_EDUCABINETS = "setEduCabinets"; // привязка кабинета к программе
+
+// libr
+export const SET_PURPOSELIBR = "setPurposeLibr";
+
+// eios
+export const SET_PURPOSEEIOS = "setPurposeEios";

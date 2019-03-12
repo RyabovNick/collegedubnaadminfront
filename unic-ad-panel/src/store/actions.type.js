@@ -104,3 +104,15 @@ export const FETCH_EDUCABINETS = "fetchEduCabinets";
 export const NEW_EDUCABINETS = "newEduCabinets";
 export const UPDATE_EDUCABINETS = "changeEduCabinets";
 export const DELETE_EDUCABINETS = "deleteEduCabinets";
+
+//purposeLibr
+export const FETCH_PURPOSELIBR = "fetchPurposeLibr";
+export const NEW_PURPOSELIBR = "newPurposeLibr";
+export const UPDATE_PURPOSELIBR = "changePurposeLibr";
+export const DELETE_PURPOSELIBR = "deletePurposeLibr";
+
+//purposeEios
+export const FETCH_PURPOSEEIOS = "fetchPurposeEios";
+export const NEW_PURPOSEEIOS = "newPurposeEios";
+export const UPDATE_PURPOSEEIOS = "changePurposeEios";
+export const DELETE_PURPOSEEIOS = "deletePurposeEios";

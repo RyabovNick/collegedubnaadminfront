@@ -221,6 +221,15 @@ export default {
             link: "/sveden/educabinets"
           },
           {
+            text: "Сведения о наличии библиотек, объектов спорта",
+            link: "/sveden/purposelibr"
+          },
+          {
+            text:
+              "Сведения о доступе к электронной информационно-образовательной среде",
+            link: "/sveden/purposeeios"
+          },
+          {
             text: "Стипендии и иные виды материальной поддержки",
             link: "/sveden/grants"
           },

@@ -44,7 +44,6 @@ export const actions = {
         return ApiService.delete("admin/objects/cabinets", params);
     },
     [UPDATE_CABINETS](context, params) {
-        console.log("its update " + params);
         ApiService.setHeader();
         return ApiService.put("admin/objects/cabinets", params);
     },
