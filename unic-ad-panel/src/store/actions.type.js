@@ -20,6 +20,7 @@ export const NEW_NEWS_DOCS = "newNewsDocs";
 export const DELETE_NEWS_DOCS = "deleteNewsDocs";
 export const UPDATE_NEWS_DOCS = "updateNewsDocs";
 
+export const UPLOAD_NEWS_PHOTO = "uploadNewsPhoto";
 export const FETCH_NEWS_PHOTO = "fetchNewsPhoto";
 export const NEW_NEWS_PHOTO = "newNewsPhoto";
 export const DELETE_NEWS_PHOTO = "deleteNewsPhoto";

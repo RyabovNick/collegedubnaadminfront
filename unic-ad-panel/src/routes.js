@@ -2,6 +2,7 @@ import Home from "./views/Home.vue";
 import About from "./views/About.vue";
 import Common from "./views/sveden/common.vue";
 import AddNews from "./views/AddNews.vue";
+import AddNewsFiles from "./views/addNewsFiles.vue";
 import Struct from "./views/sveden/struct.vue";
 import EduAccred from "./views/sveden/eduAccred.vue";
 import Education from "./views/sveden/education.vue";
@@ -29,6 +30,7 @@ export const routes = [
         meta: { authNotRequired: true }
     },
     { path: "/addnews", name: "AddNews", component: AddNews },
+    { path: "/addnewsfiles", name: "AddNewsFiles", component: AddNewsFiles },
     { path: "/sveden/common", name: "Common", component: Common },
     { path: "/sveden/struct", name: "Struct", component: Struct },
     { path: "/sveden/eduaccred", name: "EduAccred", component: EduAccred },

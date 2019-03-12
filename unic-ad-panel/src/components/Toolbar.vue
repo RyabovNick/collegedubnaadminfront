@@ -239,7 +239,12 @@ export default {
           }
         ]
       },
-      { icon: "contacts", text: "Добавить новость", link: "/addnews" }
+      { icon: "contacts", text: "Добавить новость", link: "/addnews" },
+      {
+        icon: "contacts",
+        text: "Добавить фото к новостям",
+        link: "/addnewsfiles"
+      }
     ],
     toolbar: [{ icon: "home", text: "Главная", link: "/" }]
   }),

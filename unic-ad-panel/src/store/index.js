@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import auth from "./auth.module";
 import common from "./common.module";
 import news from "./news.module";
+import newsFiles from "./newsFiles.module";
 import struct from "./struct.module";
 import eduAccred from "./eduAccred.module";
 import education from "./education.module";
@@ -25,6 +26,7 @@ export default new Vuex.Store({
         auth,
         common,
         news,
+        newsFiles,
         struct,
         eduAccred,
         education,
