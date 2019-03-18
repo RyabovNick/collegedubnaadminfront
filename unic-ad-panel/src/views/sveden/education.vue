@@ -33,7 +33,7 @@
             </div>
           </el-upload>
         </v-flex>
-        <v-flex v-if="selectedTuple !== '' && selectedValue !== null">
+        <v-flex>
           <v-btn color="error" @click="deleteEducationFile()">Удалить файл</v-btn>
         </v-flex>
       </v-layout>
@@ -103,13 +103,16 @@ export default {
             this.selectedTuple
           } у специальности ${this.selectedValue} ?`
         )) &&
-          this.$store.dispatch(DELETE_EDUCATION_FILE, {
-            id: this.selectedValue,
-            tuple: this.selectedTuple
-          });
-        this.color = "success";
-        this.text = "Данные успешно изменены";
-        this.snackbar = true;
+          this.$store
+            .dispatch(DELETE_EDUCATION_FILE, {
+              id: this.selectedValue,
+              tuple: this.selectedTuple
+            })
+            .then(() => {
+              this.color = "success";
+              this.text = "Данные успешно изменены";
+              this.snackbar = true;
+            });
       } catch {
         this.color = "error";
         this.text = "Приносим извинения, произошла ошибка";

@@ -20,10 +20,35 @@
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex xs12 sm12 md12>
-                    <v-text-field v-model="editedItem.edu_id" label="ID программы"></v-text-field>
+                    <v-select
+                      :items="eduAccred"
+                      item-value="id"
+                      v-model="editedItem.edu_id"
+                      label="Выбор образовательной программы"
+                    >
+                      <template
+                        slot="selection"
+                        slot-scope="data"
+                      >{{data.item.id}} - {{ data.item.eduCode}} - {{ data.item.eduName }}</template>
+                      <template
+                        slot="item"
+                        slot-scope="data"
+                      >{{data.item.id}} - {{ data.item.eduCode}} - {{ data.item.eduName }}</template>
+                    </v-select>
                   </v-flex>
                   <v-flex xs12 sm12 md12>
-                    <v-text-field v-model="editedItem.cabinet_id" label="ID кабинета"></v-text-field>
+                    <v-select
+                      :items="cabinets"
+                      item-value="id"
+                      v-model="editedItem.cabinet_id"
+                      label="Выбор кабинета"
+                    >
+                      <template
+                        slot="selection"
+                        slot-scope="data"
+                      >{{data.item.id}} - {{ data.item.name}}</template>
+                      <template slot="item" slot-scope="data">{{data.item.id}} - {{ data.item.name}}</template>
+                    </v-select>
                   </v-flex>
                   <v-flex xs12 sm12 md12>
                     <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
@@ -66,7 +91,10 @@ import {
   FETCH_EDUCABINETS,
   NEW_EDUCABINETS,
   DELETE_EDUCABINETS,
-  UPDATE_EDUCABINETS
+  UPDATE_EDUCABINETS,
+  // for dialog (list)
+  FETCH_CABINETS,
+  FETCH_EDUACCRED
 } from "@/store/actions.type";
 
 export default {
@@ -113,6 +141,8 @@ export default {
   methods: {
     fetchEduCabinets() {
       this.$store.dispatch(FETCH_EDUCABINETS);
+      this.$store.dispatch(FETCH_CABINETS);
+      this.$store.dispatch(FETCH_EDUACCRED);
     },
 
     editItem(item) {
@@ -182,7 +212,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["eduCabinets"]),
+    ...mapGetters(["eduCabinets", "eduAccred", "cabinets"]),
 
     formTitle() {
       return this.editedIndex === -1 ? "Новый элемент" : "Изменить элемент";

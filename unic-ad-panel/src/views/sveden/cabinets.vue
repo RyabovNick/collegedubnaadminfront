@@ -30,7 +30,7 @@
                   </v-flex>
                   <v-flex xs12 sm12 md12>
                     <v-text-field
-                      v-model="editedItem.disabled"
+                      v-model="editedItem.forDisabled"
                       label="Приспособленность для лиц с ограниченными возможностями"
                     ></v-text-field>
                   </v-flex>
@@ -46,12 +46,12 @@
           </v-card>
         </v-dialog>
       </v-toolbar>
-      <v-data-table :headers="headers" :items="cabinets" class="elevation-1" hide-actions>
+      <v-data-table :headers="headers" :items="cabinets" class="elevation-1">
         <template slot="items" slot-scope="props">
           <td class="text-xs-left">{{ props.item.id }}</td>
           <td class="text-xs-left">{{ props.item.name }}</td>
           <td class="text-xs-left">{{ props.item.address }}</td>
-          <td class="text-xs-left">{{ props.item.disabled }}</td>
+          <td class="text-xs-left">{{ props.item.forDisabled }}</td>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
@@ -94,7 +94,7 @@ export default {
         },
         {
           text: "Приспособленность для лиц с ограниченными возможностями",
-          value: "disabled"
+          value: "forDisabled"
         },
         { text: "Действия", value: "actions" }
       ],
@@ -103,13 +103,13 @@ export default {
         id: 0,
         name: "",
         address: "",
-        disabled: "нет"
+        forDisabled: "нет"
       },
       defaultItem: {
         id: 0,
         name: "",
         address: "",
-        disabled: "нет"
+        forDisabled: "нет"
       }
     };
   },
