@@ -1,5 +1,5 @@
 import ApiService from "@/common/api.service";
-import { FETCH_EDUCATION, UPLOAD_EDUCATION } from "./actions.type";
+import { FETCH_EDUCATION, UPLOAD_EDUCATION, DELETE_EDUCATION_FILE } from "./actions.type";
 import { SET_EDUCATION } from "./mutations.type";
 
 export const state = {
@@ -26,10 +26,10 @@ export const actions = {
     //         return responce;
     //     });
     // },
-    // [DELETE_EDUCATION](context, params) {
-    //     ApiService.setHeader();
-    //     return ApiService.delete("admin/education/eduaccred", params);
-    // },
+    [DELETE_EDUCATION_FILE](context, { id, tuple }) {
+        ApiService.setHeader();
+        return ApiService.put(`admin/education/eduop/${id}/${tuple}`);
+    },
     // [UPDATE_EDUCATION](context, params) {
     //     ApiService.setHeader();
     //     return ApiService.put("admin/education/eduaccred", params);

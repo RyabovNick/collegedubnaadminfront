@@ -33,6 +33,9 @@
             </div>
           </el-upload>
         </v-flex>
+        <v-flex v-if="selectedTuple !== '' && selectedValue !== null">
+          <v-btn color="error" @click="deleteEducationFile()">Удалить файл</v-btn>
+        </v-flex>
       </v-layout>
     </v-container>
     <v-snackbar v-model="snackbar" :color="color" :timeout="50 * 100">
@@ -44,7 +47,11 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { FETCH_EDUCATION, UPLOAD_EDUCATION } from "@/store/actions.type";
+import {
+  FETCH_EDUCATION,
+  UPLOAD_EDUCATION,
+  DELETE_EDUCATION_FILE
+} from "@/store/actions.type";
 
 export default {
   data() {
@@ -80,6 +87,26 @@ export default {
           tuple: this.selectedTuple,
           file: formData
         });
+        this.color = "success";
+        this.text = "Данные успешно изменены";
+        this.snackbar = true;
+      } catch {
+        this.color = "error";
+        this.text = "Приносим извинения, произошла ошибка";
+        this.snackbar = true;
+      }
+    },
+    async deleteEducationFile() {
+      try {
+        (await confirm(
+          `Вы действительно хотите удалить ${
+            this.selectedTuple
+          } у специальности ${this.selectedValue} ?`
+        )) &&
+          this.$store.dispatch(DELETE_EDUCATION_FILE, {
+            id: this.selectedValue,
+            tuple: this.selectedTuple
+          });
         this.color = "success";
         this.text = "Данные успешно изменены";
         this.snackbar = true;
