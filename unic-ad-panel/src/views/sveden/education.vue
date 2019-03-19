@@ -33,7 +33,7 @@
             </div>
           </el-upload>
         </v-flex>
-        <v-flex>
+        <v-flex v-if="selectedTuple !== '' && selectedValue !== null">
           <v-btn color="error" @click="deleteEducationFile()">Удалить файл</v-btn>
         </v-flex>
       </v-layout>
