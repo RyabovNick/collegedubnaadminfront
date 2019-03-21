@@ -244,6 +244,11 @@ export default {
         icon: "contacts",
         text: "Добавить фото к новостям",
         link: "/addnewsfiles"
+      },
+      {
+        icon: "add_a_photo",
+        text: "Фотографии на главной",
+        link: "/gallery"
       }
     ],
     toolbar: [{ icon: "home", text: "Главная", link: "/" }]

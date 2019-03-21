@@ -118,3 +118,8 @@ export const FETCH_PURPOSEEIOS = "fetchPurposeEios";
 export const NEW_PURPOSEEIOS = "newPurposeEios";
 export const UPDATE_PURPOSEEIOS = "changePurposeEios";
 export const DELETE_PURPOSEEIOS = "deletePurposeEios";
+
+// gallery
+export const FETCH_GALLERY = "fetchGallery";
+export const UPLOAD_GALLERY = "uploadGallery";
+export const DELETE_GALLERY = "deleteGallery";

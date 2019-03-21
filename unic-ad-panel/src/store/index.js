@@ -18,6 +18,7 @@ import graduatejob from "./grantsgj.module";
 import pages from "./pages.module";
 import eduStandarts from "./eduStandarts.module";
 import purpose from "./purpose.module";
+import gallery from "./gallery.module";
 
 Vue.use(Vuex);
 
@@ -39,7 +40,8 @@ export default new Vuex.Store({
         graduatejob,
         pages,
         eduStandarts,
-        purpose
+        purpose,
+        gallery
     }
     /*state: {},
     mutations: {},

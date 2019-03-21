@@ -57,3 +57,6 @@ export const SET_PURPOSELIBR = "setPurposeLibr";
 
 // eios
 export const SET_PURPOSEEIOS = "setPurposeEios";
+
+// gallery
+export const SET_GALLERY = "setGallery";

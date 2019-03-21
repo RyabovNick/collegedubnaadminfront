@@ -1,23 +1,9 @@
 <template>
   <v-app>
     <v-container fluid grid-list-xl>
-      <p>В разделе можно загрузить файлы для новости</p>
+      <p>В разделе добавить/удалить фото галлереи на главной</p>
       <v-layout wrap align-center>
-        <v-flex xs12 sm12 d-flex>
-          <v-select
-            :items="listNews"
-            item-value="id"
-            v-model="selectedValue"
-            label="Выберите новость"
-          >
-            <template
-              slot="selection"
-              slot-scope="data"
-            >{{ data.item.title}} - {{ data.item.date_now }}</template>
-            <template slot="item" slot-scope="data">{{ data.item.title}} - {{data.item.date_now }}</template>
-          </v-select>
-        </v-flex>
-        <v-flex v-if="selectedValue !== null">
+        <v-flex>
           <el-upload
             class="upload-demo"
             drag
@@ -41,14 +27,14 @@
     <section v-else>
       <div v-if="loading">Загрузка...</div>
       <v-toolbar flat color="white">
-        <v-toolbar-title>Удаление фото у новостей</v-toolbar-title>
+        <v-toolbar-title>Удаление фотографий на главной странице</v-toolbar-title>
         <v-divider class="mx-2" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
       </v-toolbar>
-      <v-data-table :headers="headers" :items="photos" :search="search" class="elevation-1">
+      <v-data-table :headers="headers" :items="gallery" :search="search" class="elevation-1">
         <template slot="items" slot-scope="props">
-          <td class="text-xs-left">{{ props.item.idnews }}</td>
+          <td class="text-xs-left">{{ props.item.id }}</td>
           <td class="text-xs-left">{{ props.item.link }}</td>
           <td class="justify-center layout px-0">
             <v-icon v-if="props.item.id !== null" small @click="deleteItem(props.item)">delete</v-icon>
@@ -66,10 +52,9 @@
 <script>
 import { mapGetters } from "vuex";
 import {
-  FETCH_LIST_NEWS,
-  FETCH_NEWS_PHOTO,
-  UPLOAD_NEWS_PHOTO,
-  DELETE_NEWS_PHOTO
+  FETCH_GALLERY,
+  UPLOAD_GALLERY,
+  DELETE_GALLERY
 } from "@/store/actions.type";
 
 export default {
@@ -79,7 +64,7 @@ export default {
       errored: false,
       search: "",
       headers: [
-        { text: "ID новости", value: "idnews" },
+        { text: "ID", value: "id" },
         { text: "Ссылка", value: "link" },
         { text: "Действия", value: "actions" }
       ],
@@ -87,16 +72,12 @@ export default {
       editedIndex: -1,
       editedItem: {
         id: 0,
-        idnews: "",
         link: ""
       },
       defaultItem: {
         id: 0,
-        idnews: "",
         link: ""
       },
-
-      selectedValue: null,
       //snackbar
       snackbar: false,
       color: "success",
@@ -108,16 +89,13 @@ export default {
   },
   methods: {
     fetchNews() {
-      this.$store.dispatch(FETCH_LIST_NEWS);
-      this.$store.dispatch(FETCH_NEWS_PHOTO);
-      //this.$store.dispatch(FETCH_NEWS_PHOTO);
+      this.$store.dispatch(FETCH_GALLERY);
     },
     async uploadFile(file) {
       let formData = new FormData();
       formData.append("upload", file.raw, file.raw.name);
       try {
-        await this.$store.dispatch(UPLOAD_NEWS_PHOTO, {
-          id: this.selectedValue,
+        await this.$store.dispatch(UPLOAD_GALLERY, {
           file: formData
         });
         this.color = "success";
@@ -130,12 +108,12 @@ export default {
       }
     },
     async deleteItem(item) {
-      const index = this.photos.indexOf(item);
+      const index = this.gallery.indexOf(item);
       const id = item.id;
       try {
         (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
-          this.$store.dispatch(DELETE_NEWS_PHOTO, { id }).then(() => {
-            this.photos.splice(index, 1);
+          this.$store.dispatch(DELETE_GALLERY, { id }).then(() => {
+            this.gallery.splice(index, 1);
             this.color = "success";
             this.text = "Данные успешно изменены";
             this.snackbar = true;
@@ -156,7 +134,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["photos", "listNews"])
+    ...mapGetters(["gallery"])
   },
   watch: {
     dialog(val) {
@@ -165,3 +143,4 @@ export default {
   }
 };
 </script>
+

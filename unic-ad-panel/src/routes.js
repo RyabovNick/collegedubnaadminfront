@@ -13,12 +13,12 @@ import Vacant from "./views/sveden/vacant.vue";
 import TeachingStaff from "./views/sveden/teachingStaff.vue";
 import GraduateJob from "./views/sveden/graduateJob.vue";
 import Pages from "./views/pages.vue";
-import Upload from "./views/upload.vue";
 import EduStandarts from "./views/sveden/eduStandarts.vue";
 import Cabinets from "./views/sveden/cabinets.vue";
 import EduCabinets from "./views/sveden/eduCabinets.vue";
 import PurposeLibr from "./views/sveden/purposeLibr.vue";
 import PurposeEios from "./views/sveden/purposeEios.vue";
+import CarouselPhotos from "./views/carouselPhotos.vue";
 
 export const routes = [
     { path: "/", name: "Home", component: Home },
@@ -47,5 +47,5 @@ export const routes = [
     { path: "/sveden/employees", name: "TeachingStaff", component: TeachingStaff },
     { path: "/sveden/grants", name: "GraduateJob", component: GraduateJob },
     { path: "/pages", name: "Pages", component: Pages },
-    { path: "/upload", name: "upload", component: Upload }
+    { path: "/gallery", name: "CarouselPhotos", component: CarouselPhotos }
 ];
