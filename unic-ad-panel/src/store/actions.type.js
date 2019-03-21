@@ -123,3 +123,4 @@ export const DELETE_PURPOSEEIOS = "deletePurposeEios";
 export const FETCH_GALLERY = "fetchGallery";
 export const UPLOAD_GALLERY = "uploadGallery";
 export const DELETE_GALLERY = "deleteGallery";
+export const UPDATE_GALLERY = "updateGallery";

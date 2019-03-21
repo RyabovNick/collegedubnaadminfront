@@ -241,7 +241,7 @@ export default {
       },
       { icon: "contacts", text: "Добавить новость", link: "/addnews" },
       {
-        icon: "contacts",
+        icon: "add_to_photos",
         text: "Добавить фото к новостям",
         link: "/addnewsfiles"
       },

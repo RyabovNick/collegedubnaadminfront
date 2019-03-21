@@ -1,5 +1,5 @@
 import ApiService from "@/common/api.service";
-import { FETCH_GALLERY, UPLOAD_GALLERY, DELETE_GALLERY } from "./actions.type";
+import { FETCH_GALLERY, UPLOAD_GALLERY, DELETE_GALLERY, UPDATE_GALLERY } from "./actions.type";
 import { SET_GALLERY } from "./mutations.type";
 
 export const state = {
@@ -29,6 +29,10 @@ export const actions = {
         return ApiService.upload(`admin/gallery`, file).then(function(response) {
             return response;
         });
+    },
+    [UPDATE_GALLERY](context, params) {
+        ApiService.setHeader();
+        return ApiService.put("admin/gallery", params);
     }
 };
 
