@@ -107,12 +107,20 @@ ul {
         <v-flex xs12 sm6 d-flex>
           <v-select
             :items="pages"
-            item-text="page_name"
             item-value="id"
             v-model="selectedValue"
             label="Выбор страницы"
             @change="fetchPage()"
-          ></v-select>
+          >
+            <template
+              slot="selection"
+              slot-scope="data"
+            >{{ data.item.page_ru_name}} - {{ data.item.page_name }}</template>
+            <template
+              slot="item"
+              slot-scope="data"
+            >{{ data.item.page_ru_name}} - {{ data.item.page_name }}</template>
+          </v-select>
         </v-flex>
         <v-flex xs12 sm4>
           <v-switch v-model="isPlace" :label="`Расположение элементов`"></v-switch>

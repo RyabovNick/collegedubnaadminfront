@@ -19,6 +19,7 @@ import pages from "./pages.module";
 import eduStandarts from "./eduStandarts.module";
 import purpose from "./purpose.module";
 import gallery from "./gallery.module";
+import environment from "./environment.module";
 
 Vue.use(Vuex);
 
@@ -41,7 +42,8 @@ export default new Vuex.Store({
         pages,
         eduStandarts,
         purpose,
-        gallery
+        gallery,
+        environment
     }
     /*state: {},
     mutations: {},

@@ -239,6 +239,39 @@ export default {
           }
         ]
       },
+      {
+        icon: "keyboard_arrow_up",
+        "icon-alt": "keyboard_arrow_down",
+        text: "Доступная среда",
+        model: false,
+        children: [
+          { text: "Виртуальная экскурсия", link: "/environment/virtual_tour" },
+          {
+            text: "Паспорта доступности",
+            link: "/environment/availability"
+          },
+          {
+            text: "Дорожная карта",
+            link: "/environment/roadmap"
+          },
+          {
+            text: "Нормативное обеспечение",
+            link: "/environment/normative"
+          },
+          {
+            text: "Оборудование",
+            link: "/environment/equipment"
+          },
+          {
+            text: "Профориентация",
+            link: "/environment/careerguidance"
+          },
+          {
+            text: "Трудоустройство",
+            link: "/environment/employment"
+          }
+        ]
+      },
       { icon: "contacts", text: "Добавить новость", link: "/addnews" },
       {
         icon: "add_to_photos",

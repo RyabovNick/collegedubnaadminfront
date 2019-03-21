@@ -124,3 +124,11 @@ export const FETCH_GALLERY = "fetchGallery";
 export const UPLOAD_GALLERY = "uploadGallery";
 export const DELETE_GALLERY = "deleteGallery";
 export const UPDATE_GALLERY = "updateGallery";
+
+// environment
+export const FETCH_KCP_PAGES = "fetchKCPPages"; //Known content pages
+export const FETCH_LIST_ENVIRONMENTS_PAGES = "fetchListEnvironmentsPages";
+export const FETCH_ENVIRONMENT = "fetchEnvironment";
+export const NEW_ENVIRONMENT = "newEnvironment";
+export const UPDATE_ENVIRONMENT = "changeEnvironment";
+export const DELETE_ENVIRONMENT = "deleteEnvironment";
