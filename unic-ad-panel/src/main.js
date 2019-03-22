@@ -3,6 +3,9 @@ import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 
+import mavonEditor from "mavon-editor";
+import "mavon-editor/dist/css/index.css";
+
 import { Upload } from "element-ui";
 
 import App from "./App.vue";
@@ -18,6 +21,7 @@ Vue.filter("date", DateFilter);
 Vue.filter("error", ErrorFilter);
 Vue.use(Vuetify);
 Vue.use(Upload);
+Vue.use(mavonEditor);
 
 ApiService.init();
 // Check auth before each page load

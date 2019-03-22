@@ -143,9 +143,6 @@ ul {
             <template slot="item" slot-scope="data">{{ data.item.title}} - {{data.item.date_now }}</template>
           </v-select>
         </v-flex>
-        <v-flex xs12 sm6 md3>
-          <v-switch v-model="isPlace" :label="`Расположение элементов`"></v-switch>
-        </v-flex>
         <v-flex v-if="selectedValue" xs12 sm6 md3>
           <v-btn color="error" @click="deleteNews()">Удалить новость</v-btn>
         </v-flex>
@@ -164,16 +161,6 @@ ul {
             hint="Введите текст"
             rows="2"
           ></v-textarea>
-        </v-flex>
-      </v-layout>
-    </v-container>
-    <v-container fluid grid-list-md>
-      <v-layout row wrap>
-        <v-flex :class="[isPlace ? 'xs12 sm6' : 'xs12 sm12 md12 lg12']">
-          <v-textarea name="input-7-1" box label="Содержание новости" v-model="newsText" rows="30"></v-textarea>
-        </v-flex>
-        <v-flex :class="[isPlace ? 'xs12 sm6' : 'xs12 sm12 md12 lg12']">
-          <vue-markdown class="md-helper" show :source="newsText"></vue-markdown>
         </v-flex>
       </v-layout>
     </v-container>
@@ -236,6 +223,14 @@ ul {
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </v-flex>
+        <v-flex xs12>
+          <mavon-editor
+            style="max-height: 800px"
+            v-model="newsText"
+            language="ru"
+            :toolbars="toolbars"
+          />
+        </v-flex>
       </v-layout>
     </v-container>
     <v-snackbar v-model="snackbar" :color="color" :timeout="50 * 100">
@@ -263,7 +258,6 @@ export default {
   },
   data() {
     return {
-      isPlace: true,
       selectedValue: null,
       snackbar: false,
       color: "success",
@@ -282,7 +276,44 @@ export default {
         .substr(11, 5),
       //image
       imageUrl: "",
-      file: ""
+      file: "",
+
+      //mavon-editor toolbars
+      toolbars: {
+        bold: true,
+        italic: true,
+        header: true,
+        underline: true,
+        strikethrough: true,
+        mark: true,
+        superscript: true,
+        subscript: true,
+        quote: false,
+        ol: true,
+        ul: true,
+        link: true,
+        imagelink: true,
+        code: true,
+        table: true,
+        fullscreen: true,
+        readmodel: true,
+        htmlcode: true,
+        help: true,
+        /* 1.3.5 */
+        undo: true,
+        redo: true,
+        trash: true,
+        save: true,
+        /* 1.4.2 */
+        navigation: true,
+        /* 2.1.8 */
+        alignleft: false,
+        aligncenter: false,
+        alignright: false,
+        /* 2.2.1 */
+        subfield: true,
+        preview: true
+      }
     };
   },
   mounted() {
@@ -339,7 +370,7 @@ export default {
       formData.append("upload", this.file, this.file.name);
 
       //add news
-      if (this.news.length === 0) {
+      if (this.selectedValue === null) {
         try {
           await this.$store.dispatch(UPLOAD_NEWS, { file: formData });
           this.color = "success";
@@ -364,6 +395,7 @@ export default {
           this.snackbar = true;
         } else {
           try {
+            console.log(1);
             const id = this.selectedValue;
             await this.$store.dispatch(UPDATE_NEWS, {
               id,

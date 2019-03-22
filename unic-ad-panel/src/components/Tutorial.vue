@@ -5,19 +5,17 @@
     <h1>Добавление новостей</h1>
 
     <p>Используется формат markdown. https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet https://ru.wikipedia.org/wiki/Markdown</p>
-    <vue-markdown class="md-helper" show :source="newsText"></vue-markdown>
+    <div id="main">
+      <mavon-editor style="height: 100%" v-model="newsText"/>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import VueMarkdown from "vue-markdown";
 
 export default {
   name: "Tutorial",
-  compponents: {
-    VueMarkdown
-  },
   data: () => ({
     show: false,
     newsText: `
@@ -30,6 +28,12 @@ export default {
 </script>
 
 <style scoped>
+#editor {
+  margin: auto;
+  width: 80%;
+  height: 580px;
+}
+
 .md-helper >>> h1 {
   font-size: 2em;
   text-align: center;

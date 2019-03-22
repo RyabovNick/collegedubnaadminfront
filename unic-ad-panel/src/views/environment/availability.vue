@@ -1,9 +1,15 @@
 <template>
-  <p>links</p>
+  <tutorial></tutorial>
 </template>
 
 <script>
-export default {};
+import Tutorial from "../../components/Tutorial";
+
+export default {
+  components: {
+    Tutorial
+  }
+};
 </script>
 
 <style>
