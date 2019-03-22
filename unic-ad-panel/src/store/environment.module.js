@@ -1,19 +1,26 @@
 import ApiService from "@/common/api.service";
 import {
     FETCH_KCP_PAGES,
+    FETCH_KCP_TYPES,
     FETCH_LIST_ENVIRONMENTS_PAGES,
     FETCH_ENVIRONMENT,
     NEW_ENVIRONMENT,
     DELETE_ENVIRONMENT,
     UPDATE_ENVIRONMENT
 } from "./actions.type";
-import { SET_KCP_PAGES, SET_LIST_ENVIRONMENTS_PAGES, SET_ENVIRONMENT } from "./mutations.type";
+import {
+    SET_KCP_PAGES,
+    SET_KCP_TYPES,
+    SET_LIST_ENVIRONMENTS_PAGES,
+    SET_ENVIRONMENT
+} from "./mutations.type";
 
 export const state = {
     //known_content_pages
     kcpPages: [],
     listEnvironmentPages: [],
-    environment: []
+    environment: [],
+    kcpTypes: []
 };
 
 const getters = {
@@ -25,14 +32,24 @@ const getters = {
     },
     kcpPages(state) {
         return state.kcpPages;
+    },
+    kcpTypes(state) {
+        return state.kcpTypes;
     }
 };
 
 export const actions = {
-    [FETCH_KCP_PAGES](context, id) {
+    [FETCH_KCP_PAGES](context) {
         ApiService.setHeader();
         return ApiService.get(`/admin/kcp_pages`).then(({ data }) => {
             context.commit(SET_KCP_PAGES, data);
+            return data;
+        });
+    },
+    [FETCH_KCP_TYPES](context) {
+        ApiService.setHeader();
+        return ApiService.get(`/admin/kcp_types`).then(({ data }) => {
+            context.commit(SET_KCP_TYPES, data);
             return data;
         });
     },
@@ -68,6 +85,9 @@ export const actions = {
 export const mutations = {
     [SET_KCP_PAGES](state, kcpPages) {
         state.kcpPages = kcpPages;
+    },
+    [SET_KCP_TYPES](state, kcpTypes) {
+        state.kcpTypes = kcpTypes;
     },
     [SET_LIST_ENVIRONMENTS_PAGES](state, listEnvironmentPages) {
         state.listEnvironmentPages = listEnvironmentPages;

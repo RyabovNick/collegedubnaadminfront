@@ -1,6 +1,27 @@
 <template>
   <v-app>
-    <h1>Структура и органы управления образовательной организацией</h1>
+    <h1>Доступная среда</h1>
+    <p class="text-xs-left">
+      <b>Добавляемые файлы могут делиться на несколько типов:</b>
+    </p>
+    <ol>
+      <li class="text-xs-left">
+        Ссылка на сайте колледжа (Внутренние ссылки): необходимо выбрать 1 тип
+        указать ссылку в таком виде /speciality - будет вести на раздел о
+        профессиях или /environment/virtual_test ведёт на подраздел виртуальные
+        тесты в разделе доступная среда
+      </li>
+      <li class="text-xs-left">
+        Ссылка на внешний ресурс (Внешняя ссылка): необходимо выбрать 2 тип и
+        указать полную ссылку - http://мой-ориентир.рф/ (например)
+      </li>
+      <li class="text-xs-left">Изображения?? Пока не используется</li>
+      <li class="text-xs-left">
+        Для добавления ссылки на файл необходимо выбрать 4 тип: Локальные файлы и
+        указать ссылку также, как в 1 типе, только с добавлением названия файла и расширения
+        /environment/availability/responsible.pdf - например.
+      </li>
+    </ol>
     <section v-if="errored">
       <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
     </section>
@@ -10,6 +31,7 @@
         <v-toolbar-title>CRUD ENVIRONMENT</v-toolbar-title>
         <v-divider class="mx-2" inset vertical></v-divider>
         <v-spacer></v-spacer>
+        <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
         <v-dialog v-model="dialog" max-width="800px">
           <v-btn slot="activator" color="primary" dark class="mb-2">Добавить</v-btn>
           <v-card>
@@ -38,10 +60,30 @@
                     </v-select>
                   </v-flex>
                   <v-flex xs12 sm12 md12>
-                    <v-text-field type="number" v-model="editedItem.type" label="Тип"></v-text-field>
+                    <v-select
+                      :items="kcpTypes"
+                      item-value="id"
+                      v-model="editedItem.type"
+                      label="Выберите тип"
+                    >
+                      <template
+                        slot="selection"
+                        slot-scope="data"
+                      >{{ data.item.type_ru}} - {{ data.item.type }}</template>
+                      <template
+                        slot="item"
+                        slot-scope="data"
+                      >{{ data.item.type_ru}} - {{data.item.type }}</template>
+                    </v-select>
                   </v-flex>
                   <v-flex xs12 sm12 md12>
                     <v-text-field v-model="editedItem.link" label="Ссылка"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <v-text-field
+                      v-model="editedItem.link_name"
+                      label="Название ссылки (будет отображать на кнопке перехода)"
+                    ></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -58,14 +100,15 @@
       <v-data-table
         :headers="headers"
         :items="listEnvironmentPages"
+        :search="search"
         class="elevation-1"
-        hide-actions
       >
         <template slot="items" slot-scope="props">
           <td class="text-xs-left">{{ props.item.id }}</td>
           <td class="text-xs-left">{{ props.item.page_id }}</td>
           <td class="text-xs-left">{{ props.item.type }}</td>
           <td class="text-xs-left">{{ props.item.link }}</td>
+          <td class="text-xs-left">{{ props.item.link_name }}</td>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
@@ -84,6 +127,7 @@
 import { mapGetters } from "vuex";
 import {
   FETCH_KCP_PAGES,
+  FETCH_KCP_TYPES,
   FETCH_LIST_ENVIRONMENTS_PAGES,
   FETCH_ENVIRONMENT,
   NEW_ENVIRONMENT,
@@ -101,25 +145,29 @@ export default {
       snackbar: false,
       color: "success",
       text: "",
+      search: "",
       headers: [
         { text: "Id", value: "id" },
         { text: "Id страницы", value: "page_id" },
         { text: "Тип", value: "type" },
         { text: "Ссылка", value: "link" },
+        { text: "Название ссылки", value: "link_name" },
         { text: "Действия", value: "actions" }
       ],
       editedIndex: -1,
       editedItem: {
         id: 0,
+        link: "",
         page_id: 0,
         type: 1,
-        link: ""
+        link_name: ""
       },
       defaultItem: {
         id: 0,
+        link: "",
         page_id: 0,
         type: 1,
-        link: ""
+        link_name: ""
       }
     };
   },
@@ -130,21 +178,22 @@ export default {
     fetchEnvironment() {
       this.$store.dispatch(FETCH_LIST_ENVIRONMENTS_PAGES);
       this.$store.dispatch(FETCH_KCP_PAGES);
+      this.$store.dispatch(FETCH_KCP_TYPES);
     },
 
     editItem(item) {
-      this.editedIndex = this.environment.indexOf(item);
+      this.editedIndex = this.listEnvironmentPages.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     async deleteItem(item) {
-      const index = this.environment.indexOf(item);
+      const index = this.listEnvironmentPages.indexOf(item);
       const id = item.id;
       try {
         (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
           this.$store.dispatch(DELETE_ENVIRONMENT, { id }).then(() => {
-            this.environment.splice(index, 1);
+            this.listEnvironmentPages.splice(index, 1);
             this.color = "success";
             this.text = "Данные успешно изменены";
             this.snackbar = true;
@@ -167,8 +216,14 @@ export default {
     async save(item) {
       if (this.editedIndex > -1) {
         try {
-          await this.$store.dispatch(UPDATE_ENVIRONMENT, item);
-          Object.assign(this.environment[this.editedIndex], item);
+          await this.$store.dispatch(UPDATE_ENVIRONMENT, {
+            id: this.editedItem.id,
+            page_id: this.editedItem.page_id,
+            type: this.editedItem.type,
+            link: this.editedItem.link,
+            name: this.editedItem.link_name
+          });
+          Object.assign(this.listEnvironmentPages[this.editedIndex], item);
           this.editedIndex = -1;
           this.color = "success";
           this.text = "Данные успешно изменены";
@@ -184,12 +239,13 @@ export default {
             .dispatch(NEW_ENVIRONMENT, {
               page_id: this.editedItem.page_id,
               type: this.editedItem.type,
-              link: this.editedItem.link
+              link: this.editedItem.link,
+              name: this.editedItem.link_name
             })
             .then(responce => {
               this.editedItem.id = responce.data.insertId;
             });
-          this.environment.push(this.editedItem);
+          this.listEnvironmentPages.push(this.editedItem);
           this.color = "success";
           this.text = "Данные успешно изменены";
           this.snackbar = true;
@@ -203,7 +259,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["kcpPages", "environment", "listEnvironmentPages"]),
+    ...mapGetters([
+      "kcpTypes",
+      "kcpPages",
+      "environment",
+      "listEnvironmentPages"
+    ]),
 
     formTitle() {
       return this.editedIndex === -1 ? "Новый элемент" : "Изменить элемент";

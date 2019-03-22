@@ -62,6 +62,7 @@ export const SET_PURPOSEEIOS = "setPurposeEios";
 export const SET_GALLERY = "setGallery";
 
 // environment
+export const SET_KCP_TYPES = "setKCPTypes";
 export const SET_KCP_PAGES = "setKCPPages";
 export const SET_LIST_ENVIRONMENTS_PAGES = "setListEnvironmentsPages";
 export const SET_ENVIRONMENT = "setEnvironment";
