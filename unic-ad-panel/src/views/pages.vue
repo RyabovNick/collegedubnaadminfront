@@ -98,6 +98,10 @@ ul {
   width: 90%;
   text-align: left;
 }
+
+.v-note-wrapper {
+  z-index: 2;
+}
 </style>
 
 <template>
@@ -123,30 +127,19 @@ ul {
           </v-select>
         </v-flex>
         <v-flex xs12 sm4>
-          <v-switch v-model="isPlace" :label="`Расположение элементов`"></v-switch>
-        </v-flex>
-        <v-flex xs12 sm2>
           <v-btn color="info" @click="savePage()">Принять изменения</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
     <v-container fluid grid-list-md>
-      <v-layout v-if="isPlace" row wrap>
-        <v-flex xs12 sm6>
-          <v-textarea name="input-7-1" box label="Label" v-model="newsText" rows="30"></v-textarea>
-        </v-flex>
-        <v-flex xs12 sm6>
-          <vue-markdown class="md-helper" show :source="newsText"></vue-markdown>
-        </v-flex>
-      </v-layout>
-      <v-layout v-else row wrap>
-        <v-flex xs12 sm12 md12 lg12>
-          <v-textarea name="input-7-1" box label="Label" v-model="newsText" rows="30"></v-textarea>
-        </v-flex>
-        <v-flex xs12 sm12 md12 lg12>
-          <vue-markdown class="md-helper" show :source="newsText"></vue-markdown>
-        </v-flex>
-      </v-layout>
+      <v-flex xs12>
+        <mavon-editor
+          style="max-height: 800px"
+          v-model="newsText"
+          language="ru"
+          :toolbars="toolbars"
+        />
+      </v-flex>
     </v-container>
     <v-snackbar v-model="snackbar" :color="color" :timeout="50 * 100">
       {{ text }}
@@ -166,12 +159,46 @@ export default {
   },
   data() {
     return {
-      isPlace: true,
       selectedValue: null,
       snackbar: false,
       color: "success",
       text: "",
-      newsText: ""
+      newsText: "",
+      toolbars: {
+        bold: true,
+        italic: true,
+        header: true,
+        underline: true,
+        strikethrough: true,
+        mark: true,
+        superscript: true,
+        subscript: true,
+        quote: false,
+        ol: true,
+        ul: true,
+        link: true,
+        imagelink: true,
+        code: true,
+        table: true,
+        fullscreen: true,
+        readmodel: true,
+        htmlcode: true,
+        help: true,
+        /* 1.3.5 */
+        undo: true,
+        redo: true,
+        trash: true,
+        save: true,
+        /* 1.4.2 */
+        navigation: true,
+        /* 2.1.8 */
+        alignleft: false,
+        aligncenter: false,
+        alignright: false,
+        /* 2.2.1 */
+        subfield: true,
+        preview: true
+      }
     };
   },
   mounted() {

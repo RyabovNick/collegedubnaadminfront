@@ -122,6 +122,10 @@ ul {
   height: 178px;
   display: block;
 }
+
+.v-note-wrapper {
+  z-index: 2;
+}
 </style>
 
 <template>
