@@ -229,6 +229,7 @@ ul {
         </v-flex>
         <v-flex xs12>
           <mavon-editor
+            class="md-helper"
             style="max-height: 800px"
             v-model="newsText"
             language="ru"

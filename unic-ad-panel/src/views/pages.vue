@@ -134,6 +134,7 @@ ul {
     <v-container fluid grid-list-md>
       <v-flex xs12>
         <mavon-editor
+          class="md-helper"
           style="max-height: 800px"
           v-model="newsText"
           language="ru"
