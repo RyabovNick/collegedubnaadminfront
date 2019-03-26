@@ -132,7 +132,7 @@ ul {
   <v-app>
     <v-container fluid grid-list-xl>
       <v-layout wrap align-center>
-        <v-flex xs12 sm6 md6 d-flex>
+        <v-flex xs12 sm6 md5 d-flex>
           <v-select
             :items="listNews"
             item-value="id"
@@ -146,6 +146,9 @@ ul {
             >{{ data.item.title}} - {{ data.item.date_now }}</template>
             <template slot="item" slot-scope="data">{{ data.item.title}} - {{data.item.date_now }}</template>
           </v-select>
+        </v-flex>
+        <v-flex xs12 sm6 md1 lg1>
+          <v-text-field type="number" v-model="rank" label="Ранк" min="0" max="10"></v-text-field>
         </v-flex>
         <v-flex v-if="selectedValue" xs12 sm6 md3>
           <v-btn color="error" @click="deleteNews()">Удалить новость</v-btn>
@@ -267,6 +270,7 @@ export default {
       snackbar: false,
       color: "success",
       title: "",
+      rank: 7,
       text: "",
       newsText: "",
       action: "Добавить новость",
@@ -366,6 +370,7 @@ export default {
       prepareDate = new Date(prepareDate).toISOString();
       this.date = prepareDate.substr(0, 10);
       this.time = prepareDate.substr(11, 5);
+      this.rank = this.$store.getters.news[0].rank;
     },
     async saveNews() {
       let formData = new FormData();
@@ -373,6 +378,7 @@ export default {
       formData.append("content", this.newsText);
       formData.append("date_now", `${this.date} ${this.time}`);
       formData.append("upload", this.file, this.file.name);
+      formData.append("rank", this.rank);
 
       //add news
       if (this.selectedValue === null) {
@@ -406,7 +412,8 @@ export default {
               id,
               title: this.title,
               content: this.newsText,
-              date_now: `${this.date} ${this.time}`
+              date_now: `${this.date} ${this.time}`,
+              rank: this.rank
             });
             this.color = "success";
             this.text = "Данные успешно изменены";
