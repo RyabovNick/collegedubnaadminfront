@@ -282,6 +282,11 @@ export default {
         icon: "add_a_photo",
         text: "Фотографии на главной",
         link: "/gallery"
+      },
+      {
+        icon: "cloud_upload",
+        text: "Загрузить файлы",
+        link: "/fileupload"
       }
     ],
     toolbar: [{ icon: "home", text: "Главная", link: "/" }]

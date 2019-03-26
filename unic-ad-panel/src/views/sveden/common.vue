@@ -138,8 +138,8 @@ export default {
       } else {
         this.$store
           .dispatch(NEW_COMMON, { name, tag, value })
-          .then(responce => {
-            this.editedItem.id = responce.data.insertId;
+          .then(response => {
+            this.editedItem.id = response.data.insertId;
           });
         this.common.push(this.editedItem);
       }

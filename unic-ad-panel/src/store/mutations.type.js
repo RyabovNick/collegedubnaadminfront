@@ -66,3 +66,7 @@ export const SET_KCP_TYPES = "setKCPTypes";
 export const SET_KCP_PAGES = "setKCPPages";
 export const SET_LIST_ENVIRONMENTS_PAGES = "setListEnvironmentsPages";
 export const SET_ENVIRONMENT = "setEnvironment";
+
+// gallery
+export const SET_PATHS = "setPaths";
+export const SET_FILES = "setFiles";

@@ -133,3 +133,11 @@ export const FETCH_ENVIRONMENT = "fetchEnvironment";
 export const NEW_ENVIRONMENT = "newEnvironment";
 export const UPDATE_ENVIRONMENT = "changeEnvironment";
 export const DELETE_ENVIRONMENT = "deleteEnvironment";
+
+// upload (paths)
+export const FETCH_PATHS = "fetchPaths";
+export const FETCH_FILES = "fetchFiles";
+export const NEW_PATHS = "newPaths";
+export const DELETE_PATHS = "deletePaths";
+export const UPDATE_PATHS = "updatePaths";
+export const UPLOAD_FILES = "uploadFiles";

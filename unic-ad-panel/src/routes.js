@@ -19,6 +19,7 @@ import EduCabinets from "./views/sveden/eduCabinets.vue";
 import PurposeLibr from "./views/sveden/purposeLibr.vue";
 import PurposeEios from "./views/sveden/purposeEios.vue";
 import CarouselPhotos from "./views/carouselPhotos.vue";
+import FileUpload from "./views/fileUpload.vue";
 import Availability from "./views/environment/availability.vue";
 import CareerGuidance from "./views/environment/careerGuidance.vue";
 import Employment from "./views/environment/employment.vue";
@@ -55,6 +56,7 @@ export const routes = [
     { path: "/sveden/grants", name: "GraduateJob", component: GraduateJob },
     { path: "/pages", name: "Pages", component: Pages },
     { path: "/gallery", name: "CarouselPhotos", component: CarouselPhotos },
+    { path: "/fileupload", name: "FileUpload", component: FileUpload },
     { path: "/environment/availability", name: "", component: Availability },
     { path: "/environment/careerguidance", name: "", component: CareerGuidance },
     { path: "/environment/employment", name: "", component: Employment },
