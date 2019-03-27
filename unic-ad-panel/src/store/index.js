@@ -21,6 +21,7 @@ import purpose from "./purpose.module";
 import gallery from "./gallery.module";
 import environment from "./environment.module";
 import upload from "./upload.module";
+import history from "./history.module";
 
 Vue.use(Vuex);
 
@@ -45,7 +46,8 @@ export default new Vuex.Store({
         purpose,
         gallery,
         environment,
-        upload
+        upload,
+        history
     }
     /*state: {},
     mutations: {},

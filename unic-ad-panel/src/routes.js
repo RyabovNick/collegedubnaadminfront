@@ -20,6 +20,7 @@ import PurposeLibr from "./views/sveden/purposeLibr.vue";
 import PurposeEios from "./views/sveden/purposeEios.vue";
 import CarouselPhotos from "./views/carouselPhotos.vue";
 import FileUpload from "./views/fileUpload.vue";
+import History from "./views/historyPages.vue";
 import Availability from "./views/environment/availability.vue";
 import CareerGuidance from "./views/environment/careerGuidance.vue";
 import Employment from "./views/environment/employment.vue";
@@ -57,6 +58,7 @@ export const routes = [
     { path: "/pages", name: "Pages", component: Pages },
     { path: "/gallery", name: "CarouselPhotos", component: CarouselPhotos },
     { path: "/fileupload", name: "FileUpload", component: FileUpload },
+    { path: "/history", name: "History", component: History },
     { path: "/environment/availability", name: "", component: Availability },
     { path: "/environment/careerguidance", name: "", component: CareerGuidance },
     { path: "/environment/employment", name: "", component: Employment },

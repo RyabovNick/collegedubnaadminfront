@@ -287,6 +287,11 @@ export default {
         icon: "cloud_upload",
         text: "Загрузить файлы",
         link: "/fileupload"
+      },
+      {
+        icon: "history",
+        text: "История изменения страниц",
+        link: "/history"
       }
     ],
     toolbar: [{ icon: "home", text: "Главная", link: "/" }]

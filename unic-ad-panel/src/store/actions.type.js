@@ -141,3 +141,8 @@ export const NEW_PATHS = "newPaths";
 export const DELETE_PATHS = "deletePaths";
 export const UPDATE_PATHS = "updatePaths";
 export const UPLOAD_FILES = "uploadFiles";
+export const DELETE_FILE = "deleteFile";
+
+// history
+export const FETCH_HISTORY = "fetchHistory";
+export const FETCH_ONE_HISTORY = "fetchOneHistory";

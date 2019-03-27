@@ -70,3 +70,7 @@ export const SET_ENVIRONMENT = "setEnvironment";
 // gallery
 export const SET_PATHS = "setPaths";
 export const SET_FILES = "setFiles";
+
+// history
+export const SET_HISTORY = "setHistory";
+export const SET_ONE_HISTORY = "setOneHistory";

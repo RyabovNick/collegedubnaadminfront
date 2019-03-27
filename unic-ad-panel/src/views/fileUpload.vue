@@ -47,6 +47,9 @@
           <td class="text-xs-left">{{ props.item.name }}</td>
           <td class="text-xs-left">{{ props.item.path }}</td>
           <td class="text-xs-left">{{ props.item.path_to_add }}</td>
+          <td class="justify-center layout px-0">
+            <v-icon small @click="deleteFile(props.item)">delete</v-icon>
+          </td>
         </template>
       </v-data-table>
     </section>
@@ -111,7 +114,8 @@ import {
   NEW_PATHS,
   DELETE_PATHS,
   UPDATE_PATHS,
-  UPLOAD_FILES
+  UPLOAD_FILES,
+  DELETE_FILE
 } from "@/store/actions.type";
 
 export default {
@@ -129,7 +133,8 @@ export default {
       headersFiles: [
         { text: "Название файла", value: "name" },
         { text: "Путь", value: "path" },
-        { text: "Путь для использования на сайте", value: "path_to_add" }
+        { text: "Путь для использования на сайте", value: "path_to_add" },
+        { text: "Действия", value: "actions" }
       ],
 
       editedIndex: -1,
@@ -178,11 +183,28 @@ export default {
       }
     },
     async deleteItem(item) {
-      const index = this.files.indexOf(item);
+      const index = this.paths.indexOf(item);
       const id = item.id;
       try {
         (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
           this.$store.dispatch(DELETE_PATHS, { id }).then(() => {
+            this.paths.splice(index, 1);
+            this.color = "success";
+            this.text = "Данные успешно изменены";
+            this.snackbar = true;
+          });
+      } catch {
+        this.color = "error";
+        this.text = "Произошла ошибка при изменении данных";
+        this.snackbar = true;
+      }
+    },
+    async deleteFile(item) {
+      const index = this.files.indexOf(item);
+      const id = item.id;
+      try {
+        (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
+          this.$store.dispatch(DELETE_FILE, { id }).then(() => {
             this.files.splice(index, 1);
             this.color = "success";
             this.text = "Данные успешно изменены";

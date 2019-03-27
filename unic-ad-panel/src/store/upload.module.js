@@ -5,7 +5,8 @@ import {
     NEW_PATHS,
     DELETE_PATHS,
     UPDATE_PATHS,
-    UPLOAD_FILES
+    UPLOAD_FILES,
+    DELETE_FILE
 } from "./actions.type";
 import { SET_PATHS, SET_FILES } from "./mutations.type";
 
@@ -29,6 +30,13 @@ export const actions = {
         return ApiService.get("admin/files").then(({ data }) => {
             context.commit(SET_FILES, data);
             return data;
+        });
+    },
+    // параметр id не используется, но лень писать другой helper
+    [DELETE_FILE](context, { id }) {
+        ApiService.setHeader();
+        return ApiService.delete(`admin/upload_files/${id}`, id).catch(err => {
+            console.log("err: ", err);
         });
     },
     [FETCH_PATHS](context) {
