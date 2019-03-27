@@ -117,8 +117,10 @@ import {
   UPLOAD_FILES,
   DELETE_FILE
 } from "@/store/actions.type";
+import snackbar from "@/common/snackbar.js";
 
 export default {
+  mixins: [snackbar],
   data() {
     return {
       loading: false,
@@ -189,14 +191,10 @@ export default {
         (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
           this.$store.dispatch(DELETE_PATHS, { id }).then(() => {
             this.paths.splice(index, 1);
-            this.color = "success";
-            this.text = "Данные успешно изменены";
-            this.snackbar = true;
+            this.runSnackbar("success", this.successDeleteMessage);
           });
       } catch {
-        this.color = "error";
-        this.text = "Произошла ошибка при изменении данных";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorDeleteMessage);
       }
     },
     async deleteFile(item) {
@@ -206,14 +204,10 @@ export default {
         (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
           this.$store.dispatch(DELETE_FILE, { id }).then(() => {
             this.files.splice(index, 1);
-            this.color = "success";
-            this.text = "Данные успешно изменены";
-            this.snackbar = true;
+            this.runSnackbar("success", this.successDeleteMessage);
           });
       } catch {
-        this.color = "error";
-        this.text = "Произошла ошибка при изменении данных";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorDeleteMessage);
       }
     },
 
@@ -238,27 +232,37 @@ export default {
           });
           Object.assign(this.paths[this.editedIndex], this.editedItem);
           this.editedIndex = -1;
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
+          this.runSnackbar("success", this.successUpdateMessage);
         } catch {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorUpdateMessage);
         }
       } else {
         const path = item.path;
-        this.$store.dispatch(NEW_PATHS, { path }).then(response => {
-          this.editedItem.id = response.data.insertId;
-        });
-        this.paths.push(this.editedItem);
+        try {
+          await this.$store.dispatch(NEW_PATHS, { path }).then(response => {
+            this.editedItem.id = response.data.insertId;
+            this.paths.push(this.editedItem);
+            this.runSnackbar("success", this.successInsertMessage);
+          });
+        } catch {
+          this.runSnackbar("error", this.errorInsertMessage);
+        }
       }
 
       this.close();
     }
   },
   computed: {
-    ...mapGetters(["paths", "files"])
+    ...mapGetters([
+      "paths",
+      "files",
+      "successInsertMessage",
+      "successUpdateMessage",
+      "successDeleteMessage",
+      "errorInsertMessage",
+      "errorUpdateMessage",
+      "errorDeleteMessage"
+    ])
   },
   watch: {
     dialog(val) {

@@ -262,11 +262,13 @@ import {
   DELETE_NEWS,
   UPLOAD_NEWS
 } from "@/store/actions.type";
+import snackbar from "@/common/snackbar.js";
 
 export default {
   components: {
     VueMarkdown
   },
+  mixins: [snackbar],
   data() {
     return {
       selectedValue: null,
@@ -386,19 +388,17 @@ export default {
       //add news
       if (this.selectedValue === null) {
         try {
-          await this.$store.dispatch(UPLOAD_NEWS, { file: formData });
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
-
-          // empty form
-          this.title = "";
-          this.newsText = "";
-          this.imageUrl = "";
+          await this.$store
+            .dispatch(UPLOAD_NEWS, { file: formData })
+            .then(() => {
+              this.runSnackbar("success", this.successInsertMessage);
+              // empty form
+              this.title = "";
+              this.newsText = "";
+              this.imageUrl = "";
+            });
         } catch {
-          this.color = "error";
-          this.text = "Приносим извинения, произошла ошибка";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorInsertMessage);
         }
       }
       //update news (need to add backend)
@@ -439,20 +439,25 @@ export default {
           } ?`
         )) &&
           this.$store.dispatch(DELETE_NEWS, { id }).then(() => {
-            this.color = "success";
-            this.text = "Данные успешно изменены";
-            this.snackbar = true;
+            this.runSnackbar("success", this.successDeleteMessage);
             this.newsText = "";
           });
       } catch {
-        this.color = "error";
-        this.text = "Произошла ошибка при изменении данных";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorDeleteMessage);
       }
     }
   },
   computed: {
-    ...mapGetters(["listNews", "news"])
+    ...mapGetters([
+      "listNews",
+      "news",
+      "successInsertMessage",
+      "successUpdateMessage",
+      "successDeleteMessage",
+      "errorInsertMessage",
+      "errorUpdateMessage",
+      "errorDeleteMessage"
+    ])
   }
 };
 </script>

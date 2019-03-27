@@ -89,8 +89,10 @@ import {
   DELETE_EDUCHISLEN,
   UPDATE_EDUCHISLEN
 } from "@/store/actions.type";
+import snackbar from "@/common/snackbar.js";
 
 export default {
+  mixins: [snackbar],
   data() {
     return {
       loading: false,
@@ -164,14 +166,10 @@ export default {
         (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
           this.$store.dispatch(DELETE_EDUCHISLEN, { id }).then(() => {
             this.eduChislen.splice(index, 1);
-            this.color = "success";
-            this.text = "Данные успешно изменены";
-            this.snackbar = true;
+            this.runSnackbar("success", this.successDeleteMessage);
           });
       } catch {
-        this.color = "error";
-        this.text = "Произошла ошибка при изменении данных";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorDeleteMessage);
       }
     },
 
@@ -186,28 +184,27 @@ export default {
     async save(item) {
       if (this.editedItem.id !== null) {
         try {
-          await this.$store.dispatch(UPDATE_EDUCHISLEN, {
-            id: this.editedItem.id,
-            numberBFpriem: this.editedItem.numberBFpriem,
-            numberBRpriem: this.editedItem.numberBRpriem,
-            numberBMpriem: this.editedItem.numberBMpriem,
-            numberPpriem: this.editedItem.numberPpriem
-          });
-          Object.assign(this.eduChislen[this.editedIndex], {
-            id: this.editedItem.id,
-            numberBFpriem: this.editedItem.numberBFpriem,
-            numberBRpriem: this.editedItem.numberBRpriem,
-            numberBMpriem: this.editedItem.numberBMpriem,
-            numberPpriem: this.editedItem.numberPpriem
-          });
-          this.editedIndex = -1;
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
+          await this.$store
+            .dispatch(UPDATE_EDUCHISLEN, {
+              id: this.editedItem.id,
+              numberBFpriem: this.editedItem.numberBFpriem,
+              numberBRpriem: this.editedItem.numberBRpriem,
+              numberBMpriem: this.editedItem.numberBMpriem,
+              numberPpriem: this.editedItem.numberPpriem
+            })
+            .then(() => {
+              Object.assign(this.eduChislen[this.editedIndex], {
+                id: this.editedItem.id,
+                numberBFpriem: this.editedItem.numberBFpriem,
+                numberBRpriem: this.editedItem.numberBRpriem,
+                numberBMpriem: this.editedItem.numberBMpriem,
+                numberPpriem: this.editedItem.numberPpriem
+              });
+              this.editedIndex = -1;
+              this.runSnackbar("success", this.successUpdateMessage);
+            });
         } catch {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorUpdateMessage);
         }
       } else {
         try {
@@ -219,29 +216,33 @@ export default {
               numberBMpriem: this.editedItem.numberBMpriem,
               numberPpriem: this.editedItem.numberPpriem
             })
-            .then(responce => {
-              this.editedItem.id = responce.data.insertId;
+            .then(response => {
+              this.editedItem.id = response.data.insertId;
+              Object.assign(this.eduChislen[this.editedIndex], {
+                numberBFpriem: this.editedItem.numberBFpriem,
+                numberBRpriem: this.editedItem.numberBRpriem,
+                numberBMpriem: this.editedItem.numberBMpriem,
+                numberPpriem: this.editedItem.numberPpriem
+              });
+              this.runSnackbar("success", this.successInsertMessage);
             });
-          Object.assign(this.eduChislen[this.editedIndex], {
-            numberBFpriem: this.editedItem.numberBFpriem,
-            numberBRpriem: this.editedItem.numberBRpriem,
-            numberBMpriem: this.editedItem.numberBMpriem,
-            numberPpriem: this.editedItem.numberPpriem
-          });
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
         } catch {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorInsertMessage);
         }
       }
       this.close();
     }
   },
   computed: {
-    ...mapGetters(["eduChislen"]),
+    ...mapGetters([
+      "eduChislen",
+      "successInsertMessage",
+      "successUpdateMessage",
+      "successDeleteMessage",
+      "errorInsertMessage",
+      "errorUpdateMessage",
+      "errorDeleteMessage"
+    ]),
 
     formTitle() {
       return this.editedIndex === -1 ? "Новый элемент" : "Изменить элемент";

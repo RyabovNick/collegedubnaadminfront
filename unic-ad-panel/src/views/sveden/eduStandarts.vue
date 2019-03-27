@@ -83,7 +83,7 @@ export default {
           file: formData
         });
         this.color = "success";
-        this.text = "Данные успешно изменены";
+        this.text = "Данные успешно загружены";
         this.snackbar = true;
         this.eduStandartsName = "";
       } catch {

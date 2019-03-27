@@ -53,6 +53,10 @@
           </td>
         </template>
       </v-data-table>
+      <v-snackbar v-model="snackbar" :color="color" :timeout="50 * 100">
+        {{ text }}
+        <v-btn dark flat @click="snackbar = false">Close</v-btn>
+      </v-snackbar>
     </section>
   </v-app>
 </template>
@@ -65,14 +69,20 @@ import {
   DELETE_COMMON,
   UPDATE_COMMON
 } from "@/store/actions.type";
+import snackbar from "@/common/snackbar.js";
 
 export default {
+  mixins: [snackbar],
   data() {
     return {
       loading: false,
       errored: false,
       //added
       dialog: false,
+      // snackbar
+      snackbar: false,
+      color: "success",
+      text: "",
       headers: [
         { text: "Id", value: "id" },
         { text: "Название", value: "name" },
@@ -109,13 +119,18 @@ export default {
       this.dialog = true;
     },
 
-    deleteItem(item) {
+    async deleteItem(item) {
       const index = this.common.indexOf(item);
       const id = item.id;
-      confirm("Действительно хотите удалить элемент с ID: " + id) &&
-        this.$store.dispatch(DELETE_COMMON, { id }).then(() => {
-          this.common.splice(index, 1);
-        });
+      try {
+        confirm("Действительно хотите удалить элемент с ID: " + id) &&
+          this.$store.dispatch(DELETE_COMMON, { id }).then(() => {
+            this.common.splice(index, 1);
+            this.runSnackbar("success", this.successDeleteMessage);
+          });
+      } catch {
+        this.runSnackbar("error", this.errorDeleteMessage);
+      }
     },
 
     close() {
@@ -126,28 +141,46 @@ export default {
       }, 300);
     },
 
-    save(item) {
+    async save(item) {
       const id = item.id;
       const name = item.name;
       const tag = item.tag;
       const value = item.value;
       if (this.editedIndex > -1) {
-        this.$store.dispatch(UPDATE_COMMON, { id, name, tag, value });
-        Object.assign(this.common[this.editedIndex], item);
-        this.editedIndex = -1;
+        try {
+          await this.$store.dispatch(UPDATE_COMMON, { id, name, tag, value });
+          Object.assign(this.common[this.editedIndex], item);
+          this.editedIndex = -1;
+          this.runSnackbar("success", this.successUpdateMessage);
+        } catch {
+          this.runSnackbar("error", this.errorUpdateMessage);
+        }
       } else {
-        this.$store
-          .dispatch(NEW_COMMON, { name, tag, value })
-          .then(response => {
-            this.editedItem.id = response.data.insertId;
-          });
-        this.common.push(this.editedItem);
+        try {
+          await this.$store
+            .dispatch(NEW_COMMON, { name, tag, value })
+            .then(response => {
+              this.editedItem.id = response.data.insertId;
+              this.common.push(this.editedItem);
+              this.runSnackbar("success", this.successInsertMessage);
+            });
+        } catch {
+          this.runSnackbar("error", this.errorInsertMessage);
+        }
       }
       this.close();
     }
   },
   computed: {
-    ...mapGetters(["common"]),
+    ...mapGetters([
+      "common",
+      "successInsertMessage",
+      "successUpdateMessage",
+      "successDeleteMessage",
+      "errorInsertMessage",
+      "errorUpdateMessage",
+      "errorDeleteMessage"
+    ]),
 
     formTitle() {
       return this.editedIndex === -1 ? "Новый элемент" : "Изменить элемент";

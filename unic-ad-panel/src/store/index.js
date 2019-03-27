@@ -22,6 +22,7 @@ import gallery from "./gallery.module";
 import environment from "./environment.module";
 import upload from "./upload.module";
 import history from "./history.module";
+import helpers from "./helpers.module";
 
 Vue.use(Vuex);
 
@@ -47,7 +48,8 @@ export default new Vuex.Store({
         gallery,
         environment,
         upload,
-        history
+        history,
+        helpers
     }
     /*state: {},
     mutations: {},

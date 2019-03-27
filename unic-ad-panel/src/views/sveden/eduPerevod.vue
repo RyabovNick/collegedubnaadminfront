@@ -89,6 +89,7 @@ import {
   DELETE_EDUPEREVOD,
   UPDATE_EDUPEREVOD
 } from "@/store/actions.type";
+import snackbar from "@/common/snackbar.js";
 
 export default {
   data() {
@@ -163,14 +164,10 @@ export default {
         (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
           this.$store.dispatch(DELETE_EDUPEREVOD, { id }).then(() => {
             this.eduPerevod.splice(index, 1);
-            this.color = "success";
-            this.text = "Данные успешно изменены";
-            this.snackbar = true;
+            this.runSnackbar("success", this.successDeleteMessage);
           });
       } catch {
-        this.color = "error";
-        this.text = "Произошла ошибка при изменении данных";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorDeleteMessage);
       }
     },
 
@@ -200,13 +197,9 @@ export default {
             numberExpPerevod: this.editedItem.numberExpPerevod
           });
           this.editedIndex = -1;
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
+          this.runSnackbar("success", this.successUpdateMessage);
         } catch {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorUpdateMessage);
         }
       } else {
         try {
@@ -218,8 +211,8 @@ export default {
               numberResPerevod: this.editedItem.numberResPerevod,
               numberExpPerevod: this.editedItem.numberExpPerevod
             })
-            .then(responce => {
-              this.editedItem.id = responce.data.insertId;
+            .then(response => {
+              this.editedItem.id = response.data.insertId;
             });
           Object.assign(this.eduPerevod[this.editedIndex], {
             numberOutPerevod: this.editedItem.numberOutPerevod,
@@ -227,20 +220,24 @@ export default {
             numberResPerevod: this.editedItem.numberResPerevod,
             numberExpPerevod: this.editedItem.numberExpPerevod
           });
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
+          this.runSnackbar("success", this.successInsertMessage);
         } catch {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorInsertMessage);
         }
       }
       this.close();
     }
   },
   computed: {
-    ...mapGetters(["eduPerevod"]),
+    ...mapGetters([
+      "eduPerevod",
+      "successInsertMessage",
+      "successUpdateMessage",
+      "successDeleteMessage",
+      "errorInsertMessage",
+      "errorUpdateMessage",
+      "errorDeleteMessage"
+    ]),
 
     formTitle() {
       return this.editedIndex === -1 ? "Новый элемент" : "Изменить элемент";

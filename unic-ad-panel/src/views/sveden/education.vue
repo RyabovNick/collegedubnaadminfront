@@ -52,6 +52,7 @@ import {
   UPLOAD_EDUCATION,
   DELETE_EDUCATION_FILE
 } from "@/store/actions.type";
+import snackbar from "@/common/snackbar.js";
 
 export default {
   data() {
@@ -87,13 +88,9 @@ export default {
           tuple: this.selectedTuple,
           file: formData
         });
-        this.color = "success";
-        this.text = "Данные успешно изменены";
-        this.snackbar = true;
+        this.runSnackbar("success", this.successInsertMessage);
       } catch {
-        this.color = "error";
-        this.text = "Приносим извинения, произошла ошибка";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorInsertMessage);
       }
     },
     async deleteEducationFile() {
@@ -109,19 +106,21 @@ export default {
               tuple: this.selectedTuple
             })
             .then(() => {
-              this.color = "success";
-              this.text = "Данные успешно изменены";
-              this.snackbar = true;
+              this.runSnackbar("success", this.successDeleteMessage);
             });
       } catch {
-        this.color = "error";
-        this.text = "Приносим извинения, произошла ошибка";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorDeleteMessage);
       }
     }
   },
   computed: {
-    ...mapGetters(["education"])
+    ...mapGetters([
+      "education",
+      "successInsertMessage",
+      "successDeleteMessage",
+      "errorInsertMessage",
+      "errorDeleteMessage"
+    ])
   }
 };
 </script>

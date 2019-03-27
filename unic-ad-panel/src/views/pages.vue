@@ -153,6 +153,7 @@ ul {
 import VueMarkdown from "vue-markdown";
 import { mapGetters } from "vuex";
 import { FETCH_PAGES, FETCH_PAGE, UPDATE_PAGE } from "@/store/actions.type";
+import snackbar from "@/common/snackbar.js";
 
 export default {
   components: {

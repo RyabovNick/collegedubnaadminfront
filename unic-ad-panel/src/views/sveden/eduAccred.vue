@@ -112,8 +112,10 @@ import {
   DELETE_EDUACCRED,
   UPDATE_EDUACCRED
 } from "@/store/actions.type";
+import snackbar from "@/common/snackbar.js";
 
 export default {
+  mixins: [snackbar],
   data() {
     return {
       loading: false,
@@ -193,14 +195,11 @@ export default {
         (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
           this.$store.dispatch(DELETE_EDUACCRED, { id }).then(() => {
             this.eduAccred.splice(index, 1);
+
+            this.runSnackbar("success", this.successDeleteMessage);
           });
-        this.color = "success";
-        this.text = "Данные успешно изменены";
-        this.snackbar = true;
       } catch {
-        this.color = "error";
-        this.text = "Произошла ошибка при изменении данных";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorDeleteMessage);
       }
     },
 
@@ -215,55 +214,58 @@ export default {
     async save(item) {
       if (this.editedIndex > -1) {
         try {
-          await this.$store.dispatch(UPDATE_EDUACCRED, {
-            id: this.editedItem.id,
-            eduCode: this.editedItem.eduCode,
-            eduName: this.editedItem.eduName,
-            eduLevel: this.editedItem.eduLevel,
-            eduForm: this.editedItem.eduForm,
-            learningTerm: this.editedItem.learningTerm,
-            language: this.editedItem.language,
-            dateEnd: this.editedItem.dateEnd
-          });
-          Object.assign(this.eduAccred[this.editedIndex], {
-            id: this.editedItem.id,
-            eduCode: this.editedItem.eduCode,
-            eduName: this.editedItem.eduName,
-            eduLevel: this.editedItem.eduLevel,
-            eduForm: this.editedItem.eduForm,
-            learningTerm: this.editedItem.learningTerm,
-            language: this.editedItem.language,
-            dateEnd: this.editedItem.dateEnd
-          });
-          this.editedIndex = -1;
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
+          await this.$store
+            .dispatch(UPDATE_EDUACCRED, {
+              id: this.editedItem.id,
+              eduCode: this.editedItem.eduCode,
+              eduName: this.editedItem.eduName,
+              eduLevel: this.editedItem.eduLevel,
+              eduForm: this.editedItem.eduForm,
+              learningTerm: this.editedItem.learningTerm,
+              language: this.editedItem.language,
+              dateEnd: this.editedItem.dateEnd
+            })
+            .then(() => {
+              Object.assign(this.eduAccred[this.editedIndex], {
+                id: this.editedItem.id,
+                eduCode: this.editedItem.eduCode,
+                eduName: this.editedItem.eduName,
+                eduLevel: this.editedItem.eduLevel,
+                eduForm: this.editedItem.eduForm,
+                learningTerm: this.editedItem.learningTerm,
+                language: this.editedItem.language,
+                dateEnd: this.editedItem.dateEnd
+              });
+              this.editedIndex = -1;
+              this.runSnackbar("success", this.successUpdateMessage);
+            });
         } catch {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorUpdateMessage);
         }
       } else {
         try {
-          await this.$store.dispatch(NEW_EDUACCRED, item).then(responce => {
-            this.editedItem.id = responce.data.insertId;
+          await this.$store.dispatch(NEW_EDUACCRED, item).then(response => {
+            this.editedItem.id = response.data.insertId;
+            this.eduAccred.push(this.editedItem);
+            this.runSnackbar("success", this.successInsertMessage);
           });
-          this.eduAccred.push(this.editedItem);
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
         } catch {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorInsertMessage);
         }
       }
       this.close();
     }
   },
   computed: {
-    ...mapGetters(["eduAccred"]),
+    ...mapGetters([
+      "eduAccred",
+      "successInsertMessage",
+      "successUpdateMessage",
+      "successDeleteMessage",
+      "errorInsertMessage",
+      "errorUpdateMessage",
+      "errorDeleteMessage"
+    ]),
 
     formTitle() {
       return this.editedIndex === -1 ? "Новый элемент" : "Изменить элемент";

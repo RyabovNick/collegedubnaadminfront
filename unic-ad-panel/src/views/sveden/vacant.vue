@@ -98,6 +98,7 @@ import {
   DELETE_VACANT,
   UPDATE_VACANT
 } from "@/store/actions.type";
+import snackbar from "@/common/snackbar.js";
 
 export default {
   data() {
@@ -180,14 +181,10 @@ export default {
         (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
           this.$store.dispatch(DELETE_VACANT, { id }).then(() => {
             this.vacant.splice(index, 1);
-            this.color = "success";
-            this.text = "Данные успешно изменены";
-            this.snackbar = true;
+            this.runSnackbar("success", this.successDeleteMessage);
           });
       } catch {
-        this.color = "error";
-        this.text = "Произошла ошибка при изменении данных";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorDeleteMessage);
       }
     },
 
@@ -205,34 +202,34 @@ export default {
           await this.$store.dispatch(UPDATE_VACANT, item);
           Object.assign(this.vacant[this.editedIndex], item);
           this.editedIndex = -1;
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
+          this.runSnackbar("success", this.successUpdateMessage);
         } catch {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorUpdateMessage);
         }
       } else {
         try {
-          await this.$store.dispatch(NEW_VACANT, item).then(responce => {
-            this.editedItem.id = responce.data.insertId;
+          await this.$store.dispatch(NEW_VACANT, item).then(response => {
+            this.editedItem.id = response.data.insertId;
           });
           this.vacant.push(this.editedItem);
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
+          this.runSnackbar("success", this.successInsertMessage);
         } catch {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorInsertMessage);
         }
       }
       this.close();
     }
   },
   computed: {
-    ...mapGetters(["vacant"]),
+    ...mapGetters([
+      "vacant",
+      "successInsertMessage",
+      "successUpdateMessage",
+      "successDeleteMessage",
+      "errorInsertMessage",
+      "errorUpdateMessage",
+      "errorDeleteMessage"
+    ]),
 
     formTitle() {
       return this.editedIndex === -1 ? "Новый элемент" : "Изменить элемент";

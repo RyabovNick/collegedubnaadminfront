@@ -96,6 +96,7 @@ import {
   DELETE_GALLERY,
   UPDATE_GALLERY
 } from "@/store/actions.type";
+import snackbar from "@/common/snackbar.js";
 
 export default {
   data() {

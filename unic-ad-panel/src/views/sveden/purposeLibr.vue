@@ -68,6 +68,7 @@ import {
   DELETE_PURPOSELIBR,
   UPDATE_PURPOSELIBR
 } from "@/store/actions.type";
+import snackbar from "@/common/snackbar.js";
 
 export default {
   data() {
@@ -128,9 +129,7 @@ export default {
         (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
           this.$store.dispatch(DELETE_PURPOSELIBR, { id }).then(() => {
             this.purposeLibr.splice(index, 1);
-            this.color = "success";
-            this.text = "Данные успешно изменены";
-            this.snackbar = true;
+            this.runSnackbar("success", this.successDeleteMessage);
           });
       } catch {
         this.color = "error";
@@ -153,36 +152,36 @@ export default {
           await this.$store.dispatch(UPDATE_PURPOSELIBR, this.editedItem);
           Object.assign(this.purposeLibr[this.editedIndex], this.editedItem);
           this.editedIndex = -1;
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
+          this.runSnackbar("success", this.successUpdateMessage);
         } catch {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorUpdateMessage);
         }
       } else {
         try {
           await this.$store
             .dispatch(NEW_PURPOSELIBR, this.editedItem)
-            .then(responce => {
-              this.editedItem.id = responce.data.insertId;
+            .then(response => {
+              this.editedItem.id = response.data.insertId;
             });
           this.purposeLibr.push(this.editedItem);
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
+          this.runSnackbar("success", this.successInsertMessage);
         } catch {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorInsertMessage);
         }
       }
       this.close();
     }
   },
   computed: {
-    ...mapGetters(["purposeLibr"]),
+    ...mapGetters([
+      "purposeLibr",
+      "successInsertMessage",
+      "successUpdateMessage",
+      "successDeleteMessage",
+      "errorInsertMessage",
+      "errorUpdateMessage",
+      "errorDeleteMessage"
+    ]),
 
     formTitle() {
       return this.editedIndex === -1 ? "Новый элемент" : "Изменить элемент";

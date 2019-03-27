@@ -71,6 +71,7 @@ import {
   UPLOAD_NEWS_PHOTO,
   DELETE_NEWS_PHOTO
 } from "@/store/actions.type";
+import snackbar from "@/common/snackbar.js";
 
 export default {
   data() {

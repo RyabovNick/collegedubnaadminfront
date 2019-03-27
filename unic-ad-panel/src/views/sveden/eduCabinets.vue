@@ -96,6 +96,7 @@ import {
   FETCH_CABINETS,
   FETCH_EDUACCRED
 } from "@/store/actions.type";
+import snackbar from "@/common/snackbar.js";
 
 export default {
   data() {
@@ -158,14 +159,10 @@ export default {
         (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
           this.$store.dispatch(DELETE_EDUCABINETS, { id }).then(() => {
             this.eduCabinets.splice(index, 1);
-            this.color = "success";
-            this.text = "Данные успешно изменены";
-            this.snackbar = true;
+            this.runSnackbar("success", this.successDeleteMessage);
           });
       } catch {
-        this.color = "error";
-        this.text = "Произошла ошибка при изменении данных";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorDeleteMessage);
       }
     },
 
@@ -183,36 +180,38 @@ export default {
           await this.$store.dispatch(UPDATE_EDUCABINETS, this.editedItem);
           Object.assign(this.eduCabinets[this.editedIndex], this.editedItem);
           this.editedIndex = -1;
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
+          this.runSnackbar("success", this.successUpdateMessage);
         } catch {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorUpdateMessage);
         }
       } else {
         try {
           await this.$store
             .dispatch(NEW_EDUCABINETS, this.editedItem)
-            .then(responce => {
-              this.editedItem.id = responce.data.insertId;
+            .then(response => {
+              this.editedItem.id = response.data.insertId;
             });
           this.eduCabinets.push(this.editedItem);
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
+          this.runSnackbar("success", this.successInsertMessage);
         } catch {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorInsertMessage);
         }
       }
       this.close();
     }
   },
   computed: {
-    ...mapGetters(["eduCabinets", "eduAccred", "cabinets"]),
+    ...mapGetters([
+      "eduCabinets",
+      "eduAccred",
+      "cabinets",
+      "successInsertMessage",
+      "successUpdateMessage",
+      "successDeleteMessage",
+      "errorInsertMessage",
+      "errorUpdateMessage",
+      "errorDeleteMessage"
+    ]),
 
     formTitle() {
       return this.editedIndex === -1 ? "Новый элемент" : "Изменить элемент";
