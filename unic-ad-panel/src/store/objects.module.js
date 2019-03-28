@@ -35,8 +35,8 @@ export const actions = {
     },
     [NEW_CABINETS](context, params) {
         ApiService.setHeader();
-        return ApiService.post("admin/objects/cabinets", params).then(function(responce) {
-            return responce;
+        return ApiService.post("admin/objects/cabinets", params).then(function(response) {
+            return response;
         });
     },
     [DELETE_CABINETS](context, params) {
@@ -56,8 +56,8 @@ export const actions = {
     },
     [NEW_EDUCABINETS](context, params) {
         ApiService.setHeader();
-        return ApiService.post("admin/objects/educabs", params).then(function(responce) {
-            return responce;
+        return ApiService.post("admin/objects/educabs", params).then(function(response) {
+            return response;
         });
     },
     [DELETE_EDUCABINETS](context, params) {

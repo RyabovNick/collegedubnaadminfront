@@ -22,8 +22,8 @@ export const actions = {
     },
     [NEW_EDUPRIEM](context, params) {
         ApiService.setHeader();
-        return ApiService.post("admin/education/edupriem", params).then(function(responce) {
-            return responce;
+        return ApiService.post("admin/education/edupriem", params).then(function(response) {
+            return response;
         });
     },
     [DELETE_EDUPRIEM](context, params) {

@@ -21,8 +21,8 @@ export const actions = {
     },
     [NEW_GRANTSGJ](context, params) {
         ApiService.setHeader();
-        return ApiService.post("admin/grants/graduatejob", params).then(function(responce) {
-            return responce;
+        return ApiService.post("admin/grants/graduatejob", params).then(function(response) {
+            return response;
         });
     },
     [DELETE_GRANTSGJ](context, params) {

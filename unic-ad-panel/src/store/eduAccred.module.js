@@ -21,8 +21,8 @@ export const actions = {
     },
     [NEW_EDUACCRED](context, params) {
         ApiService.setHeader();
-        return ApiService.post("admin/education/eduaccred", params).then(function(responce) {
-            return responce;
+        return ApiService.post("admin/education/eduaccred", params).then(function(response) {
+            return response;
         });
     },
     [DELETE_EDUACCRED](context, params) {

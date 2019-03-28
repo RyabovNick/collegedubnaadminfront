@@ -34,8 +34,8 @@ export const actions = {
     },
     [NEW_PURPOSELIBR](context, params) {
         ApiService.setHeader();
-        return ApiService.post("admin/objects/purposelibr", params).then(function(responce) {
-            return responce;
+        return ApiService.post("admin/objects/purposelibr", params).then(function(response) {
+            return response;
         });
     },
     [DELETE_PURPOSELIBR](context, params) {
@@ -54,8 +54,8 @@ export const actions = {
     },
     [NEW_PURPOSEEIOS](context, params) {
         ApiService.setHeader();
-        return ApiService.post("admin/objects/purposeeios", params).then(function(responce) {
-            return responce;
+        return ApiService.post("admin/objects/purposeeios", params).then(function(response) {
+            return response;
         });
     },
     [DELETE_PURPOSEEIOS](context, params) {

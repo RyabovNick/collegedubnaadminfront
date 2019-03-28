@@ -68,8 +68,8 @@ export const actions = {
     },
     [NEW_ENVIRONMENT](context, params) {
         ApiService.setHeader();
-        return ApiService.post("admin/environment", params).then(function(responce) {
-            return responce;
+        return ApiService.post("admin/environment", params).then(function(response) {
+            return response;
         });
     },
     [DELETE_ENVIRONMENT](context, params) {

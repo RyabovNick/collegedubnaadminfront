@@ -20,20 +20,10 @@ export const actions = {
             return data;
         });
     },
-    // [NEW_EDUCATION](context, params) {
-    //     ApiService.setHeader();
-    //     return ApiService.post("admin/education/eduaccred", params).then(function(responce) {
-    //         return responce;
-    //     });
-    // },
     [DELETE_EDUCATION_FILE](context, { id, tuple }) {
         ApiService.setHeader();
         return ApiService.put(`admin/education/eduop/${id}/${tuple}`);
     },
-    // [UPDATE_EDUCATION](context, params) {
-    //     ApiService.setHeader();
-    //     return ApiService.put("admin/education/eduaccred", params);
-    // }
     [UPLOAD_EDUCATION](context, { id, tuple, file }) {
         ApiService.setHeader();
         return ApiService.upload(`admin/education/upload/${id}/${tuple}`, file).then(function(

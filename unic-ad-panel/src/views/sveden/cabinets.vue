@@ -165,8 +165,8 @@ export default {
         try {
           await this.$store
             .dispatch(NEW_CABINETS, this.editedItem)
-            .then(responce => {
-              this.editedItem.id = responce.data.insertId;
+            .then(response => {
+              this.editedItem.id = response.data.insertId;
             });
           this.cabinets.push(this.editedItem);
           this.runSnackbar("success", this.successInsertMessage);

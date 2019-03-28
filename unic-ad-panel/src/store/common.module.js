@@ -21,8 +21,8 @@ export const actions = {
     },
     [NEW_COMMON](context, params) {
         ApiService.setHeader();
-        return ApiService.post("admin/common", params).then(function(responce) {
-            return responce;
+        return ApiService.post("admin/common", params).then(function(response) {
+            return response;
         });
     },
     [DELETE_COMMON](context, params) {

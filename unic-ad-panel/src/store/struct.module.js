@@ -21,8 +21,8 @@ export const actions = {
     },
     [NEW_STRUCT](context, params) {
         ApiService.setHeader();
-        return ApiService.post("admin/heads", params).then(function(responce) {
-            return responce;
+        return ApiService.post("admin/heads", params).then(function(response) {
+            return response;
         });
     },
     [DELETE_STRUCT](context, params) {

@@ -27,8 +27,8 @@ export const actions = {
     },
     [NEW_EDUPEREVOD](context, params) {
         ApiService.setHeader();
-        return ApiService.post("admin/education/eduperevod", params).then(function(responce) {
-            return responce;
+        return ApiService.post("admin/education/eduperevod", params).then(function(response) {
+            return response;
         });
     },
     [DELETE_EDUPEREVOD](context, params) {

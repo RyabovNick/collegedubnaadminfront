@@ -40,8 +40,8 @@ export const actions = {
     },
     [NEW_NEWS](context, params) {
         ApiService.setHeader();
-        return ApiService.post("admin/upload/news", params).then(function(responce) {
-            return responce;
+        return ApiService.post("admin/upload/news", params).then(function(response) {
+            return response;
         });
     },
     [DELETE_NEWS](context, params) {

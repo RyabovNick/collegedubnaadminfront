@@ -27,8 +27,8 @@ export const actions = {
     },
     [NEW_EDUCHISLEN](context, params) {
         ApiService.setHeader();
-        return ApiService.post("admin/education/educhislen", params).then(function(responce) {
-            return responce;
+        return ApiService.post("admin/education/educhislen", params).then(function(response) {
+            return response;
         });
     },
     [DELETE_EDUCHISLEN](context, params) {
