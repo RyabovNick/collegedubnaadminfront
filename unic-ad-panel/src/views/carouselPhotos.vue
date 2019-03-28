@@ -99,6 +99,7 @@ import {
 import snackbar from "@/common/snackbar.js";
 
 export default {
+  mixins: [snackbar],
   data() {
     return {
       loading: false,
@@ -148,14 +149,10 @@ export default {
             file: formData
           })
           .then(() => {
-            this.color = "success";
-            this.text = "Данные успешно изменены";
-            this.snackbar = true;
+            this.runSnackbar("success", this.successInsertMessage);
           });
       } catch (err) {
-        this.color = "error";
-        this.text = "Приносим извинения, произошла ошибка";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorInsertMessage);
       }
     },
     async deleteItem(item) {
@@ -165,14 +162,10 @@ export default {
         (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
           this.$store.dispatch(DELETE_GALLERY, { id }).then(() => {
             this.gallery.splice(index, 1);
-            this.color = "success";
-            this.text = "Данные успешно изменены";
-            this.snackbar = true;
+            this.runSnackbar("success", this.successDeleteMessage);
           });
       } catch {
-        this.color = "error";
-        this.text = "Произошла ошибка при изменении данных";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorDeleteMessage);
       }
     },
 
@@ -190,26 +183,33 @@ export default {
     },
     async save(item) {
       try {
-        await this.$store.dispatch(UPDATE_GALLERY, {
-          id: this.editedItem.id,
-          number: this.editedItem.number
-        });
-        Object.assign(this.gallery[this.editedIndex], this.editedItem);
-        this.editedIndex = -1;
-        this.color = "success";
-        this.text = "Данные успешно изменены";
-        this.snackbar = true;
+        await this.$store
+          .dispatch(UPDATE_GALLERY, {
+            id: this.editedItem.id,
+            number: this.editedItem.number
+          })
+          .then(() => {
+            Object.assign(this.gallery[this.editedIndex], this.editedItem);
+            this.editedIndex = -1;
+            this.runSnackbar("success", this.successUpdateMessage);
+          });
       } catch {
-        this.color = "error";
-        this.text = "Произошла ошибка при изменении данных";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorUpdateMessage);
       }
 
       this.close();
     }
   },
   computed: {
-    ...mapGetters(["gallery"])
+    ...mapGetters([
+      "gallery",
+      "successInsertMessage",
+      "successUpdateMessage",
+      "successDeleteMessage",
+      "errorInsertMessage",
+      "errorUpdateMessage",
+      "errorDeleteMessage"
+    ])
   },
   watch: {
     dialog(val) {

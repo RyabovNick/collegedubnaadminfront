@@ -55,8 +55,10 @@ import {
   DELETE_EDUSTANDARTS,
   UPLOAD_EDUSTANDARTS
 } from "@/store/actions.type";
+import snackbar from "@/common/snackbar.js";
 
 export default {
+  mixins: [snackbar],
   data() {
     return {
       selectedValue: null,
@@ -79,17 +81,16 @@ export default {
       formData.append("name", this.eduStandartsName);
       formData.append("upload", file.raw, file.raw.name);
       try {
-        await this.$store.dispatch(UPLOAD_EDUSTANDARTS, {
-          file: formData
-        });
-        this.color = "success";
-        this.text = "Данные успешно загружены";
-        this.snackbar = true;
-        this.eduStandartsName = "";
+        await this.$store
+          .dispatch(UPLOAD_EDUSTANDARTS, {
+            file: formData
+          })
+          .then(() => {
+            this.runSnackbar("success", this.successUpdateMessage);
+            this.eduStandartsName = "";
+          });
       } catch {
-        this.color = "error";
-        this.text = "Приносим извинения, произошла ошибка";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorUpdateMessage);
       }
     },
     async deleteEduStandarts() {
@@ -99,21 +100,23 @@ export default {
           `Вы действительно хотите удалить стандарт с id: ${id}?`
         )) &&
           this.$store.dispatch(DELETE_EDUSTANDARTS, { id }).then(() => {
-            this.color = "success";
-            this.text = "Данные успешно изменены";
-            this.snackbar = true;
+            this.runSnackbar("success", this.successDeleteMessage);
             this.eduStandartsName = "";
             this.selectedValue = null;
           });
       } catch {
-        this.color = "error";
-        this.text = "Произошла ошибка при изменении данных";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorDeleteMessage);
       }
     }
   },
   computed: {
-    ...mapGetters(["eduStandarts"])
+    ...mapGetters([
+      "eduStandarts",
+      "successUpdateMessage",
+      "successDeleteMessage",
+      "errorUpdateMessage",
+      "errorDeleteMessage"
+    ])
   }
 };
 </script>

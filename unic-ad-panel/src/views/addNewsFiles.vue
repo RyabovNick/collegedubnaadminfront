@@ -74,6 +74,7 @@ import {
 import snackbar from "@/common/snackbar.js";
 
 export default {
+  mixins: [snackbar],
   data() {
     return {
       loading: false,
@@ -117,17 +118,16 @@ export default {
       let formData = new FormData();
       formData.append("upload", file.raw, file.raw.name);
       try {
-        await this.$store.dispatch(UPLOAD_NEWS_PHOTO, {
-          id: this.selectedValue,
-          file: formData
-        });
-        this.color = "success";
-        this.text = "Данные успешно изменены";
-        this.snackbar = true;
+        await this.$store
+          .dispatch(UPLOAD_NEWS_PHOTO, {
+            id: this.selectedValue,
+            file: formData
+          })
+          .then(() => {
+            this.runSnackbar("success", this.successInsertMessage);
+          });
       } catch (err) {
-        this.color = "error";
-        this.text = "Приносим извинения, произошла ошибка";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorInsertMessage);
       }
     },
     async deleteItem(item) {
@@ -137,14 +137,10 @@ export default {
         (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
           this.$store.dispatch(DELETE_NEWS_PHOTO, { id }).then(() => {
             this.photos.splice(index, 1);
-            this.color = "success";
-            this.text = "Данные успешно изменены";
-            this.snackbar = true;
+            this.runSnackbar("success", this.successDeleteMessage);
           });
       } catch {
-        this.color = "error";
-        this.text = "Произошла ошибка при изменении данных";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorDeleteMessage);
       }
     },
 
@@ -157,7 +153,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["photos", "listNews"])
+    ...mapGetters([
+      "photos",
+      "listNews",
+      "successInsertMessage",
+      "successDeleteMessage",
+      "errorInsertMessage",
+      "errorDeleteMessage"
+    ])
   },
   watch: {
     dialog(val) {

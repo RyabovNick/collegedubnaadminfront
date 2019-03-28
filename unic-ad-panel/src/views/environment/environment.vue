@@ -134,8 +134,10 @@ import {
   DELETE_ENVIRONMENT,
   UPDATE_ENVIRONMENT
 } from "@/store/actions.type";
+import snackbar from "@/common/snackbar.js";
 
 export default {
+  mixins: [snackbar],
   data() {
     return {
       loading: false,
@@ -194,14 +196,10 @@ export default {
         (await confirm("Действительно хотите удалить элемент с ID: " + id)) &&
           this.$store.dispatch(DELETE_ENVIRONMENT, { id }).then(() => {
             this.listEnvironmentPages.splice(index, 1);
-            this.color = "success";
-            this.text = "Данные успешно изменены";
-            this.snackbar = true;
+            this.runSnackbar("success", this.successDeleteMessage);
           });
       } catch {
-        this.color = "error";
-        this.text = "Произошла ошибка при изменении данных";
-        this.snackbar = true;
+        this.runSnackbar("error", this.errorDeleteMessage);
       }
     },
 
@@ -216,22 +214,21 @@ export default {
     async save(item) {
       if (this.editedIndex > -1) {
         try {
-          await this.$store.dispatch(UPDATE_ENVIRONMENT, {
-            id: this.editedItem.id,
-            page_id: this.editedItem.page_id,
-            type: this.editedItem.type,
-            link: this.editedItem.link,
-            name: this.editedItem.link_name
-          });
-          Object.assign(this.listEnvironmentPages[this.editedIndex], item);
-          this.editedIndex = -1;
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
+          await this.$store
+            .dispatch(UPDATE_ENVIRONMENT, {
+              id: this.editedItem.id,
+              page_id: this.editedItem.page_id,
+              type: this.editedItem.type,
+              link: this.editedItem.link,
+              name: this.editedItem.link_name
+            })
+            .then(() => {
+              Object.assign(this.listEnvironmentPages[this.editedIndex], item);
+              this.editedIndex = -1;
+              this.runSnackbar("success", this.successUpdateMessage);
+            });
         } catch {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorUpdateMessage);
         }
       } else {
         try {
@@ -242,17 +239,13 @@ export default {
               link: this.editedItem.link,
               name: this.editedItem.link_name
             })
-            .then(responce => {
-              this.editedItem.id = responce.data.insertId;
+            .then(response => {
+              this.editedItem.id = response.data.insertId;
+              this.listEnvironmentPages.push(this.editedItem);
+              this.runSnackbar("success", this.successInsertMessage);
             });
-          this.listEnvironmentPages.push(this.editedItem);
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
         } catch {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorInsertMessage);
         }
       }
       this.close();
@@ -263,7 +256,13 @@ export default {
       "kcpTypes",
       "kcpPages",
       "environment",
-      "listEnvironmentPages"
+      "listEnvironmentPages",
+      "successInsertMessage",
+      "successUpdateMessage",
+      "successDeleteMessage",
+      "errorInsertMessage",
+      "errorUpdateMessage",
+      "errorDeleteMessage"
     ]),
 
     formTitle() {

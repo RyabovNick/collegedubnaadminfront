@@ -174,14 +174,11 @@ export default {
             file: formData
           })
           .then(() => {
-            this.color = "success";
-            this.text = "Данные успешно изменены";
-            this.snackbar = true;
+            this.runSnackbar("success", this.successInsertMessage);
           });
       } catch (err) {
-        this.color = "error";
-        this.text = "Приносим извинения, произошла ошибка";
-        this.snackbar = true;
+        console.log("err: ", err);
+        this.runSnackbar("error", this.successInsertMessage);
       }
     },
     async deleteItem(item) {

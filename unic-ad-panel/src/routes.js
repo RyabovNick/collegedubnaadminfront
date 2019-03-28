@@ -21,13 +21,7 @@ import PurposeEios from "./views/sveden/purposeEios.vue";
 import CarouselPhotos from "./views/carouselPhotos.vue";
 import FileUpload from "./views/fileUpload.vue";
 import History from "./views/historyPages.vue";
-import Availability from "./views/environment/availability.vue";
-import CareerGuidance from "./views/environment/careerGuidance.vue";
-import Employment from "./views/environment/employment.vue";
-import Equipment from "./views/environment/equipment.vue";
-import Normative from "./views/environment/normative.vue";
-import Roadmap from "./views/environment/roadmap.vue";
-import Virtual_tour from "./views/environment/virtual_tour.vue";
+import Environment from "./views/environment/environment.vue";
 
 export const routes = [
     { path: "/", name: "Home", component: Home },
@@ -59,11 +53,5 @@ export const routes = [
     { path: "/gallery", name: "CarouselPhotos", component: CarouselPhotos },
     { path: "/fileupload", name: "FileUpload", component: FileUpload },
     { path: "/history", name: "History", component: History },
-    { path: "/environment/availability", name: "", component: Availability },
-    { path: "/environment/careerguidance", name: "", component: CareerGuidance },
-    { path: "/environment/employment", name: "", component: Employment },
-    { path: "/environment/equipment", name: "", component: Equipment },
-    { path: "/environment/normative", name: "", component: Normative },
-    { path: "/environment/roadmap", name: "", component: Roadmap },
-    { path: "/environment/virtual_tour", name: "", component: Virtual_tour }
+    { path: "/environment", name: "", component: Environment }
 ];

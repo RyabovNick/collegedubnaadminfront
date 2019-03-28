@@ -113,6 +113,7 @@ import {
 import snackbar from "@/common/snackbar.js";
 
 export default {
+  mixins: [snackbar],
   data() {
     return {
       loading: false,

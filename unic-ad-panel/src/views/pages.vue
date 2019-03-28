@@ -159,6 +159,7 @@ export default {
   components: {
     VueMarkdown
   },
+  mixins: [snackbar],
   data() {
     return {
       selectedValue: null,
@@ -216,27 +217,27 @@ export default {
     },
     async savePage() {
       if (this.selectedValue === null) {
-        this.color = "error";
-        this.text = "Необходимо выбрать новость";
-        this.snackbar = true;
+        this.runSnackbar("error", "Необходимо выбрать новость");
       } else {
         try {
           const id = this.selectedValue;
           const content = this.newsText;
-          await this.$store.dispatch(UPDATE_PAGE, { id, content });
-          this.color = "success";
-          this.text = "Данные успешно изменены";
-          this.snackbar = true;
+          await this.$store.dispatch(UPDATE_PAGE, { id, content }).then(() => {
+            this.runSnackbar("success", this.successUpdateMessage);
+          });
         } catch (err) {
-          this.color = "error";
-          this.text = "Произошла ошибка при изменении данных";
-          this.snackbar = true;
+          this.runSnackbar("error", this.errorUpdateMessage);
         }
       }
     }
   },
   computed: {
-    ...mapGetters(["pages", "page"])
+    ...mapGetters([
+      "pages",
+      "page",
+      "successUpdateMessage",
+      "errorUpdateMessage"
+    ])
   }
 };
 </script>
