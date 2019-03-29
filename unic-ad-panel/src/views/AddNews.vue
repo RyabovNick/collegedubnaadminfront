@@ -143,11 +143,11 @@ ul {
             <template
               slot="selection"
               slot-scope="data"
-            >{{ data.item.title}} - {{ data.item.date_now | date}}</template>
+            >{{ data.item.title}} - {{ data.item.date_now | date}} - Ранк: {{data.item.rank}}</template>
             <template
               slot="item"
               slot-scope="data"
-            >{{ data.item.title}} - {{data.item.date_now | date}}</template>
+            >{{ data.item.title}} - {{data.item.date_now | date}} - Ранк: {{data.item.rank}}</template>
           </v-select>
         </v-flex>
         <v-flex xs12 sm6 md1 lg1>
