@@ -1,7 +1,21 @@
 <template>
   <v-app>
+    <h1>Локальные нормативные акты</h1>
+    <v-expansion-panel>
+      <v-expansion-panel-content>
+        <template v-slot:header>
+          <div>Помощь</div>
+        </template>
+        <v-card>
+          <v-card-text>
+            На странице можно добавить информацию в раздел "Стипендии и иные виды материальной поддержки" в подраздел "Локальные нормативные акты".
+            <br>Для добавления необходимо ввести название, которое будет отображаться на странице. И перетащить или выбрать файл, загрузка начнётся автоматически. По завершению будет уведомление о результате выполнения.
+            <br>Для удаления в выпадающем списке необходимо выбрать нужный акт и нажать на кнопку "Удалить"
+          </v-card-text>
+        </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
     <v-container fluid grid-list-xl>
-      <p>В разделе можно загрузить и удалить локальные нормативные акты</p>
       <v-layout wrap align-center>
         <v-flex>
           <v-textarea
@@ -85,7 +99,12 @@ export default {
           .dispatch(UPLOAD_GRANTSDOCS, {
             file: formData
           })
-          .then(() => {
+          .then(response => {
+            this.grantsDocs.push({
+              id: response.data.insertId,
+              link: "",
+              name: this.grantsDocsName
+            });
             this.runSnackbar("success", this.successUpdateMessage);
             this.grantsDocsName = "";
           });
@@ -100,6 +119,8 @@ export default {
           `Вы действительно хотите удалить стандарт с id: ${id}?`
         )) &&
           this.$store.dispatch(DELETE_GRANTSDOCS, { id }).then(() => {
+            const index = this.grantsDocs.findIndex(item => item.id === id);
+            this.grantsDocs.splice(index, 1);
             this.runSnackbar("success", this.successDeleteMessage);
             this.grantsDocsName = "";
             this.selectedValue = null;

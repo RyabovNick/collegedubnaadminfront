@@ -1,6 +1,16 @@
 <template>
   <v-app>
     <h1>Трудойстройство выпускников</h1>
+    <v-expansion-panel>
+      <v-expansion-panel-content>
+        <template v-slot:header>
+          <div>Помощь</div>
+        </template>
+        <v-card>
+          <v-card-text>На странице можно добавить информацию в раздел "Стипендии и иные виды материальной поддержки" в подраздел "Трудойстройство выпускников".</v-card-text>
+        </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
     <section v-if="errored">
       <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
     </section>

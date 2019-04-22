@@ -107,6 +107,19 @@ ul {
 <template>
   <v-app>
     <v-container fluid grid-list-xl>
+      <v-expansion-panel>
+        <v-expansion-panel-content>
+          <template v-slot:header>
+            <div>Помощь</div>
+          </template>
+          <v-card>
+            <v-card-text>
+              На странице посмотреть старые версии страниц.
+              <br>Если произошла какая-то ошибка при изменении, на этой странице можно посмотреть "как было" и скопировать обратно.
+            </v-card-text>
+          </v-card>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
       <v-layout wrap align-center>
         <v-flex xs12 sm6 d-flex>
           <v-select

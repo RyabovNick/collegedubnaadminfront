@@ -1,13 +1,23 @@
 <template>
   <v-app>
     <h1>Сведения о наличии библиотек, объектов спорта, об условиях питания и охраны здоровья обучающихся</h1>
+    <v-expansion-panel>
+      <v-expansion-panel-content>
+        <template v-slot:header>
+          <div>Помощь</div>
+        </template>
+        <v-card>
+          <v-card-text>На странице можно добавить информацию в раздел "Материально-техническое обеспечение" в подраздел "Сведения о наличии библиотек, объектов спорта, об условиях питания и охраны здоровья обучающихся".</v-card-text>
+        </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
     <section v-if="errored">
       <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
     </section>
     <section v-else>
       <div v-if="loading">Загрузка...</div>
       <v-toolbar flat color="white">
-        <v-toolbar-title>Кабинеты</v-toolbar-title>
+        <v-toolbar-title>purposeLibr</v-toolbar-title>
         <v-divider class="mx-2" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="800px">

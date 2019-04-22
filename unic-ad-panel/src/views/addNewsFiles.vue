@@ -1,7 +1,23 @@
 <template>
   <v-app>
     <v-container fluid grid-list-xl>
-      <p>В разделе можно загрузить файлы для новости</p>
+      <v-expansion-panel>
+        <v-expansion-panel-content>
+          <template v-slot:header>
+            <div>Помощь</div>
+          </template>
+          <v-card>
+            <v-card-text>
+              На странице можно загрузить фото к новостям.
+              <br>Выберите необходимую новость
+              <br>Выберите столько файлов, сколько нужно
+              <br>Загрузка начнётся автоматически, по завершению будет уведомление об итоге выполнения
+              <br>
+              <b>Если файлы весят много, то нужно немного подождать, не спешите</b>
+            </v-card-text>
+          </v-card>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
       <v-layout wrap align-center>
         <v-flex xs12 sm12 d-flex>
           <v-select

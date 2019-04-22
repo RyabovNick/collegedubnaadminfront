@@ -1,7 +1,21 @@
 <template>
   <v-app>
+    <h1>Образовательные стандарты</h1>
+    <v-expansion-panel>
+      <v-expansion-panel-content>
+        <template v-slot:header>
+          <div>Помощь</div>
+        </template>
+        <v-card>
+          <v-card-text>
+            На странице можно добавить информацию в раздел "Образовательные стандарты".
+            <br>Для добавления стандарта необходимо ввести название, которое будет отображаться на странице. И перетащить или выбрать файл, загрузка начнётся автоматически. По завершению будет уведомление о результате выполнения.
+            <br>Для удаления в выпадающем списке необходимо выбрать нужный образовательный стандарт и нажать на кнопку "Удалить стандарт"
+          </v-card-text>
+        </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
     <v-container fluid grid-list-xl>
-      <p>В разделе можно загрузить и удалить образовательные стандарты</p>
       <v-layout wrap align-center>
         <v-flex>
           <v-textarea
@@ -85,7 +99,12 @@ export default {
           .dispatch(UPLOAD_EDUSTANDARTS, {
             file: formData
           })
-          .then(() => {
+          .then(response => {
+            this.eduStandarts.push({
+              id: response.data.insertId,
+              link: "",
+              name: this.eduStandartsName
+            });
             this.runSnackbar("success", this.successUpdateMessage);
             this.eduStandartsName = "";
           });
@@ -100,6 +119,8 @@ export default {
           `Вы действительно хотите удалить стандарт с id: ${id}?`
         )) &&
           this.$store.dispatch(DELETE_EDUSTANDARTS, { id }).then(() => {
+            const index = this.eduStandarts.findIndex(item => item.id === id);
+            this.eduStandarts.splice(index, 1);
             this.runSnackbar("success", this.successDeleteMessage);
             this.eduStandartsName = "";
             this.selectedValue = null;

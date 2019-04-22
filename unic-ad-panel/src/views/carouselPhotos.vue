@@ -1,12 +1,21 @@
 <template>
   <v-app>
     <v-container fluid grid-list-xl>
-      <p>В разделе добавить/удалить фото галлереи на главной</p>
-      <p>Размер: ...</p>
-      <p>
-        Порядок показа фото зависит от цифры (Номер). Чем меньше,
-        тем раньше будет показана фотография.
-      </p>
+      <v-expansion-panel>
+        <v-expansion-panel-content>
+          <template v-slot:header>
+            <div>Помощь</div>
+          </template>
+          <v-card>
+            <v-card-text>
+              На странице можно добавить/удалить фото галлереи на главной
+              <br>Размер: ...
+              <br>Порядок показа фото зависит от цифры (Номер). Чем меньше,
+              тем раньше будет показана фотография.
+            </v-card-text>
+          </v-card>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
       <v-layout wrap align-center>
         <v-flex xs12 sm6 md5 lg5>
           <v-text-field

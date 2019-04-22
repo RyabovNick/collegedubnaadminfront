@@ -7,10 +7,17 @@ table.v-table thead th {
 <template>
   <v-app>
     <h1>Срок действия аккредитации</h1>
-    <p>
-      На этой странице можно добавить образовательные программы и указать
-      в каких годах действует. Удалить года можно в разделе образование
-    </p>
+    <v-expansion-panel>
+      <v-expansion-panel-content>
+        <template v-slot:header>
+          <div>Помощь</div>
+        </template>
+        <v-card>
+          <v-card-text>На этой странице можно добавить образовательные программы и указать в каких годах действует. Удалить года можно в разделе образование</v-card-text>
+        </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+    <p></p>
     <section v-if="errored">
       <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
     </section>

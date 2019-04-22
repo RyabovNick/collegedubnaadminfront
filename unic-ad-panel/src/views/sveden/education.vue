@@ -1,7 +1,23 @@
 <template>
   <v-app>
+    <h1>Образование</h1>
+    <v-expansion-panel>
+      <v-expansion-panel-content>
+        <template v-slot:header>
+          <div>Помощь</div>
+        </template>
+        <v-card>
+          <v-card-text>
+            На странице можно добавить информацию в раздел "Образование".
+            <br>Информация для этого раздела берётся с информации на странице "Срок действия аккредитации", а на этой странице можно загрузить файлы.
+            <br>Загрузка начинается сразу, после выбора или перетаскивания документа.
+            <br>Также можно удалить файл, если кнопки "удалить файл" нет на страницы, то значит такой файл ещё не загружен.
+          </v-card-text>
+        </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+
     <v-container fluid grid-list-xl>
-      <p>В разделе можно загрузить файлы для конкретной специальности и года</p>
       <v-layout wrap align-center>
         <v-flex xs12 sm12 d-flex>
           <v-select
@@ -9,7 +25,7 @@
             item-value="eduopId"
             v-model="selectedValue"
             label="Выберите специальность"
-            @change="fetchEducation()"
+            @change="setIndex()"
           >
             <template
               slot="selection"
@@ -33,7 +49,9 @@
             </div>
           </el-upload>
         </v-flex>
-        <v-flex v-if="selectedTuple !== '' && selectedValue !== null">
+        <v-flex
+          v-if="selectedTuple !== '' && selectedValue !== null && education[index][selectedTuple] !== null"
+        >
           <v-btn color="error" @click="deleteEducationFile()">Удалить файл</v-btn>
         </v-flex>
       </v-layout>
@@ -70,7 +88,8 @@ export default {
       //snackbar
       snackbar: false,
       color: "success",
-      text: ""
+      text: "",
+      index: null
     };
   },
   mounted() {
@@ -112,6 +131,12 @@ export default {
       } catch {
         this.runSnackbar("error", this.errorDeleteMessage);
       }
+    },
+    setIndex() {
+      this.index = this.education.findIndex(
+        item => item.eduopId === this.selectedValue
+      );
+      console.log("this.index: ", this.index);
     }
   },
   computed: {

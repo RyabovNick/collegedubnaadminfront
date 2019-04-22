@@ -1,6 +1,20 @@
 <template>
   <v-app>
     <h1>Вакантные места</h1>
+    <v-expansion-panel>
+      <v-expansion-panel-content>
+        <template v-slot:header>
+          <div>Помощь</div>
+        </template>
+        <v-card>
+          <v-card-text>
+            На странице можно добавить информацию в раздел "Вакантные места для приема (перевода)".
+            <br>Справа находятся кнопки редактирования или удаления информации.
+            <br>Поиск в таблице осуществляется по совпадению во всех столбцах.
+          </v-card-text>
+        </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
     <section v-if="errored">
       <p>Приносим извинения, произошла ошибка. Пожалуйста, повторите позднее</p>
     </section>
