@@ -12,6 +12,8 @@ import EduPriem from "./views/sveden/eduPriem.vue";
 import Vacant from "./views/sveden/vacant.vue";
 import TeachingStaff from "./views/sveden/teachingStaff.vue";
 import GraduateJob from "./views/sveden/graduateJob.vue";
+import GrantsDocs from "./views/sveden/grantsDocs.vue";
+import HostelInfo from "./views/sveden/hostelinfo.vue";
 import Pages from "./views/pages.vue";
 import EduStandarts from "./views/sveden/eduStandarts.vue";
 import Cabinets from "./views/sveden/cabinets.vue";
@@ -49,6 +51,8 @@ export const routes = [
     { path: "/sveden/vacant", name: "Vacant", component: Vacant },
     { path: "/sveden/employees", name: "TeachingStaff", component: TeachingStaff },
     { path: "/sveden/grants", name: "GraduateJob", component: GraduateJob },
+    { path: "/sveden/grantsdocs", name: "GrantsDocs", component: GrantsDocs },
+    { path: "/sveden/hostelinfo", name: "HostelInfo", component: HostelInfo },
     { path: "/pages", name: "Pages", component: Pages },
     { path: "/gallery", name: "CarouselPhotos", component: CarouselPhotos },
     { path: "/fileupload", name: "FileUpload", component: FileUpload },

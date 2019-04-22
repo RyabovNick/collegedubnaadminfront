@@ -234,6 +234,15 @@ export default {
             link: "/sveden/grants"
           },
           {
+            text: "Локальные нормативные акты",
+            link: "/sveden/grantsdocs"
+          },
+          {
+            text:
+              "Наличие общежития, количество жилых помещений в общежитии для иногородних обучающихся",
+            link: "/sveden/hostelinfo"
+          },
+          {
             text: "Вакантные места для приема (перевода)",
             link: "/sveden/vacant"
           }

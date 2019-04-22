@@ -93,6 +93,19 @@ export const NEW_EDUSTANDARTS = "newEduStandarts";
 export const CHANGE_EDUSTANDARTS = "changeEduStandarts";
 export const DELETE_EDUSTANDARTS = "deleteEduStandarts";
 
+//grantsdocs
+export const FETCH_GRANTSDOCS = "fetchGrantsDocs";
+export const UPLOAD_GRANTSDOCS = "uploadGrantsDocs";
+export const NEW_GRANTSDOCS = "newGrantsDocs";
+export const CHANGE_GRANTSDOCS = "changeGrantsDocs";
+export const DELETE_GRANTSDOCS = "deleteGrantsDocs";
+
+//hostelinfo
+export const FETCH_HOSTELINFO = "fetchHostelInfo";
+export const NEW_HOSTELINFO = "newHostelInfo";
+export const DELETE_HOSTELINFO = "deleteHostelInfo";
+export const UPDATE_HOSTELINFO = "updateHostelInfo";
+
 //objects
 
 //cabinets

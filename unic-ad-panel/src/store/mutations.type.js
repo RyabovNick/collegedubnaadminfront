@@ -46,6 +46,11 @@ export const SET_EDUPEREVOD = "setEduPerevod";
 //eduStandarts
 export const SET_EDUSTANDARTS = "setEduStandarts";
 
+//eduStandarts
+export const SET_GRANTSDOCS = "setGrantsDocs";
+//eduStandarts
+export const SET_HOSTELINFO = "setHostelInfo";
+
 //objects
 
 //cabs
