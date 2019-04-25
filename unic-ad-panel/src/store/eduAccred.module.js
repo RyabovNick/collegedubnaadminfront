@@ -14,7 +14,8 @@ const getters = {
 
 export const actions = {
     [FETCH_EDUACCRED](context) {
-        return ApiService.get("eduaccred").then(({ data }) => {
+        ApiService.setHeader();
+        return ApiService.get("admin/education/eduaccred").then(({ data }) => {
             context.commit(SET_EDUACCRED, data);
             return data;
         });
