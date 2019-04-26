@@ -82,7 +82,7 @@
           </v-card>
         </v-dialog>
       </v-toolbar>
-      <v-data-table :headers="headers" :items="eduCabinets" class="elevation-1" hide-actions>
+      <v-data-table :headers="headers" :items="eduCabinets" class="elevation-1">
         <template slot="items" slot-scope="props">
           <td class="text-xs-left">{{ props.item.id }}</td>
           <td class="text-xs-left">{{ props.item.edu_id }}</td>
