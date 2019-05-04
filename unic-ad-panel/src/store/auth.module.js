@@ -1,12 +1,12 @@
-import ApiService from "@/common/api.service";
-import JwtService from "@/common/jwt.service";
-import { LOGIN, LOGOUT, CHECK_AUTH } from "./actions.type";
-import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "./mutations.type";
+import ApiService from '@/common/api.service';
+import JwtService from '@/common/jwt.service';
+import { LOGIN, LOGOUT, CHECK_AUTH } from './actions.type';
+import { SET_AUTH, PURGE_AUTH, SET_ERROR } from './mutations.type';
 
 const state = {
     errors: null,
     user: {},
-    isAuthenticated: !!JwtService.getToken()
+    isAuthenticated: false,
 };
 
 const getters = {
@@ -15,20 +15,22 @@ const getters = {
     },
     isAuthenticated(state) {
         return state.isAuthenticated;
-    }
+    },
 };
 
 const actions = {
     [LOGIN](context, credentials) {
-        return new Promise(resolve => {
-            ApiService.post("user/login", { user: credentials })
+        return new Promise((resolve, reject) => {
+            ApiService.post('user/login', { user: credentials })
                 .then(({ data }) => {
                     context.commit(SET_AUTH, data.user);
+                    JwtService.saveToken(data.user.token);
                     resolve(data);
                 })
-                .catch(({ response }) => {
-                    console.log("response: ", response);
-                    context.commit(SET_ERROR, response.data.message);
+                .catch(error => {
+                    console.log('response: ', error);
+                    context.commit(SET_ERROR, error);
+                    reject(error);
                 });
         });
     },
@@ -36,19 +38,24 @@ const actions = {
         context.commit(PURGE_AUTH);
     },
     [CHECK_AUTH](context) {
-        if (JwtService.getToken()) {
-            ApiService.setHeader();
-            ApiService.get("user")
-                .then(({ data }) => {
-                    context.commit(SET_AUTH, data.user);
-                })
-                .catch(({ response }) => {
-                    context.commit(SET_ERROR, response.data.errors);
-                });
-        } else {
-            context.commit(PURGE_AUTH);
-        }
-    }
+        return new Promise((resolve, reject) => {
+            if (JwtService.getToken()) {
+                ApiService.setHeader();
+                ApiService.get('user')
+                    .then(({ data }) => {
+                        context.commit(SET_AUTH, data.user);
+                        resolve(data);
+                    })
+                    .catch(error => {
+                        context.commit(SET_ERROR, error);
+                        reject(error);
+                    });
+            } else {
+                context.commit(PURGE_AUTH);
+                reject(new Error('Token does not exist'));
+            }
+        });
+    },
 };
 
 const mutations = {
@@ -66,12 +73,12 @@ const mutations = {
         state.user = {};
         state.errors = {};
         JwtService.destroyToken();
-    }
+    },
 };
 
 export default {
     state,
     actions,
     mutations,
-    getters
+    getters,
 };

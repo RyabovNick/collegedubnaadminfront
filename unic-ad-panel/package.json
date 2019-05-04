@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "serve": "vue-cli-service serve",
+        "serve": "vue-cli-service serve --port 8432",
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint",
         "test:unit": "vue-cli-service test:unit"
@@ -29,7 +29,7 @@
         "@vue/cli-plugin-babel": "^3.4.0",
         "@vue/cli-plugin-eslint": "^3.4.0",
         "@vue/cli-plugin-unit-mocha": "^3.4.0",
-        "@vue/cli-service": "^3.4.0",
+        "@vue/cli-service": "^3.7.0",
         "@vue/eslint-config-prettier": "^3.0.0-rc.12",
         "@vue/test-utils": "^1.0.0-beta.20",
         "babel-plugin-component": "^1.1.1",
