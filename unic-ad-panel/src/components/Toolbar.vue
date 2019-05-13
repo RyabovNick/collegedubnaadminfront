@@ -171,107 +171,119 @@ export default {
     dialog: false,
     drawer: null,
     items: [
-      { icon: "home", text: "Главная", link: "/" },
-      { icon: "account_balance", text: "Страницы", link: "/pages" },
+      { icon: "home", text: "Главная", link: "/unic-ad-panel" },
+      {
+        icon: "account_balance",
+        text: "Страницы",
+        link: "/unic-ad-panel/pages"
+      },
       {
         icon: "keyboard_arrow_up",
         "icon-alt": "keyboard_arrow_down",
         text: "Сведения об образовательной организации",
         model: false,
         children: [
-          { text: "Основные сведения", link: "/sveden/common" },
+          { text: "Основные сведения", link: "/unic-ad-panel/sveden/common" },
           {
             text: "Структура и органы управления образовательной организацией",
-            link: "/sveden/struct"
+            link: "/unic-ad-panel/sveden/struct"
           },
           {
             text: "Срок действия аккредитации",
-            link: "/sveden/eduAccred"
+            link: "/unic-ad-panel/sveden/eduAccred"
           },
           {
             text: "Образование",
-            link: "/sveden/education"
+            link: "/unic-ad-panel/sveden/education"
           },
           {
             text: "Численость обучающихся",
-            link: "/sveden/eduChislen"
+            link: "/unic-ad-panel/sveden/eduChislen"
           },
           {
             text: "Информация о приёме",
-            link: "/sveden/eduPriem"
+            link: "/unic-ad-panel/sveden/eduPriem"
           },
           {
             text: "Информация о переводе, восстановлении, отчислении",
-            link: "/sveden/eduPerevod"
+            link: "/unic-ad-panel/sveden/eduPerevod"
           },
           {
             text: "Образовательные стандарты",
-            link: "/sveden/eduStandarts"
+            link: "/unic-ad-panel/sveden/eduStandarts"
           },
           {
             text: "Руководство. Педагогический (научно-педагогический) состав",
-            link: "/sveden/employees"
+            link: "/unic-ad-panel/sveden/employees"
           },
           {
             text: "Материально-техническое обеспечение (Кабинеты)",
-            link: "/sveden/cabinets"
+            link: "/unic-ad-panel/sveden/cabinets"
           },
           {
             text: "Привязать кабинет к программе",
-            link: "/sveden/educabinets"
+            link: "/unic-ad-panel/sveden/educabinets"
           },
           {
             text: "Сведения о наличии библиотек, объектов спорта",
-            link: "/sveden/purposelibr"
+            link: "/unic-ad-panel/sveden/purposelibr"
           },
           {
             text:
               "Сведения о доступе к электронной информационно-образовательной среде",
-            link: "/sveden/purposeeios"
+            link: "/unic-ad-panel/sveden/purposeeios"
           },
           {
             text: "Стипендии и иные виды материальной поддержки",
-            link: "/sveden/grants"
+            link: "/unic-ad-panel/sveden/grants"
           },
           {
             text: "Локальные нормативные акты",
-            link: "/sveden/grantsdocs"
+            link: "/unic-ad-panel/sveden/grantsdocs"
           },
           {
             text:
               "Наличие общежития, количество жилых помещений в общежитии для иногородних обучающихся",
-            link: "/sveden/hostelinfo"
+            link: "/unic-ad-panel/sveden/hostelinfo"
           },
           {
             text: "Вакантные места для приема (перевода)",
-            link: "/sveden/vacant"
+            link: "/unic-ad-panel/sveden/vacant"
           }
         ]
       },
-      { icon: "accessible", text: "Доступная среда", link: "/environment" },
-      { icon: "contacts", text: "Добавить новость", link: "/addnews" },
+      {
+        icon: "accessible",
+        text: "Доступная среда",
+        link: "/unic-ad-panel/environment"
+      },
+      {
+        icon: "contacts",
+        text: "Добавить новость",
+        link: "/unic-ad-panel/addnews"
+      },
       {
         icon: "add_to_photos",
         text: "Добавить фото к новостям",
-        link: "/addnewsfiles"
+        link: "/unic-ad-panel/addnewsfiles"
       },
       {
         icon: "add_a_photo",
         text: "Фотографии на главной",
-        link: "/gallery"
+        link: "/unic-ad-panel/gallery"
       },
       {
         icon: "cloud_upload",
         text: "Загрузить файлы",
-        link: "/fileupload"
+        link: "/unic-ad-panel/fileupload"
       },
       {
         icon: "history",
         text: "История изменения страниц",
-        link: "/history"
+        link: "/unic-ad-panel/history"
       }
     ],
-    toolbar: [{ icon: "home", text: "Главная", link: "/" }]
+    toolbar: [{ icon: "home", text: "Главная", link: "/unic-ad-panel" }]
   }),
   props: {
     source: String

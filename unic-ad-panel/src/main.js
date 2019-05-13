@@ -31,13 +31,13 @@ router.beforeEach((to, from, next) => {
         .dispatch('checkAuth')
         .then(() => {
             if (to.name === 'login') {
-                next('/');
+                next('/unic-ad-panel');
             }
             next();
         })
         .catch(() => {
             if (authRequired) {
-                next('/login');
+                next('/unic-ad-panel/login');
             } else {
                 next();
             }

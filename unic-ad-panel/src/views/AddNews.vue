@@ -400,7 +400,7 @@ export default {
       await this.$store.dispatch(FETCH_NEWS, this.selectedValue);
       this.title = await this.$store.getters.news[0].title;
       this.newsText = this.$store.getters.news[0].content;
-      this.imageUrl = `http://localhost:3001/files/${
+      this.imageUrl = `https://college.uni-dubna.ru:8443/files/${
         this.$store.getters.news[0].logo
       }`;
       let prepareDate = new Date(this.$store.getters.news[0].date_now);
