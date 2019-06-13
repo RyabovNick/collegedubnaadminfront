@@ -411,16 +411,16 @@ export default {
       this.rank = this.$store.getters.news[0].rank;
     },
     async saveNews() {
-      let formData = new FormData();
-      formData.append("title", this.title);
-      formData.append("content", this.newsText);
-      formData.append("date_now", `${this.date} ${this.time}`);
-      formData.append("upload", this.file, this.file.name);
-      formData.append("rank", this.rank);
-
       //add news
       if (this.selectedValue === null) {
         try {
+          let formData = new FormData();
+          formData.append("title", this.title);
+          formData.append("content", this.newsText);
+          formData.append("date_now", `${this.date} ${this.time}`);
+          formData.append("upload", this.file, this.file.name);
+          formData.append("rank", this.rank);
+
           await this.$store
             .dispatch(UPLOAD_NEWS, { file: formData })
             .then(() => {
