@@ -12,7 +12,7 @@
         "@fortawesome/fontawesome": "^1.1.8",
         "@fortawesome/fontawesome-free-solid": "^5.0.13",
         "@fortawesome/vue-fontawesome": "0.0.23",
-        "axios": "^0.15.3",
+        "axios": "^0.19.0",
         "date-fns": "^1.29.0",
         "element-ui": "^2.5.4",
         "font-awesome": "^4.6.3",
