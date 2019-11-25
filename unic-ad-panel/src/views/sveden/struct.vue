@@ -45,6 +45,9 @@
                   <v-flex xs12 sm6 md6>
                     <v-text-field v-model="editedItem.email" label="Почта"></v-text-field>
                   </v-flex>
+                  <v-flex xs12 sm6 md6>
+                    <v-text-field v-model="editedItem.telephone" label="Телефон"></v-text-field>
+                  </v-flex>
                 </v-layout>
               </v-container>
             </v-card-text>
@@ -65,6 +68,7 @@
           <td class="text-xs-left">{{ props.item.addressStr }}</td>
           <td class="text-xs-left">{{ props.item.site }}</td>
           <td class="text-xs-left">{{ props.item.email }}</td>
+          <td class="text-xs-left">{{ props.item.telephone }}</td>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
@@ -107,6 +111,7 @@ export default {
         { text: "Адрес", value: "addressStr" },
         { text: "Сайт", value: "site" },
         { text: "Почта", value: "email" },
+        { text: "Телефон", value: "telephone" },
         { text: "Действия", value: "actions" }
       ],
       editedIndex: -1,
@@ -116,7 +121,8 @@ export default {
         post: "",
         addressStr: "",
         site: "",
-        email: ""
+        email: "",
+        telephone: ""
       },
       defaultItem: {
         id: 0,
@@ -124,7 +130,8 @@ export default {
         post: "",
         addressStr: "",
         site: "",
-        email: ""
+        email: "",
+        telephone: ""
       }
     };
   },
